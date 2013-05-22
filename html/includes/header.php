@@ -1,3 +1,4 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd"> 
 <html>
 <body>
 <link rel="stylesheet" type="text/css" href="../css/header.css" />
@@ -44,14 +45,19 @@ function logincancel() {
 				<label>Password:</label>
 				<input class="input" type="password" name="password" />
 			</div>
-				Remember me?
-				<input type="checkbox" name="remember" />
-				<br />
-				<br />
-				<input type="submit" value="Login" style="margin-bottom:10px;"/>
+				<span class="remember">Remember Me?</span>
+				<input class="remembercheck" type="checkbox" name="remember" />
+				<br/>
+				<input type="submit" value="Login" id="loginButton"/>
 			</form>
+	<link rel="stylesheet" type="text/css" href="../css/basecontent.css" />
 	<table>
-	
+		<td class="sideelements">
+		</td>
+		<td class="centerelement">
+		</td>
+		<td class="sideelements">
+		</td>
 	</table>
 	<div id="footer" style="height:100px;">
 	</div>

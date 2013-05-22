@@ -8,7 +8,26 @@ label{
 	line-height:25px;
 	font-size:15px;
 	color:black;
-	text-shadow:1px 1px 3px #white;
+	text-shadow:1px 1px 3px white;
+}
+
+.remember{
+	font-weight:bold;
+	margin-right:1px;
+	text-align:right;
+	width:100px;
+	line-height:25px;
+	font-size:15px;
+	color:black;
+	text-shadow:1px 1px 3px white;
+}
+
+.remembercheck{
+	margin-right:10px;
+	padding:5px;
+	border:1px solid #b9bdc1;
+	color:#505050;
+	background-color:#F9F9F9;
 }
 
 .field{
@@ -21,7 +40,7 @@ label{
 	border:1px solid #b9bdc1;
 	width:200px;
 	color:#505050;
-	background-color:#FAFAFA;
+	background-color:#F9F9F9;
 }
 .input:focus{
 	background-color:white;
@@ -54,7 +73,7 @@ label{
     position: fixed;
     top: 50%;
     margin-top: -125px;
-    width: 340;
+    width: 350px;
     left: 50%;
     margin-left: -170px;
     background-color: #EEEEEE;
@@ -81,13 +100,28 @@ label{
     background: #99DD33;
     font-size: 14px;
     overflow: hidden;
-    transition: box-shadow 0.5s;
-    -webkit-transition: box-shadow 0.5s; /* Safari */
-    box-shadow: 0px 0px 0px black;
 	border-radius: 10px 10px 0px 0px;
     -moz-border-radius: 10px 10px 0px 0px;
 }
 
 #innerloginbar{
 	padding: 0px 10px 0px 10px;
+}
+
+#loginButton{
+	margin-bottom:10px;
+	margin-top:10px;
+	border: 1px #b9bdc1 solid;
+	background-color:#FFFFFF;
+	padding:3px 6px;
+	font-size:15px;
+	font-weight: bold;
+}
+
+#loginButton:hover{
+	margin-bottom:10px;
+	border: 1px #b9bdc1 solid;
+	background-color:#F6F6F6;
+	padding:3px 6px;
+	font-size:15px;
 }
