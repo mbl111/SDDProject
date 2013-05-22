@@ -51,15 +51,19 @@ function logincancel() {
 				<input type="submit" value="Login" id="loginButton"/>
 			</form>
 	<link rel="stylesheet" type="text/css" href="../css/basecontent.css" />
-	<table>
-		<td class="sideelements">
-		</td>
-		<td class="centerelement">
-		</td>
-		<td class="sideelements">
-		</td>
-	</table>
+	<div id="contentarea">
+		<div class="sideelements">
+		Side
+		</div>
+		<div class="centerelement">
+		Hey
+		</div>
+		<div class="sideelements">
+		Side2
+		</div>
+	</div>
 	<div id="footer" style="height:100px;">
+	Footman
 	</div>
 </div>
 </body>
