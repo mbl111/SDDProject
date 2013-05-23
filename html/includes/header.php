@@ -15,9 +15,19 @@ function logincancel() {
     document.getElementById("loginback").style.display = "none";
     document.getElementById("outerfloatbar").setAttribute("class", "");
 }
+
+function hide($id) {
+    document.getElementById($id).style.display = "none";
+    document.getElementById($id).style.display = "none";
+}
+
+function show($id) {
+    document.getElementById($id).style.display = "none";
+    document.getElementById($id).style.display = "none";
+}
 </script>
 
-<div id="wrapper" style="width:1000px;background-color:#EEEEEE;margin:auto;padding:10px;">
+<div id="wrapper" style="width:1200px;background-color:#EEEEEE;margin:auto;height:100%">
 	<div id="header">
 		<div id="floatbar">
 		<aside id="innerfloatbar" style="">
@@ -52,18 +62,25 @@ function logincancel() {
 			</form>
 	<link rel="stylesheet" type="text/css" href="../css/basecontent.css" />
 	<div id="contentarea">
-		<div class="sideelements">
-		Side
-		</div>
-		<div class="centerelement">
+		<aside id="sideelement">
+			<div id="toolbox">
+				<div class="toolboxheader">Super long name that wont fit in one line</div>
+				<div class="toolboxcontent">
+					<ul class="toolboxlinklist">
+						<li><a href="" class="toolboxlink">My Account</a></li>
+						<li><a href="" class="toolboxlink">Messages</a></li>
+						<li><a href="" class="toolboxlink">Settings</a></li>
+						<li><a href="" class="toolboxlink">Log out</a></li>
+					</ul>
+				</div>
+			</div>
+		</aside>
+		<div id="centerelement">
 		Hey
 		</div>
-		<div class="sideelements">
-		Side2
-		</div>
 	</div>
-	<div id="footer" style="height:100px;">
-	Footman
+	<div id="footer" style="height:50px; margin-top:10px;display: inline; width:100%;">
+	<span style="font-size:12px;font-style:italic;">© Matt and Justin</span>
 	</div>
 </div>
 </body>
