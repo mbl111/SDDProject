@@ -4,7 +4,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
 </head>
 <body>
-<link rel="stylesheet" type="text/css" href="../css/header.css" />
+<link rel="stylesheet" type="text/css" href="css/header.css" />
 <script>
 function login() {
     document.getElementById("login").style.display = "block";
@@ -30,6 +30,25 @@ function show($id) {
 }
 </script>
 
+<?
+	session_start();
+	include_once("dbConnect.php");
+	include_once("include.php");
+	if (loggedIn()){
+		addToolBox("[SpA]mbl111", "
+		<ul class='toolboxlinklist'>
+			<li><a href='' class='toolboxlink'>My Account</a></li>
+			<li><a href='' class='toolboxlink'>Messages</a></li>
+			<li><a href='' class='toolboxlink'>Settings</a></li>
+			<li><a href='' class='toolboxlink'>Log out</a></li>
+		</ul>
+		");
+	}
+	addToolBox("Justin", "
+		Yeah! Content
+		");
+?>
+
 <div id="wrapper" style="width:1200px;background-color:#EEEEEE;margin:auto;height:100%">
 	<div id="header">
 		<div id="floatbar">
@@ -41,7 +60,7 @@ function show($id) {
 		<div id="menu"></div>
 	</div>
 	
-	<link rel="stylesheet" type="text/css" href="../css/login.css" />
+	<link rel="stylesheet" type="text/css" href="css/login.css" />
 	<div id="loginback" onclick="logincancel();"></div>
 		<form method="post" action="login.php?page=/index.php" id="login">
 			<div id="loginbar">
@@ -63,39 +82,7 @@ function show($id) {
 				<br/>
 				<input type="submit" value="Login" id="loginButton"/>
 			</form>
-	<link rel="stylesheet" type="text/css" href="../css/basecontent.css" />
+	<link rel="stylesheet" type="text/css" href="css/basecontent.css" />
+	
 	<div id="contentarea">
 		<aside id="sideelement">
-			<div id="toolbox">
-				<div class="toolboxheader">[SpA]mbl111</div>
-				<div class="toolboxcontent">
-					<ul class="toolboxlinklist">
-						<li><a href="" class="toolboxlink">My Account</a></li>
-						<li><a href="" class="toolboxlink">Messages</a></li>
-						<li><a href="" class="toolboxlink">Settings</a></li>
-						<li><a href="" class="toolboxlink">Log out</a></li>
-					</ul>
-				</div>
-			</div>
-		</aside>
-		<div id="centerelement">
-			<div id="contentbox">
-				<div class="contentboxheader">Content Title Section!</div>
-				<div class="contentboxbody">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eu nunc in felis mollis semper ac in turpis.
-				Suspendisse risus ante, dapibus id auctor in, venenatis eu leo. Morbi gravida arcu sed nisi hendrerit non blandit lorem pharetra.
-				Curabitur non nibh quam. Cras adipiscing rhoncus risus nec volutpat. Proin sodales nulla nec nisi pellentesque vel ultrices leo luctus.
-				Aenean in felis risus.<br/><br/>
-				Maecenas quam magna, tincidunt in aliquet nec, aliquam vitae nisi. Class aptent taciti sociosqu ad litora torquent per conubia nostra,
-				per inceptos himenaeos. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse sit
-				amet elit mollis mi gravida aliquet et vitae urna. Quisque nec neque mauris, non imperdiet erat. Aliquam lobortis porttitor quam et dictum.
-				Etiam at est ut ligula semper convallis at et risus. Sed tincidunt commodo scelerisque. </div>
-				<div class="contentboxfooter">Posted 24/05/2013 by [SpA]mbl111</div>
-			</div>
-		</div>
-	</div>
-	<div id="footer" style="height:50px; margin-top:10px;width:100%;">
-	<span style="font-size:12px;font-style:italic;">© Matt and Justin</span>
-	</div>
-</div>
-</body>
-</html>
