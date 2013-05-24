@@ -5,10 +5,11 @@ body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fiel
 }
 
 #contentarea {
-	margin-top: 40px;
-	width: 1200px;
+	margin: 40px auto 0px auto;
+	width: 1000px;
 	background-color: #FFFFFF;
 	height: 100%;
+	display: table;
 }
 
 #sideelement {
@@ -17,14 +18,16 @@ body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fiel
 	background-color: #FFFFFF;
 	padding: 10px;
 	padding-top: 20px;
+	display:table-cell;
 }
 
 #centerelement{
 	background-color: #FFFFFF;
-	border-left: 1px solid #F0F0F0;
-	width: 945px;
+	width: 745px;
 	float: left;
 	padding: 10px;
+	padding-top: 20px;
+	display:table-cell;
 }
 
 #toolbox{
@@ -33,28 +36,70 @@ body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fiel
 	margin-bottom: 10px;
 }
 
+#contentbox{
+	border: 3px solid #F0F0F0;
+	margin-bottom: 10px;
+	width: 735px;
+	text-align: left;
+}
+
+.contentboxheader{
+	border-bottom:  1px #BDC2BD dashed;
+	padding: 3px 10px;
+	overflow: hidden;
+	font-weight: bold;
+    font-size: 18px;
+    text-shadow: 0px 0px 10px #AAFF55;
+	text-align: left;
+	color: #000000;
+}
+
+.contentboxbody{
+	padding: 0px 10px;
+	margin: 10px 0px;
+	text-shadow: 0px 0px 10px white;
+	color: #222222;
+	text-decoration: none;
+	font-size: 14px;
+}
+
+.contentboxfooter{
+	border-top:  1px #BDC2BD dashed;
+	font-style: italic;
+	font-size: 10px;
+	color: #ADB2AD;
+	padding: 3px 10px;
+}
+
 .toolboxheader{
-	width: 200;
 	overflow: hidden;
 	padding: 3px 10px;
 	border-bottom: 1px #BDC2BD dashed;
-	background-color: #D9e0D9;
+	/*background-color: #D9e0D9;*/
 	font-weight: bold;
     font-size: 16px;
-    text-shadow: 0px 0px 10px #AAFF55;
+    text-shadow: 0px 0px 10px #A1A1A1;
 	text-align: left;
-	color: #77BB11;
+	color: #000000;
+	background: #c1c1c1; /* Old browsers */
+	background: -moz-linear-gradient(top,  #c1c1c1 0%, #969696 75%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#c1c1c1), color-stop(75%,#969696)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #c1c1c1 0%,#969696 75%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #c1c1c1 0%,#969696 75%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #c1c1c1 0%,#969696 75%); /* IE10+ */
+	background: linear-gradient(to bottom,  #c1c1c1 0%,#969696 75%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c1c1c1', endColorstr='#969696',GradientType=0 ); /* IE6-9 */
 }
 
 .toolboxcontent{
-	background-color: #D9e0D9;
+	background-color: #F5F5F5;
 	padding: 4px;
 	min-height: 10px;
 	font-size: 12px;
 	color: #222222;
 	font-weight: bold;
 	text-align:left;
-	line-height: 18px;
+	line-height: 14px;
 }
 
 .toolboxlink{
@@ -72,4 +117,5 @@ body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fiel
 	list-style-type: circle;
 	list-style-position:inside;
 	margin-left: 10px;
+	line-height: 18px;
 }
