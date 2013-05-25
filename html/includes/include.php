@@ -1,5 +1,7 @@
 <?php
 
+define("SITENAME","Online Creative Neuro-Learning Tools");
+
 $toolboxes = array();
 
 function mustBeLoggedin($pageToSend = "index.php"){
@@ -44,7 +46,7 @@ echo "</div></div>";
 
 function footer(){
 echo '<div id="footer" style="height:50px; margin-top:10px;width:100%;">
-	<span style="font-size:12px;font-style:italic;">© Matt and Justin</span>
+	<span style="font-size:12px;font-style:italic;">ï¿½ Matt and Justin</span>
 	</div>
 	</div>
 	</body>
