@@ -72,3 +72,17 @@ body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fiel
     margin-right: 10px;
     text-shadow: 0px 0px 10px white;
 }
+
+.pagetitle{
+	font-size:22px;
+	font-weight:bold;
+	color:black;
+	text-decoration:none;
+}
+
+.pagetitle:clicked{
+	font-size:22px;
+	font-weight:bold;
+	color:black;
+	text-decoration:none;
+}

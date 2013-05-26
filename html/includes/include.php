@@ -9,7 +9,7 @@ function mustBeLoggedin($pageToSend = "index.php"){
 }
 
 function loggedIn(){
-	return true;
+	return false;
 }
 
 function drawToolBoxes(){
@@ -50,7 +50,7 @@ echo '<div id="footer" style="height:50px; margin-top:10px;width:100%;">
 	</div>
 	</div>
 	</body>
-	</html>';
+	</html>";
 }
 
 

@@ -119,3 +119,11 @@ body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fiel
 	margin-left: 10px;
 	line-height: 18px;
 }
+
+.error{
+	border: 3px solid #AA0000;
+	margin-bottom: 10px;
+	text-align: left;
+	background-color: #FFAAAA;
+	padding: 3px 10px;
+}

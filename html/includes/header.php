@@ -53,8 +53,12 @@ function show($id) {
 	<div id="header">
 		<div id="floatbar">
 		<aside id="innerfloatbar" style="">
-			<span style="font-size:22px;font-weight:bold;">Quizman</span>
-			<span class="usergreeting">Welcome guest! Please <a href="javascript:login();" class="usergreetinglink">login</a> or <a href="regiser.php" class="usergreetinglink">register</a></span>
+			<a href="index.php" class="pagetitle">OnLine Databank of Creative Universal Neuro-Learning Tools (OLD CUNT)</a>
+			<? if (loggedIn()){
+			echo '<span class="usergreeting">Welcome <a href="userpage.php?id=1" class="usergreetinglink">[SpA]mbl111</a>! - <a href="logout.php" class="usergreetinglink">Logout</a></span>';
+			}else{
+			echo '<span class="usergreeting">Welcome guest! Please <a href="javascript:login();" class="usergreetinglink">login</a> or <a href="regiser.php" class="usergreetinglink">register</a></span>';
+			}?>
 		</aside>
 		</div>
 		<div id="menu"></div>
