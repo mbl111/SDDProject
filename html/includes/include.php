@@ -148,8 +148,12 @@ function displayContent($contentID){
 		
 		case "quiz":
 			
-			$questions = str_split("|",$content['questions']);
-			$answers = str_split("|",$content['answers']);
+			$quizData = getQuiz($contentID);
+			$quizSection = "";
+			shuffle($quizData);
+			foreach ($quizData as $question){
+				
+			}
 			
 			break;
 	}
@@ -162,7 +166,7 @@ function displayContent($contentID){
 
 function getContentGeneral($contentID){
 	return array(
-	"type" => "news",
+	"type" => "quiz",
 	"title" => "News Story",
 	"nid" => $contentID,
 	);
@@ -199,6 +203,35 @@ function getContentSpecifics($dataTable, $contentID){
 
 function resolveUserFromID($uid){
 	return "[SpA]mbl111";
+}
+
+function getQuiz($contentID){
+	return array(
+		array(
+			"id" => 0,
+			"q" => "1 + 2",
+			"1" => "3",
+			"2" => "4",
+			"3" => "2",
+			"4" => "1"
+		),
+		array(
+			"id" => 1,
+			"q" => "2",
+			"1" => "2",
+			"2" => "4",
+			"3" => "3",
+			"4" => "1"
+		),
+		array(
+			"id" => 2,
+			"q" => "2 + 2",
+			"1" => "4",
+			"2" => "3",
+			"3" => "2",
+			"4" => "1"
+		)
+	);
 }
 
 
