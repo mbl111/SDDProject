@@ -5,7 +5,7 @@
 ?>
 	
 <?
-	displayContent(0);
+	echo buildContent(1);
 	endMainContent();
 	footer();
 ?>
