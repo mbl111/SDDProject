@@ -133,17 +133,34 @@ function buildContent($contentID){
 
 	$contentDetails = getContentGeneral($contentID);
 	$contentTemplate = getTemplate($contentDetails['type']);
-	$content = getContentSpecifics($contentTemplate['table'], $contentID);
+	$content = getContentSpecifics("content_".$contentDetails['type'], $contentID);
 	
 	$displayableContent = $contentTemplate;
 	
 	$displayableContent = str_replace('$$CONTENT_TITLE', $contentDetails['title'], $displayableContent);
 	$displayableContent = str_replace('$$CONTENT_TIME', date($dateFormat, getTimeWithZone($contentDetails['timestamp'], +10)), $displayableContent);
-	$displayableContent = str_replace('$$CONTENT_USER', resolveUserFromID($content['uid']), $displayableContent);
+	
 	
 	switch($contentDetails['type']){
 		case "news":
+			$displayableContent = str_replace('$$CONTENT_USER', resolveUserFromID($content['poster']), $displayableContent);
 			$displayableContent = str_replace('$$CONTENT_BODY', $content['body'], $displayableContent);
+			
+			if ($content['lasteditor'] > 0){
+				$displayableContent = str_replace('$$?IF_EDIT', "", $displayableContent);
+				$displayableContent = str_replace('$$?ENDIF_EDIT', "", $displayableContent);
+				$displayableContent = str_replace('$$CONTENT_EDITOR', resolveUserFromID($content['lasteditor']), $displayableContent);
+				$displayableContent = str_replace('$$CONTENT_EDIT_TIME', resolveUserFromID($content['edittime']), $displayableContent);
+			}else{
+				$parts = explode('$$IF_EDIT', $displayableContent);
+				$rebuilt = "";
+				for ($i = 0; $i < count($parts); $i++){
+					if (($i % 2) == 0){
+						$rebuilt .= $parts[$i];
+					}
+				}
+				$displayableContent = $rebuilt;
+			}
 			break;
 		
 		case "quiz":
@@ -174,17 +191,7 @@ function getTemplate($type){
 }
 
 function getContentSpecifics($dataTable, $contentID){
-	return array(
-		"body" => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eu nunc in felis mollis semper ac in turpis.
-			Suspendisse risus ante, dapibus id auctor in, venenatis eu leo. Morbi gravida arcu sed nisi hendrerit non blandit lorem pharetra.
-			Curabitur non nibh quam. Cras adipiscing rhoncus risus nec volutpat. Proin sodales nulla nec nisi pellentesque vel ultrices leo luctus.
-			Aenean in felis risus.<br/><br/>
-			Maecenas quam magna, tincidunt in aliquet nec, aliquam vitae nisi. Class aptent taciti sociosqu ad litora torquent per conubia nostra,
-			per inceptos himenaeos. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse sit
-			amet elit mollis mi gravida aliquet et vitae urna. Quisque nec neque mauris, non imperdiet erat. Aliquam lobortis porttitor quam et dictum.
-			Etiam at est ut ligula semper convallis at et risus. Sed tincidunt commodo scelerisque.",
-		"uid" => 0,
-	);
+	return mysql_fetch_assoc(dbQuery("SELECT * FROM $dataTable WHERE `id`=$contentID"));
 }
 
 function resolveUserFromID($uid){
@@ -192,32 +199,7 @@ function resolveUserFromID($uid){
 }
 
 function getQuiz($contentID){
-	return array(
-		array(
-			"id" => 0,
-			"q" => "1 + 2",
-			"1" => "3",
-			"2" => "4",
-			"3" => "2",
-			"4" => "1"
-		),
-		array(
-			"id" => 1,
-			"q" => "2",
-			"1" => "2",
-			"2" => "4",
-			"3" => "3",
-			"4" => "1"
-		),
-		array(
-			"id" => 2,
-			"q" => "2 + 2",
-			"1" => "4",
-			"2" => "3",
-			"3" => "2",
-			"4" => "1"
-		)
-	);
+	return mysql_fetch_assoc(dbQuery("SELECT * FROM content WHERE `quiz_id`=$contentID"));
 }
 
 
