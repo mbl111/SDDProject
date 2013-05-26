@@ -128,17 +128,17 @@ echo '<div id="footer" style="height:50px; margin-top:10px;width:100%;">
 	</html>';
 }
 
-function displayContent($contentID){
+function buildContent($contentID){
 	global $dateFormat;
 
 	$contentDetails = getContentGeneral($contentID);
-	$contentTemplate = resolveContentTypeToTableName($contentDetails['type']);
+	$contentTemplate = getTemplate($contentDetails['type']);
 	$content = getContentSpecifics($contentTemplate['table'], $contentID);
 	
-	$displayableContent = $contentTemplate['template'];
+	$displayableContent = $contentTemplate;
 	
 	$displayableContent = str_replace('$$CONTENT_TITLE', $contentDetails['title'], $displayableContent);
-	$displayableContent = str_replace('$$CONTENT_TIME', date($dateFormat, getTimeWithZone($content['post_time'], +10)), $displayableContent);
+	$displayableContent = str_replace('$$CONTENT_TIME', date($dateFormat, getTimeWithZone($contentDetails['timestamp'], +10)), $displayableContent);
 	$displayableContent = str_replace('$$CONTENT_USER', resolveUserFromID($content['uid']), $displayableContent);
 	
 	switch($contentDetails['type']){
@@ -160,30 +160,17 @@ function displayContent($contentID){
 	
 	
 	
-	echo $displayableContent;
+	return $displayableContent;
 	
 }
 
+
 function getContentGeneral($contentID){
-	return array(
-	"type" => "quiz",
-	"title" => "News Story",
-	"nid" => $contentID,
-	);
+	return mysql_fetch_assoc(dbQuery("SELECT * FROM content WHERE `nid`=$contentID"));
 }
 
-function resolveContentTypeToTableName($type){
-	return array(
-		"table" => "content_news",
-		"template" => '
-		<div id="contentbox">
-		<div class="contentboxheader">$$CONTENT_TITLE</div>
-		<div class="contentboxbody">$$CONTENT_BODY
-		</div>
-		<div class="contentboxfooter">Posted $$CONTENT_TIME by $$CONTENT_USER</div>
-	</div>
-		'
-	);
+function getTemplate($type){
+	return file_get_contents("templates/".$type.".html");
 }
 
 function getContentSpecifics($dataTable, $contentID){
@@ -197,7 +184,6 @@ function getContentSpecifics($dataTable, $contentID){
 			amet elit mollis mi gravida aliquet et vitae urna. Quisque nec neque mauris, non imperdiet erat. Aliquam lobortis porttitor quam et dictum.
 			Etiam at est ut ligula semper convallis at et risus. Sed tincidunt commodo scelerisque.",
 		"uid" => 0,
-		"post_time" => time(),
 	);
 }
 
