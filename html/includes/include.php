@@ -80,7 +80,7 @@ echo '<select name="DropDownTimezone" id="DropDownTimezone">
 }
 
 function mustBeLoggedin($pageToSend = "index.php"){
-
+	header("Location:$pageToSend");
 }
 
 function loggedIn(){
@@ -139,6 +139,7 @@ function buildContent($contentID){
 	
 	$displayableContent = str_replace('$$CONTENT_TITLE', $contentDetails['title'], $displayableContent);
 	$displayableContent = str_replace('$$CONTENT_TIME', date($dateFormat, getTimeWithZone($contentDetails['timestamp'], +10)), $displayableContent);
+	$displayableContent = str_replace('$$CONTENT_ID', $contentDetails['nid'], $displayableContent);
 	
 	
 	switch($contentDetails['type']){
@@ -212,6 +213,7 @@ function generateIndex(){
 		$content = getContentSpecifics("content_news", $contentDetails['nid']);
 		
 		$displayableContent = str_replace('$$CONTENT_TITLE', $contentDetails['title'], $displayableContent);
+		$displayableContent = str_replace('$$CONTENT_ID', $contentDetails['nid'], $displayableContent);
 		$displayableContent = str_replace('$$CONTENT_TIME', date($dateFormat, getTimeWithZone($contentDetails['timestamp'], +10)), $displayableContent);
 		$displayableContent = str_replace('$$CONTENT_USER', resolveUserFromID($content['poster']), $displayableContent);
 		$displayableContent = str_replace('$$CONTENT_BODY', $content['body'], $displayableContent);

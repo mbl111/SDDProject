@@ -54,6 +54,15 @@ body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fiel
 	color: #000000;
 }
 
+.contentboxheadertext{
+	font-weight: bold;
+    font-size: 18px;
+    text-shadow: 0px 0px 10px #AAFF55;
+	text-align: left;
+	color: #000000;
+	text-decoration: none;
+}
+
 .contentboxbody{
 	padding: 0px 10px;
 	margin: 10px 0px;
