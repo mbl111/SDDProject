@@ -2,7 +2,12 @@
 
 include("includes/header.php");
 $error = array();
+$page = "index.php";
 
+
+if (isset($_GET['page'])){
+	$page = $_GET['page'];
+}
 
 if (loggedIn() == false){
 	if (empty($_POST['username'])){
@@ -18,6 +23,12 @@ if (loggedIn() == false){
     }else{
 		$password = $_POST['password'];
     }
+	
+	if (empty($error)){
+		$_SESSION['userid'] = 1;
+		header("Location:$page");
+	}
+	
 }else{
 	$error[] = "<p class='error'>You are already logged in!</p>";
 }

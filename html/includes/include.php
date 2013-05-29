@@ -84,7 +84,7 @@ function mustBeLoggedin($pageToSend = "index.php"){
 }
 
 function loggedIn(){
-	return false;
+	return isset($_SESSION['userid']);
 }
 
 function drawToolBoxes(){
@@ -140,6 +140,7 @@ function buildContent($contentID){
 	$displayableContent = str_replace('$$CONTENT_TITLE', $contentDetails['title'], $displayableContent);
 	$displayableContent = str_replace('$$CONTENT_TIME', date($dateFormat, getTimeWithZone($contentDetails['timestamp'], +10)), $displayableContent);
 	$displayableContent = str_replace('$$CONTENT_ID', $contentDetails['nid'], $displayableContent);
+	$displayableContent = str_replace('$$CONTENT_USER', resolveUserFromID($content['poster']), $displayableContent);
 	
 	
 	switch($contentDetails['type']){
@@ -166,12 +167,19 @@ function buildContent($contentID){
 		
 		case "quiz":
 			
-			$quizData = getQuiz($contentID);
-			$quizSection = "";
-			shuffle($quizData);
-			foreach ($quizData as $question){
-				
+			$quizBody = "<div style='border-bottom:1px #CDD2CD dashed;margin:-8px -10px 8px -10px;padding:0px 10px 3px 10px;'><span style='font-weight:bold;'>Quiz Due: </span><span style='";
+			if ($content['due'] < time()){
+				$quizBody .= "color:#EC0000"; 
+			}else {
+				$quizBody .= "color:#11EC11"; 
 			}
+			$quizBody .= "';>".date($dateFormat, getTimeWithZone($content['due'], +10))."</div>";
+			
+			$quizBody .= $content['description']."";
+			
+			
+			
+			$displayableContent = str_replace('$$CONTENT_BODY', $quizBody, $displayableContent);
 			
 			break;
 	}
@@ -196,6 +204,9 @@ function getContentSpecifics($dataTable, $contentID){
 }
 
 function resolveUserFromID($uid){
+	if ($uid == null){
+		return "";
+	}
 	return "[SpA]mbl111";
 }
 

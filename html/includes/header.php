@@ -55,7 +55,7 @@ function show($id) {
 		<aside id="innerfloatbar" style="">
 			<a href="index.php" class="pagetitle"><?echo SITENAME;?></a>
 			<? if (loggedIn()){
-			echo '<span class="usergreeting">Welcome <a href="userpage.php?id=1" class="usergreetinglink">[SpA]mbl111</a>! - <a href="logout.php" class="usergreetinglink">Logout</a></span>';
+			echo '<span class="usergreeting">Welcome <a href="userpage.php?id=1" class="usergreetinglink">[SpA]mbl111</a>! - <a href="logout.php?page=index.php" class="usergreetinglink">Logout</a></span>';
 			}else{
 			echo '<span class="usergreeting">Welcome guest! Please <a href="javascript:login();" class="usergreetinglink">login</a> or <a href="regiser.php" class="usergreetinglink">register</a></span>';
 			}?>
@@ -66,7 +66,7 @@ function show($id) {
 	
 	<link rel="stylesheet" type="text/css" href="css/login.css" />
 	<div id="loginback" onclick="logincancel();"></div>
-		<form method="post" action="login.php?page=/index.php" id="login">
+		<form method="post" action="login.php?page=index.php" id="login">
 			<div id="loginbar">
 			<aside id="inngerloginbar" style="">
 				<span style="font-size:22px;font-weight:bold;text-shadow: 0px 0px 10px white;">Login</span>
