@@ -31,14 +31,18 @@ function show($id) {
 </script>
 
 <?
+	define("USER_STUDENT", 1);
+	define("USER_TEACHER", 0);
+
 	session_start();
 	include_once("dbConnect.php");
 	include_once("include.php");
 	if (loggedIn()){
 		addToolBox("[SpA]mbl111", "
 		<ul class='toolboxlinklist'>
-			<li><a href='' class='toolboxlink'>My Account</a></li>
-			<li><a href='' class='toolboxlink'>Messages</a></li>
+			<li><a href='userpage.php?id={$_SESSION['userid']}' class='toolboxlink'>My Account</a></li>
+			<li><a href='' class='toolboxlink'>Notifications (6)</a></li>
+			<li><a href='' class='toolboxlink'>Messages (1)</a></li>
 			<li><a href='' class='toolboxlink'>Settings</a></li>
 			<li><a href='' class='toolboxlink'>Log out</a></li>
 		</ul>
@@ -55,7 +59,7 @@ function show($id) {
 		<aside id="innerfloatbar" style="">
 			<a href="index.php" class="pagetitle"><?echo SITENAME;?></a>
 			<? if (loggedIn()){
-			echo '<span class="usergreeting">Welcome <a href="userpage.php?id=1" class="usergreetinglink">[SpA]mbl111</a>! - <a href="logout.php?page=index.php" class="usergreetinglink">Logout</a></span>';
+			echo '<span class="usergreeting">Welcome <a href="userpage.php?id='.$_SESSION['userid'].'" class="usergreetinglink">'.myFullName().'</a>! - <a href="logout.php?page=index.php" class="usergreetinglink">Logout</a></span>';
 			}else{
 			echo '<span class="usergreeting">Welcome guest! Please <a href="javascript:login();" class="usergreetinglink">login</a> or <a href="regiser.php" class="usergreetinglink">register</a></span>';
 			}?>

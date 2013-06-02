@@ -140,19 +140,19 @@ function buildContent($contentID){
 	$displayableContent = str_replace('$$CONTENT_TITLE', $contentDetails['title'], $displayableContent);
 	$displayableContent = str_replace('$$CONTENT_TIME', date($dateFormat, getTimeWithZone($contentDetails['timestamp'], +10)), $displayableContent);
 	$displayableContent = str_replace('$$CONTENT_ID', $contentDetails['nid'], $displayableContent);
-	$displayableContent = str_replace('$$CONTENT_USER', resolveUserFromID($content['poster']), $displayableContent);
+	$displayableContent = str_replace('$$CONTENT_USER', resolveFullnameFromID($content['poster']), $displayableContent);
 	
 	
 	switch($contentDetails['type']){
 		case "news":
-			$displayableContent = str_replace('$$CONTENT_USER', resolveUserFromID($content['poster']), $displayableContent);
+			$displayableContent = str_replace('$$CONTENT_USER', resolveFullnameFromID($content['poster']), $displayableContent);
 			$displayableContent = str_replace('$$CONTENT_BODY', $content['body'], $displayableContent);
 			
 			if ($content['lasteditor'] > 0){
 				$displayableContent = str_replace('$$?IF_EDIT', "", $displayableContent);
 				$displayableContent = str_replace('$$?ENDIF_EDIT', "", $displayableContent);
-				$displayableContent = str_replace('$$CONTENT_EDITOR', resolveUserFromID($content['lasteditor']), $displayableContent);
-				$displayableContent = str_replace('$$CONTENT_EDIT_TIME', resolveUserFromID($content['edittime']), $displayableContent);
+				$displayableContent = str_replace('$$CONTENT_EDITOR', resolveFullnameFromID($content['lasteditor']), $displayableContent);
+				$displayableContent = str_replace('$$CONTENT_EDIT_TIME', resolveFullnameFromID($content['edittime']), $displayableContent);
 			}else{
 				$parts = explode('$$IF_EDIT', $displayableContent);
 				$rebuilt = "";
@@ -203,17 +203,41 @@ function getContentSpecifics($dataTable, $contentID){
 	return mysql_fetch_assoc(dbQuery("SELECT * FROM $dataTable WHERE `id`=$contentID LIMIT 1"));
 }
 
-function resolveUserFromID($uid){
+function resolveUsernameFromID($uid){
 	if ($uid == null){
 		return "";
 	}
-	return "[SpA]mbl111";
+	$query = dbQuery("SELECT firstname, lastname FROM users WHERE id=$uid LIMIT 1");
+	if ($query){
+		$array = mysql_fetch_assoc($query);
+		return strtolower($array['firstname'].".".$array['lastname']);
+	}else{
+		return "";
+	}
+}
+
+function resolveFullnameFromID($uid){
+	if ($uid == null){
+		return "";
+	}
+	$query = dbQuery("SELECT firstname, lastname FROM users WHERE id=$uid LIMIT 1");
+	if ($query){
+		$array = mysql_fetch_assoc($query);
+		return $array['firstname']." ".$array['lastname'];
+	}else{
+		return "";
+	}
+}
+
+function myFullName(){
+	return $_SESSION['firstname']." ".$_SESSION['lastname'];
 }
 
 function getQuiz($contentID){
 	return mysql_fetch_assoc(dbQuery("SELECT * FROM content WHERE `quiz_id`=$contentID"));
 }
 
+//Reusing this code as its faster for showing JUST news on the home page
 function generateIndex(){
 	global $dateFormat;
 	$query = dbQuery("SELECT * FROM content WHERE `type`='news' ORDER BY `timestamp` ASC LIMIT 10");
@@ -226,13 +250,13 @@ function generateIndex(){
 		$displayableContent = str_replace('$$CONTENT_TITLE', $contentDetails['title'], $displayableContent);
 		$displayableContent = str_replace('$$CONTENT_ID', $contentDetails['nid'], $displayableContent);
 		$displayableContent = str_replace('$$CONTENT_TIME', date($dateFormat, getTimeWithZone($contentDetails['timestamp'], +10)), $displayableContent);
-		$displayableContent = str_replace('$$CONTENT_USER', resolveUserFromID($content['poster']), $displayableContent);
+		$displayableContent = str_replace('$$CONTENT_USER', resolveFullnameFromID($content['poster']), $displayableContent);
 		$displayableContent = str_replace('$$CONTENT_BODY', $content['body'], $displayableContent);
 		if ($content['lasteditor'] > 0){
 			$displayableContent = str_replace('$$?IF_EDIT', "", $displayableContent);
 			$displayableContent = str_replace('$$?ENDIF_EDIT', "", $displayableContent);
-			$displayableContent = str_replace('$$CONTENT_EDITOR', resolveUserFromID($content['lasteditor']), $displayableContent);
-			$displayableContent = str_replace('$$CONTENT_EDIT_TIME', resolveUserFromID($content['edittime']), $displayableContent);
+			$displayableContent = str_replace('$$CONTENT_EDITOR', resolveFullnameFromID($content['lasteditor']), $displayableContent);
+			$displayableContent = str_replace('$$CONTENT_EDIT_TIME', resolveFullnameFromID($content['edittime']), $displayableContent);
 		}else{
 			$parts = explode('$$IF_EDIT', $displayableContent);
 			$rebuilt = "";
