@@ -5,6 +5,8 @@
 </head>
 <body>
 <link rel="stylesheet" type="text/css" href="css/header.css" />
+<script src="js/jquery.js"></script>
+
 <script>
 function login() {
     document.getElementById("login").style.display = "block";
@@ -18,16 +20,6 @@ function logincancel() {
     document.getElementById("loginback").style.display = "none";
     document.getElementById("outerfloatbar").setAttribute("class", "");
 }
-
-function hide($id) {
-    document.getElementById($id).style.display = "none";
-    document.getElementById($id).style.display = "none";
-}
-
-function show($id) {
-    document.getElementById($id).style.display = "none";
-    document.getElementById($id).style.display = "none";
-}
 </script>
 
 <?
@@ -37,10 +29,18 @@ function show($id) {
 	session_start();
 	include_once("dbConnect.php");
 	include_once("include.php");
+	
 	if (loggedIn()){
-		addToolBox("[SpA]mbl111", "
+	
+		dbQuery("UPDATE users SET lastactive=".time()." WHERE `id`={$_SESSION['userid']}");
+		$teacherLinks = "";
+		if ($_SESSION['usertype']==USER_TEACHER){
+			$teacherLinks = "<li><a href='students.php' class='toolboxlink'>Students</a></li>";
+		}
+		addToolBox(myFullName(), "
 		<ul class='toolboxlinklist'>
 			<li><a href='userpage.php?id={$_SESSION['userid']}' class='toolboxlink'>My Account</a></li>
+			$teacherLinks
 			<li><a href='' class='toolboxlink'>Notifications (6)</a></li>
 			<li><a href='' class='toolboxlink'>Messages (1)</a></li>
 			<li><a href='' class='toolboxlink'>Settings</a></li>
@@ -48,9 +48,6 @@ function show($id) {
 		</ul>
 		");
 	}
-	addToolBox("Justin", "
-		Yeah! Content
-		");
 ?>
 
 <div id="wrapper" style="width:1200px;background-color:#EEEEEE;margin:auto;height:100%">
