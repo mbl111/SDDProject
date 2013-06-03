@@ -87,6 +87,7 @@ function logincancel() {
 				<br/>
 				<input type="submit" value="Login" id="loginButton"/>
 			</form>
+			
 	<link rel="stylesheet" type="text/css" href="css/basecontent.css" />
 	
 	<div id="contentarea">

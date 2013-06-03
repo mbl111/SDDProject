@@ -121,7 +121,7 @@ echo "</div></div>";
 
 function footer(){
 echo '<div id="footer" style="height:50px; margin-top:10px;width:100%;">
-	<span style="font-size:12px;font-style:italic;">Copyright 2013 - Matt and Justin</span>
+	<span style="font-size:12px;font-style:italic;">Copyright 2013 - Matt and Justin - <a href="reportbug.php" style="color:black; font-weight:bold;">Report a bug</a></span>
 	</div>
 	</div>
 	</body>
