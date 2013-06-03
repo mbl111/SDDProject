@@ -273,7 +273,10 @@ function generateIndex(){
 	return $overallPage;
 }
 
-
-
+function getClassName($id){
+	$query  = dbQuery("SELECT name FROM classes WHERE `id`=$id");
+	$class = mysql_fetch_assoc($query);
+	return $class['name'];
+}
 
 ?>

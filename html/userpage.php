@@ -69,7 +69,7 @@
 			}
 			$classes = array();
 			if (isset($user['class']) and $user['class']!=""){
-				$classes = explode(",", $user['classes']);
+				$classes = explode(",", $user['class']);
 			}
 			
 			
@@ -106,16 +106,16 @@
 			if ($_SESSION['usertype'] == USER_TEACHER or $_SESSION['userid'] == $id){
 			echo "<div id='contentbox'>
 				<div class='contentboxheader'>Classes</div>
-				<div class='contentboxbody'>";
+				<ul class='contentboxbody' style='list-style-type: circle;list-style-position:inside;margin-left: 10px;line-height: 18px;'>";
 				if (!empty($classes)){
 					foreach ($classes as $class){
-						echo "<p><span class='label'>$class</span></p>";
+						echo "<li><span class='label'><a href='classpage.php?id=$class' class='toolboxlink' style='font-weight:bold;text-decoration:underline;'>".getClassName($class)."</a></span></li>";
 					}
 				}else{
 					echo "{$user['firstname']} {$user['lastname']} is not in any classes";
 				}
 				echo "
-				</div>
+				</ul>
 				</div>";
 			}
 		}
