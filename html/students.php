@@ -2,6 +2,7 @@
 	include("includes/header.php");
 	drawToolBoxes();
 	beginMainContent();
+	mustBeLoggedin();
 ?>
 	<link rel="stylesheet" type="text/css" href="css/student.css"/>
 	<script>
@@ -93,7 +94,8 @@
 		}
 	
 		$query = dbQuery("SELECT * FROM users WHERE `teacher`={$_SESSION['userid']}".$bonusString);
-		
+		$amt = mysql_num_rows($query);
+		echo "You have <b>$amt</b> students - <a href='addstudent.php' class='toolboxlink' style='font-weight:bold;font-size:16px;'>Add another</a>";
 		echo "<form method='GET'>
 			Sort By
 			<select name='srt' id='''>
@@ -116,10 +118,9 @@
 			<input type='submit' value='Filter' id='loginButton'/>
 			</form>";
 		
-		if (mysql_num_rows($query) == 0){
+		if ($amt == 0){
 			echo "You have no students matching the filters :(";
 		}else{
-		
 			echo "<div id='table'>
 			<table id='contentbox'><tr class='contentboxheader' style='font-size:16px;'><th>Last Name</th><th>First Name</th><th>Joined</th><th>Last Seen</th><th>Options</th></tr>";
 			
@@ -144,6 +145,7 @@
 			}
 			echo "</table></div>";
 		}
+		
 	}else{
 		echo "<p class='error'>You are not a teacher!</p>";
 	}

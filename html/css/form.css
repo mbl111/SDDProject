@@ -26,6 +26,11 @@ label{
 .input:focus{
 	background-color:white;
 }
+
+.textarea:focus{
+	background-color:white;
+}
+
 .textarea{
 	font-family:Arial;
 	height:150px;
@@ -34,6 +39,7 @@ label{
 	padding:5px;
 	border:1px solid #b9bdc1;
 	color:#505050;
+	background-color:#F9F9F9;
 }
 
 .field:hover .hint{

@@ -21,7 +21,7 @@ if (loggedIn() == false){
 	if(empty($_POST['password'])){
         $error[] = "Please enter a password.";
     }else{
-		$password = $_POST['password'];
+		$password = md5($_POST['password']);
     }
 	
 	if (empty($error)){

@@ -79,8 +79,25 @@ echo '<select name="DropDownTimezone" id="DropDownTimezone">
 </select>';
 }
 
-function mustBeLoggedin($pageToSend = "index.php"){
-	header("Location:$pageToSend");
+function generateRandomString($length = 10) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, strlen($characters) - 1)];
+    }
+    return $randomString;
+}
+
+function mustBeLoggedin($pageToSend = "message.php?id=1"){
+	if (!loggedIn()){
+		header("Location:$pageToSend");
+	}
+}
+
+function mustBeTeacher(){
+	if ($_SESSION['usertype'] != USER_TEACHER){
+		header("Location:message.php?id=2");
+	}
 }
 
 function loggedIn(){

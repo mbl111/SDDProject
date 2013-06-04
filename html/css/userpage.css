@@ -1,11 +1,18 @@
-.text{
+.label{
 	font-weight: bold;
 	font-size: 16px;
 	line-height: 22px;
 }
 
-.label{
+.text{
 	font-size: 15px;
 	font-style: italic;
 }
 
+td{
+vertical-align:top;
+}
+
+td .text{
+	text-align:left;
+}

@@ -5,6 +5,7 @@
 	beginMainContent();
 
 	$errors = array();
+	mustBeLoggedin();
 	if (loggedIn()){
 		if (isset($_POST['submit'])){
 			if (isset($_POST['title']) and isset($_POST['desc']) and isset($_POST['reproduce'])){
@@ -31,7 +32,7 @@
 			echo "<p class='error'>$error</p>";
 		}
 	}
-	if (loggedIn() and (isset($_POST['submit']) == false)){
+	if ((isset($_POST['submit']) == false) or !empty($errors)){
 		?><link rel="stylesheet" type="text/css" href="css/form.css" />
 
 		<form id="contentbox" method="post" action="#">
