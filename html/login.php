@@ -21,7 +21,7 @@ if (loggedIn() == false){
 	if(empty($_POST['password'])){
         $error[] = "Please enter a password.";
     }else{
-		$password = md5($_POST['password']);
+		$password = $_POST['password'];
     }
 	
 	if (empty($error)){
@@ -54,6 +54,7 @@ if (loggedIn() == false){
 					$_SESSION['firstname'] = $user['firstname'];
 					$_SESSION['lastname'] = $user['lastname'];
 					$_SESSION['usertype'] = $user['usertype'];
+					$_SESSION['namechanged'] = $user['namechanged'];
 					$_SESSION['timezone'] = 10;
 					session_write_close();
 					header("Location:$page");

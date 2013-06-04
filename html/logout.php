@@ -6,7 +6,6 @@ if (isset($_GET['page'])){
 }
 
 session_start();
-mustBeLoggedin();
 unset($_SESSION);
 session_destroy();
 
