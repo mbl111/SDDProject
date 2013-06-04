@@ -137,8 +137,11 @@ echo "</div></div>";
 }
 
 function footer(){
+global $starttime;
+$time = round(microtime_float() - $starttime, 4);
 echo '<div id="footer" style="height:50px; margin-top:10px;width:100%;">
-	<span style="font-size:12px;font-style:italic;">Copyright 2013 - Matt and Justin - <a href="reportbug.php" style="color:black; font-weight:bold;">Report a bug</a></span>
+	<span style="font-size:12px;font-style:italic;">Copyright 2013 - Matt and Justin - <a href="reportbug.php" style="color:black; font-weight:bold;">Report a bug</a></span><br/>
+	<span style="color:#C0C0C0;font-size:12px;font-style:italic;">Generated in '.$time.' seconds</span>
 	</div>
 	</div>
 	</body>
@@ -220,27 +223,44 @@ function getContentSpecifics($dataTable, $contentID){
 	return mysql_fetch_assoc(dbQuery("SELECT * FROM $dataTable WHERE `id`=$contentID LIMIT 1"));
 }
 
+//usernames by id
+$usernamesById = array();
+
 function resolveUsernameFromID($uid){
+	global $usernamesById;
+
 	if ($uid == null){
 		return "";
 	}
-	$query = dbQuery("SELECT firstname, lastname FROM users WHERE id=$uid LIMIT 1");
+	if (isset($usernamesById[$uid])){
+		return $usernamesById[$uid];
+	}
+	$query = dbQuery("SELECT username FROM users WHERE id=$uid LIMIT 1");
 	if ($query){
 		$array = mysql_fetch_assoc($query);
-		return strtolower($array['firstname'].".".$array['lastname']);
+		$usernamesById[$uid] = $array['username'];
+		return $usernamesById[$uid];
 	}else{
 		return "";
 	}
 }
 
+$fullnamesById = array();
+
 function resolveFullnameFromID($uid){
+	global $fullnamesById;
+
 	if ($uid == null){
 		return "";
+	}
+	if (isset($fullnamesById[$uid])){
+		return $fullnamesById[$uid];
 	}
 	$query = dbQuery("SELECT firstname, lastname FROM users WHERE id=$uid LIMIT 1");
 	if ($query){
 		$array = mysql_fetch_assoc($query);
-		return $array['firstname']." ".$array['lastname'];
+		$fullnamesById[$uid] =  $array['firstname']." ".$array['lastname'];
+		return $fullnamesById[$uid];
 	}else{
 		return "";
 	}
@@ -290,9 +310,15 @@ function generateIndex(){
 	return $overallPage;
 }
 
+$classnameById = array();
+
 function getClassName($id){
+	if (isset($classnameById[$id])){
+		return $classnameById[$id];
+	}
 	$query  = dbQuery("SELECT name FROM classes WHERE `id`=$id");
 	$class = mysql_fetch_assoc($query);
+	$classnameById[$id] = $class['name'];
 	return $class['name'];
 }
 

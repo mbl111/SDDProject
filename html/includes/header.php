@@ -23,6 +23,14 @@ function logincancel() {
 </script>
 
 <?
+	//Because we call this before ANYTHING else
+	function microtime_float(){
+		list($usec, $sec) = explode(" ", microtime());
+		return ((float)$usec + (float)$sec);
+	}
+
+	$starttime = microtime_float();
+
 	define("USER_STUDENT", 1);
 	define("USER_TEACHER", 0);
 
