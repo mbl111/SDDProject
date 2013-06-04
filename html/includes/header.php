@@ -52,7 +52,7 @@ function logincancel() {
 			<li><a href='' class='toolboxlink'>Notifications (6)</a></li>
 			<li><a href='' class='toolboxlink'>Messages (1)</a></li>
 			<li><a href='settings.php' class='toolboxlink'>Settings</a></li>
-			<li><a href='' class='toolboxlink'>Log out</a></li>
+			<li><a href='logout.php?page=index.php' class='toolboxlink'>Logout</a></li>
 		</ul>
 		");
 	}

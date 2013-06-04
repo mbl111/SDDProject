@@ -29,6 +29,8 @@
 			
 			
 			dbQuery("INSERT INTO users (`firstname`, `lastname`, `username`, `password`, `usertype`, `admin`, `active`, `class`, `teacher`, `joined`, `lastactive`) VALUES ('$firstname', '$lastname','$username','$pass',1,0,1,NULL,{$_SESSION['userid']}, ".time().", ".time().")");
+			$result = mysql_fetch_assoc(dbQuery("SELECT id FROM users WHERE username='$username'"));
+			dbQuery("INSERT INTO user_details (`id`, `bio`) VALUES ({$result['id']},'')");
 			
 			echo "<div id='contentbox'>Student added successfully! Please retain the following information and pass it on to the student.<br/><br/>
 				Username: <span style='font-weight:600;font-style: italic;'>$username</span><br/>
