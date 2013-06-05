@@ -124,7 +124,7 @@
 					
 					<div class="field">
 						<label>Password:</label>
-						<input maxlength="20" class="input" type="text" name="pass" id="pass" value=""/>
+						<input maxlength="20" class="input" type="password" name="pass" id="pass" value=""/>
 						<span class="hint">Type a secure password (20 characters max.)</span>
 					</div>
 					
