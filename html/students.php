@@ -98,19 +98,19 @@
 		echo "You have <b>$amt</b> students - <a href='addstudent.php' class='toolboxlink' style='font-weight:bold;font-size:16px;'>Add another</a>";
 		echo "<form method='GET'>
 			Sort By
-			<select name='srt' id='''>
+			<select name='srt' id='' class='input' style='width:115px;'>
 				<option value='fn' "; if ($sort[0] == 'fn'){echo "selected ";} echo ">First Name</option>
 				<option value='ln' "; if ($sort[0] == 'ln'){echo "selected ";} echo ">Last Name</option>
 				<option value='jn' "; if ($sort[0] == 'jn'){echo "selected ";} echo ">Joined</option>
 				<option value='ls' "; if ($sort[0] == 'ls'){echo "selected ";} echo ">Last seen</option>
 			</select>
 			Direction
-			<select name='t' id=''>
+			<select name='t' id='' class='input' style='width:160px;'>
 				<option value='a' "; if ($sort[1] == 'a'){echo "selected ";} echo ">Ascending</option>
 				<option value='d' "; if ($sort[1] == 'd'){echo "selected ";} echo ">Descending</option>
 			</select>
 			Show Users
-			<select name='ao' id=''>
+			<select name='ao' id='' class='input' style='width:120px;'>
 				<option value='-1' "; if ($activity == -1){echo "selected ";} echo ">All</option>
 				<option value='1' "; if ($activity == 1){echo "selected ";} echo ">Activated</option>
 				<option value='0' "; if ($activity == 0){echo "selected ";} echo ">Disactivated</option>
