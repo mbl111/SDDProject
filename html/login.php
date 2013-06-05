@@ -55,7 +55,7 @@ if (loggedIn() == false){
 					$_SESSION['lastname'] = $user['lastname'];
 					$_SESSION['usertype'] = $user['usertype'];
 					$_SESSION['namechanged'] = $user['namechanged'];
-					$_SESSION['timezone'] = 10;
+					$_SESSION['timezone'] = $user['timezone'];
 					session_write_close();
 					header("Location:$page");
 				}

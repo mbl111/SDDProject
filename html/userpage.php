@@ -1,7 +1,9 @@
 <?
 	include("includes/header.php");
-?>
-	<script>
+	
+	if (loggedIn() and $_SESSION['usertype'] == USER_TEACHER){
+
+	echo '<script>
 	
 		function activateStudent(id){
 			$("#isactive").html("Please wait...");
@@ -9,10 +11,10 @@
 		}
 		
 		function doActivate(id){
-			$.post('ajax/activateuser.php', {id:id}, function(data) {
+			$.post("ajax/activateuser.php", {id:id}, function(data) {
 				if (data=="true"){
 					$("#isactive").html("User has been activated.");
-					$(".studentactivate").html("<a href='javascript:deactivateStudent(" + id + ");' class='toolboxlink'>Deactivate Student</a>");
+					$(".studentactivate").html("<a href="javascript:deactivateStudent(" + id + ");" class="toolboxlink">Deactivate Student</a>");
 				}else{
 					$("#isactive").html("Failed to activate user");
 				}
@@ -28,10 +30,10 @@
 		}
 		
 		function dodeactivate(id){
-			$.post('ajax/deactivateuser.php', {id:id}, function(data) {
+			$.post("ajax/deactivateuser.php", {id:id}, function(data) {
 				if (data=="true"){
 					$("#isactive").html("User has been deactivated.");
-					$(".studentactivate").html("<a href='javascript:activateStudent(" + id + ");' class='toolboxlink'>Activate Student</a>");
+					$(".studentactivate").html("<a href="javascript:activateStudent(" + id + ");" class="toolboxlink">Activate Student</a>");
 				}else{
 					$("#isactive").html("Failed to activate user");
 				}
@@ -40,7 +42,8 @@
 				$("#isactive").html("Request time out");
 			});
 		}
-	</script>
+	</script>';
+	}?>
 	<link rel="stylesheet" type="text/css" href="css/userpage.css" />
 <?
 	$id = -1;
@@ -50,9 +53,9 @@
 	
 	if ($id > 0){
 		$columns = "firstname, lastname, usertype, joined, lastactive";
-		if ($_SESSION['usertype'] == USER_TEACHER){
+		if (loggedIn() and $_SESSION['usertype'] == USER_TEACHER){
 			$columns .= ", teacher, class, active";
-		}elseif ($id == $_SESSION['userid']){
+		}elseif (loggedIn() and $id == $_SESSION['userid']){
 			$columns .= ", class, teacher";
 		}
 		$query = dbQuery("SELECT $columns from users WHERE id=$id");
@@ -79,7 +82,7 @@
 			
 			
 			$bonuslink = "";
-			if ($_SESSION['usertype']==USER_TEACHER and $_SESSION['userid'] == $user['teacher']){
+			if (loggedIn() and $_SESSION['usertype']==USER_TEACHER and $_SESSION['userid'] == $user['teacher']){
 				if ($user['active']==0){
 					$bonuslink = "<li class='studentactivate'><a href='javascript:activateStudent($id)' class='toolboxlink'>Activate Student</a></li>";
 				}else{
@@ -87,7 +90,7 @@
 				}
 			}
 			
-			if ($id != $_SESSION['userid']){
+			if (loggedIn() and  $id != $_SESSION['userid']){
 				addToolBox($user['firstname']." ".$user['lastname'], 
 				"<ul class='toolboxlinklist'>
 				<li><a href='' class='toolboxlink'>Message User</a></li>
@@ -100,7 +103,7 @@
 			
 			echo "
 			<p style='padding-bottom:3px;text-align:left;'><span class='text'>{$user['firstname']} {$user['lastname']}</span> <span class='label'>(".$typestring.")</span>";
-			if ($_SESSION['usertype'] == USER_TEACHER and $user['active'] == 0){
+			if (loggedIn() and $_SESSION['usertype'] == USER_TEACHER and $user['active'] == 0){
 				echo "  <span id='isactive' style='font-style:italic;font-size:14px;color:#990000'>This user is inactive (<a href='javascript:activateStudent($id)' class='toolboxlink'>Activate Student</a>)</span>";
 			}else{
 				echo "  <span id='isactive' style='font-style:italic;font-size:14px;color:#990000'></span>";
@@ -108,12 +111,12 @@
 			echo "</p><div id='contentbox'>
 			<div class='contentboxheader'>User Statistics</div>
 			<table class='contentboxbody'>
-				<tr><td class='label' style='width:90px;text-align:right;padding-right:3px;'>Joined:</td><td class='text'>".date($dateFormat, getTimeWithZone($user['joined'], $_SESSION['timezone']))."</td></tr>
-				<tr><td class='label' style='width:90px;text-align:right;padding-right:3px;'>Last Seen:</td><td class='text'>".date($dateFormat, getTimeWithZone($user['lastactive'], $_SESSION['timezone']))."</td></tr>
+				<tr><td class='label' style='width:90px;text-align:right;padding-right:3px;'>Joined:</td><td class='text'>".date($dateFormat, getTimeWithZone($user['joined'], getTimezone()))."</td></tr>
+				<tr><td class='label' style='width:90px;text-align:right;padding-right:3px;'>Last Seen:</td><td class='text'>".date($dateFormat, getTimeWithZone($user['lastactive'], getTimezone()))."</td></tr>
 				<tr><td class='label' style='width:90px;text-align:right;padding-right:3px;'>Bio:</td><td class='text'>"; if (mysql_num_rows($bio) == 1){echo $userbio['bio'];}echo "</td></tr>
 			</table>
 			</div>";
-			if ($_SESSION['usertype'] == USER_TEACHER or $_SESSION['userid'] == $id){
+			if (loggedIn() and $_SESSION['usertype'] == USER_TEACHER or loggedIn() and $_SESSION['userid'] == $id){
 			echo "<div id='contentbox'>
 				<div class='contentboxheader'>Classes</div>
 				<ul class='contentboxbody' style='list-style-type: circle;list-style-position:inside;margin-left: 10px;line-height: 18px;'>";
@@ -131,7 +134,9 @@
 		}
 		
 	}else{
-		echo "<p class='error'>This user could not be found</p>";
+		drawToolBoxes();
+		beginMainContent();
+		echo "<p class='error'>No user defined</p>";
 	}
 	
 	endMainContent();

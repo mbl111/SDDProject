@@ -86,6 +86,22 @@
 					$("#changepassb").css("background-color", "#F9F9F9");
 				}
 			});
+			
+			$("#changetzb").click(function(e){
+				var b = $("#timezone.input").val();
+				$("#changetz").html("<span style='color:#990000'>Changing timezone... Please wait</span>");
+				$.post('ajax/changetimezone.php', {tz:b}, function(data) {
+					if (data=="true"){
+						$("#changetz").html("Your timezone has been changed.");
+					}else{
+						$("#changetz").html("Failed to change your timezone. ("+ data +") Refresh to try again");
+					}
+				}).done(function() {})
+				.fail(function() { 
+					$("#changetz").html("Request time out. Refresh to try again");
+				});
+			});
+			
 		});
 	</script>
 	
@@ -129,6 +145,17 @@
 					</div>
 					
 					<input class="input" id='changepassb' style="width:180px;font-weight:bold;margin-left:110px;" type="button" name="submit" value="Change my password!"/>
+				</div>
+				
+				<div id="changetz" style="margin-bottom:10px;padding-bottom:10px;border-bottom: 1px #BDC2BD dashed;">
+					
+					<div class="field">
+						<label>Timezone:</label>
+						<?drawTimeZoneDropDown("class='input' id='timezone' name='timezone'", getTimeZone());?>
+						<span class="hint">Select a timezone near you</span>
+					</div>
+					
+					<input class="input" id='changetzb' style="width:180px;font-weight:bold;margin-left:110px;" type="button" name="submit" value="Change my timezone!"/>
 				</div>
 				
 			</div>
