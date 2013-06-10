@@ -17,6 +17,9 @@
 		case 2:
 			echo "<p class='error'>You must be a teacher to see this page</p>";
 			break;
+		case 3:
+			echo "<p class='error'>No class by this id exists!</p>";
+			break;
 		default: 
 			echo "<p class='error'>No message found</p>";
 			break;
