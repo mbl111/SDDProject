@@ -285,9 +285,14 @@ function getQuiz($contentID){
 //Reusing this code as its faster for showing JUST news on the home page
 function generateIndex(){
 	global $dateFormat;
-	$query = dbQuery("SELECT class FROM users WHERE `id`={$_SESSION['userid']} LIMIT 1");
-	$user = mysql_fetch_assoc($query);
-	$query = dbQuery("SELECT * FROM content WHERE `type`='news' AND `class` IN ({$user['class']}, -1)  ORDER BY `timestamp` ASC LIMIT 10");
+	
+	if (loggedIn()){
+		$query = dbQuery("SELECT class FROM users WHERE `id`={$_SESSION['userid']} LIMIT 1");
+		$user = mysql_fetch_assoc($query);
+		$query = dbQuery("SELECT * FROM content WHERE `type`='news' AND `class` IN ({$user['class']}, -1)  ORDER BY `timestamp` ASC LIMIT 10");
+	}else{
+		$query = dbQuery("SELECT * FROM content WHERE `type`='news' AND `class`=-1  ORDER BY `timestamp` ASC LIMIT 10");
+	}
 	$contentTemplate = getTemplate('news');
 	$overallPage = "";
 	while(($contentDetails = mysql_fetch_assoc($query))==true){

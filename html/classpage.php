@@ -24,9 +24,9 @@
 		drawToolBoxes();
 		beginMainContent();
 		echo "<div id='contentbox'>";
-		echo "<p class='contentboxheader' style='font-size:26px;'>{$class['name']}</p>";
+		echo "<p class='contentboxheader' style='font-size:26px;'>Class: {$class['name']}</p>";
 		echo "<div class='contentboxbody'>{$class['description']}";
-		echo "</div></div><br/>";
+		echo "</div></div><br/><p style='text-align:left;font-size:24px;margin-bottom:4px;'>Latest News</p>";
 		
 		$news = getNewsForClass($id);
 		foreach ($news as $story){
