@@ -27,28 +27,12 @@
 		
 			$("#changepassb").attr("disabled", true);
 			$("#changepassb").css("background-color", "#A9A9A9");
-		
-			$("#changenameb").click(function(e){
-				var fn = $("#firstname.input").val();
-				var ln = $("#lastname.input").val();
-				$("#changename").html("<span style='color:#990000'>Changing name... Please wait</span>");
-				$.post('ajax/changename.php', {firstname:fn, lastname:ln}, function(data) {
-					if (data=="true"){
-						$("#changename").html("Your name has been changed.");
-					}else{
-						$("#changename").html("Failed to change your name. ("+ data +") Refresh to try again");
-					}
-				}).done(function() {})
-				.fail(function() { 
-					$("#changename").html("Request time out. Refresh to try again");
-				});
-			});
 			
 			
 			$("#changepassb").click(function(e){
 				var b = $("#pass.input").val();
 				$("#changepass").html("<span style='color:#990000'>Changing password... Please wait</span>");
-				$.post('ajax/changepass.php', {pass:b}, function(data) {
+				$.post('ajax/setting/changepass.php', {pass:b}, function(data) {
 					if (data=="true"){
 						$("#changepass").html("Your password has been changed.");
 					}else{
@@ -76,7 +60,7 @@
 			$("#changetzb").click(function(e){
 				var b = $("#timezone.input").val();
 				$("#changetz").html("<span style='color:#990000'>Changing timezone... Please wait</span>");
-				$.post('ajax/changetimezone.php', {tz:b}, function(data) {
+				$.post('ajax/setting/changetimezone.php', {tz:b}, function(data) {
 					if (data=="true"){
 						$("#changetz").html("Your timezone has been changed.");
 					}else{
