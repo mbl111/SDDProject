@@ -31,16 +31,21 @@ function logincancel() {
 
 	$starttime = microtime_float();
 
-	define("USER_STUDENT", 1);
-	define("USER_TEACHER", 0);
-
 	session_start();
 	include_once("dbConnect.php");
 	include_once("include.php");
 	
 	if (loggedIn()){
-	
-		dbQuery("UPDATE users SET lastactive=".time()." WHERE `id`={$_SESSION['userid']}");
+		$q = dbQuery("SELECT active FROM users WHERE `id`={$_SESSION['userid']}");
+		if ($q){
+			$a = mysql_fetch_assoc($q);
+			if ($a['active'] == 0){
+				unset($_SESSION);
+				session_destroy();
+				header("Location:message.php?id=4");
+			}
+		}
+		dbQuery("UPDATE users SET `lastactive`=".time()." WHERE `id`={$_SESSION['userid']}");
 		$teacherLinks = "";
 		if ($_SESSION['usertype']==USER_TEACHER){
 			$teacherLinks = "<li><a href='students.php' class='toolboxlink'>Students</a></li>";

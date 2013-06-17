@@ -20,6 +20,9 @@
 		case 3:
 			echo "<p class='error'>No class by this id exists!</p>";
 			break;
+		case 4:
+			echo "<p class='error'>Your account has been disabled... You have also been logged out!</p>";
+			break;
 		default: 
 			echo "<p class='error'>No message found</p>";
 			break;

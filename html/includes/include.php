@@ -1,6 +1,8 @@
 <?php
 
 define("SITENAME","Online Creative Neuro-Learning Tools");
+	define("USER_STUDENT", 1);
+	define("USER_TEACHER", 0);
 
 if (isset($usesettings)){
 	include("setting.class.php");

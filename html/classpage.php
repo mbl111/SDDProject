@@ -45,6 +45,22 @@
 			echo $story;
 		}
 	}elseif ($classPageType == 1){
+		echo '
+		<script>
+			function removeFromGroup(uid){
+				$("#info_" + uid).html("Removing. Please wait");
+				$.post("ajax/class/removefromclass.php", {id:'.$id.',uid:uid}, function(data) {
+				$("#info_" + uid).html(data);
+					deleteRow("user_" + uid);
+				});
+			}
+			
+			function deleteRow(rowid){   
+				var row = document.getElementById(rowid);
+				row.parentNode.removeChild(row);
+			}
+		</script>
+		';
 		echo '<link rel="stylesheet" type="text/css" href="css/student.css"/>';
 		$sort = array("ln", "a");
 		if (isset($_GET["srt"])){
@@ -59,7 +75,6 @@
 				$activity = $_GET['ao'];
 			}
 		}
-		if ($_SESSION['usertype']==USER_TEACHER){
 		
 			$bonusString = "";
 		
@@ -97,9 +112,9 @@
 				}
 			}
 		
-			$query = dbQuery("SELECT * FROM users WHERE `teacher`={$_SESSION['userid']}".$bonusString);
+			$query = dbQuery("SELECT * FROM users WHERE `class` LIKE '%$id%' AND `usertype`=1".$bonusString);
 			$amt = mysql_num_rows($query);
-			echo "You have <b>$amt</b> students in your class- <a href='classpage.php?id=$id&cpt=3' class='toolboxlink' style='font-weight:bold;font-size:16px;'>Add students to your class</a>";
+			echo "<a href='classpage.php?id=$id&cpt=3' class='toolboxlink' style='font-weight:bold;font-size:16px;'>Add students to your class</a>";
 			echo "<form method='GET'>
 				Sort By
 				<select name='srt' id='' class='input' style='width:115px;'>
@@ -127,29 +142,28 @@
 			}else{
 				echo "<div id='table'>
 				<table id='contentbox'><tr class='contentboxheader' style='font-size:16px;'><th>Last Name</th><th>First Name</th><th>Joined</th><th>Last Seen</th><th>Options</th></tr>";
-				
+				$i = 0;
 				while (($row = mysql_fetch_assoc($query)) != false){
-					$col = "#BBFFBB";
-					if ($row['active'] == 0){
-						$col = "#FFBBBB";
+					if (in_array($id, explode(",", $row['class']))){
+						$col = "#BBFFBB";
+						if ($row['active'] == 0){
+							$col = "#FFBBBB";
+						}
+						echo "<tr id='user_{$row['id']}' class='contentboxbody' style='background-color:$col'>
+						<td>".$row['lastname']."</td>
+						<td>".$row['firstname']."</td>
+						<td>".date($dateFormat, getTimeWithZone($row['joined'], $_SESSION['timezone']))."</td>
+						<td>".date($dateFormat, getTimeWithZone($row['lastactive'], $_SESSION['timezone']))."</td>
+						<td id='info_{$row['id']}'><a class='toolboxlink' style='font-weight:bold;font-size:12px;' href='userpage.php?id={$row['id']}'>View Profile</a>";
+						if ($_SESSION['usertype']==USER_TEACHER){
+						echo " | <a class='toolboxlink' style='font-weight:bold;font-size:12px;' href='javascript:removeFromGroup({$row['id']})'>Remove</a>";
+						}
+						echo "</td></tr>";
+						$i++;
 					}
-					echo "<tr id='user_{$row['id']}' class='contentboxbody' style='background-color:$col'>
-					<td>".$row['lastname']."</td>
-					<td>".$row['firstname']."</td>
-					<td>".date($dateFormat, getTimeWithZone($row['joined'], $_SESSION['timezone']))."</td>
-					<td>".date($dateFormat, getTimeWithZone($row['lastactive'], $_SESSION['timezone']))."</td>
-					<td id='info_{$row['id']}'><a class='toolboxlink' style='font-weight:bold;font-size:12px;' href='userpage.php?id={$row['id']}'>View Profile</a>";
-					if ($_SESSION['usertype']==USER_TEACHER){
-					echo " | <a class='toolboxlink' style='font-weight:bold;font-size:12px;' href='javascript:removeFromGroup({$row['id']})'>Remove</a>";
-					}
-					echo "</td></tr>";
 				}
 				echo "</table></div>";
 			}
-			
-		}else{
-			echo "<p class='error'>You are not a teacher!</p>";
-		}
 	}elseif ($classPageType == 2){
 		echo '<form id="contentbox">
 			<div class="contentboxbody">';
@@ -167,19 +181,49 @@
 		if ($_SESSION['usertype']==USER_TEACHER){
 			echo '<script type="text/javascript">
 				$(document).ready(function() {
-            $("#query.input").keyup(function() {
-                var search_term = $(this).val();
-                $.post("ajax/studentsearch.php", {search_term:search_term}, function(data) {
-                    $(".result").html(data);
-                });
-            });
-        });
+					$("#query.input").keyup(function() {
+						var search_term = $(this).val();
+						$.post("ajax/studentsearch.php", {search_term:search_term}, function(data) {
+							$(".result").html(data);
+						});
+					});
+					
+					$("#seluser").click(function() {
+						$("#feedback").html("Validating User");
+						$(this).attr("disabled", true);
+						$(this).css("background-color", "#A9A9A9");
+						var inp = $("#query.input").val();
+						$.post("ajax/validateuser.php", {name:inp}, function(data) {
+							if (data=="true"){
+								$.post("ajax/class/putinclass.php", {name:inp,id:'.$id.'}, function(data) {
+									if (data=="true"){
+										$("#feedback").html(inp + " added to class");
+										$("#query.input").val("");
+									}else{
+										$("#feedback").html(data);
+										$("#query.input").val("");
+									}
+								});
+							}else{
+								$("#feedback").html("User Not Found");
+							}
+						});
+						
+						$(this).removeAttr("disabled");
+						$(this).css("background-color", "#F9F9F9");
+					});
+				});
+				
+				function autoFill(e){
+					$("#query.input").val(e.innerHTML);
+					$(".result").html("");
+				}
         </script>';
 			echo '<link rel="stylesheet" type="text/css" href="css/form.css"/>';
 			echo "<div id='contentbox'>";
-			echo "<form style='padding:10px 0px;'><field><label>User Search</label>";
+			echo "<form style='padding:10px 0px;'><field><label>Users Name</label>";
 			echo "<input type='text' class='input' id='query' name='query' maxlength='20' autocomplete='off' style='width:200px;'/>";
-			echo "</field></form>";
+			echo "</field><input type='button' id='seluser' class='input' style='width:150px; margin: 0px 10px;' value='Add User'/><span id='feedback'></span></form>";
 			echo "<div class='dropdown' style='font-family:Verdana;margin-left:110px;margin-top:-10px;position:absolute;'>
                     <ul class='result'></ul>
                 </div></div>";

@@ -10,7 +10,7 @@ if (isset($_POST['search_term']) && ! empty($_POST['search_term'])){
         $id = $row['id'];
         $fname = $row['firstname'];
 		$lname = $row['lastname'];
-        echo "<li id='dropdownname' class='$id'>$fname $lname</li>";
+        echo "<li id='dropdownname' class='$id' onclick='autoFill(this)'>$fname $lname</li>";
     }
 }
 ?>

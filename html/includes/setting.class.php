@@ -113,7 +113,7 @@ class TextSetting extends BaseSetting{
 	function render(){
 		echo "<div class='field'>
 			<label>".$this->name."</label>
-			<".$this->cls." class='".$this->cls."' maxlength='".$this->length."' type='".$this->type."' name='".$this->ident."' id='".$this->ident."' value='".$this->default."'></".$this->cls.">";
+			<".$this->cls." class='".$this->cls."' maxlength='".$this->length."' type='".$this->type."' name='".$this->ident."' id='".$this->ident."' value='".$this->default."'>".$this->default."</".$this->cls.">";
 			if (isset($this->hint)){
 				echo "<span class='hint'>{$this->hint}</span>";
 			}
