@@ -14,7 +14,7 @@
 			$.post("ajax/activateuser.php", {id:id}, function(data) {
 				if (data=="true"){
 					$("#isactive").html("User has been activated.");
-					$(".studentactivate").html("<a href="javascript:deactivateStudent(" + id + ");" class="toolboxlink">Deactivate Student</a>");
+					$(".studentactivate").html("<a href=\'javascript:deactivateStudent(" + id + ");\' class=\'toolboxlink\'>Deactivate Student</a>");
 				}else{
 					$("#isactive").html("Failed to activate user");
 				}
@@ -33,7 +33,7 @@
 			$.post("ajax/deactivateuser.php", {id:id}, function(data) {
 				if (data=="true"){
 					$("#isactive").html("User has been deactivated.");
-					$(".studentactivate").html("<a href="javascript:activateStudent(" + id + ");" class="toolboxlink">Activate Student</a>");
+					$(".studentactivate").html("<a href=\'javascript:activateStudent(" + id + ");\' class=\'toolboxlink\'>Activate Student</a>");
 				}else{
 					$("#isactive").html("Failed to activate user");
 				}
