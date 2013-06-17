@@ -1,4 +1,5 @@
 <?
+	$usesettings = true;
 	$id = 0;
 	$classPageType = 0;
 	if (isset($_GET['id'])){
@@ -18,11 +19,17 @@
 		header("Location:message.php?id=3");
 	}
 	$class = mysql_fetch_assoc($query);
+		
+	$tlinks = "";
+	if ($_SESSION['usertype'] == USER_TEACHER){
+		$tlinks = "<li><a href='classpage.php?id=$id&cpt=2' class='toolboxlink'>Class Setting</a></li>
+			<li><a href='classpage.php?id=$id&cpt=3' class='toolboxlink'>Add Student to class</a></li>";
+	}
 	
 	addToolBox($class['name'],"<ul class='toolboxlinklist'>
 			<li><a href='classpage.php?id=$id' class='toolboxlink'>Overview</a></li>
 			<li><a href='classpage.php?id=$id&cpt=1' class='toolboxlink'>Members</a></li>
-			<li><a href='classpage.php?id=$id&cpt=2' class='toolboxlink'>Class Setting</a></li>
+			$tlinks
 		</ul>");
 		drawToolBoxes();
 		beginMainContent();
@@ -92,7 +99,7 @@
 		
 			$query = dbQuery("SELECT * FROM users WHERE `teacher`={$_SESSION['userid']}".$bonusString);
 			$amt = mysql_num_rows($query);
-			echo "You have <b>$amt</b> students - <a href='addstudent.php' class='toolboxlink' style='font-weight:bold;font-size:16px;'>Add another</a>";
+			echo "You have <b>$amt</b> students in your class- <a href='classpage.php?id=$id&cpt=3' class='toolboxlink' style='font-weight:bold;font-size:16px;'>Add students to your class</a>";
 			echo "<form method='GET'>
 				Sort By
 				<select name='srt' id='' class='input' style='width:115px;'>
@@ -131,9 +138,10 @@
 					<td>".$row['firstname']."</td>
 					<td>".date($dateFormat, getTimeWithZone($row['joined'], $_SESSION['timezone']))."</td>
 					<td>".date($dateFormat, getTimeWithZone($row['lastactive'], $_SESSION['timezone']))."</td>
-					<td id='info_{$row['id']}'><a class='toolboxlink' style='font-weight:bold;font-size:12px;' href='userpage.php?id={$row['id']}'>View Profile</a> | ";
-					echo "<a class='toolboxlink' style='font-weight:bold;font-size:12px;' href='javascript:removeFromGroup({$row['id']})'>Remove</a>";
-					
+					<td id='info_{$row['id']}'><a class='toolboxlink' style='font-weight:bold;font-size:12px;' href='userpage.php?id={$row['id']}'>View Profile</a>";
+					if ($_SESSION['usertype']==USER_TEACHER){
+					echo " | <a class='toolboxlink' style='font-weight:bold;font-size:12px;' href='javascript:removeFromGroup({$row['id']})'>Remove</a>";
+					}
 					echo "</td></tr>";
 				}
 				echo "</table></div>";
@@ -143,7 +151,39 @@
 			echo "<p class='error'>You are not a teacher!</p>";
 		}
 	}elseif ($classPageType == 2){
-		
+		echo '<form id="contentbox">
+			<div class="contentboxbody">';
+			$groupdesc = new TextSetting("Class Description", "cdesc");
+			$groupdesc->setType(1);
+			$groupdesc->setLength(800);
+			$groupdesc->setDefault($class['description']);
+			
+			$descSettingGroup = new SettingGroup('changegroupdesc', 'Change Description');
+			$descSettingGroup->addSetting($groupdesc);
+			$descSettingGroup->setButtonWidth(200);
+			$descSettingGroup->render();
+		echo '</div></form>';
+	}elseif ($classPageType == 3){
+		if ($_SESSION['usertype']==USER_TEACHER){
+			echo '<script type="text/javascript">
+				$(document).ready(function() {
+            $("#query.input").keyup(function() {
+                var search_term = $(this).val();
+                $.post("ajax/studentsearch.php", {search_term:search_term}, function(data) {
+                    $(".result").html(data);
+                });
+            });
+        });
+        </script>';
+			echo '<link rel="stylesheet" type="text/css" href="css/form.css"/>';
+			echo "<div id='contentbox'>";
+			echo "<form style='padding:10px 0px;'><field><label>User Search</label>";
+			echo "<input type='text' class='input' id='query' name='query' maxlength='20' autocomplete='off' style='width:200px;'/>";
+			echo "</field></form>";
+			echo "<div class='dropdown' style='font-family:Verdana;margin-left:110px;margin-top:-10px;position:absolute;'>
+                    <ul class='result'></ul>
+                </div></div>";
+		}
 	}
 	
 ?>

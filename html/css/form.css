@@ -57,3 +57,27 @@ label{
 .hint{
 	display:none;
 }
+
+.result {
+    width:200px;
+    list-style:none;
+    position:absolute;
+}
+
+.dropdown li{
+    width:200px;
+    padding:5px;
+    border:1px solid #b9bdc1;
+    background-color: #EEEEEE;
+}
+
+.dropdown li:hover {background-color:#CCCCCC;}  /* mouse over link */
+
+.dropdown{
+    display:absolute;
+    z-index:9002;
+    padding:0px;
+    margin-top:-14px;
+    border-top:0;
+    cursor:pointer;
+}

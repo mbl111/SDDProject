@@ -93,27 +93,37 @@
 	
 		<form id="contentbox">
 			<div class="contentboxbody">
-				<div id="changename" style="margin-bottom:10px;padding-bottom:10px;border-bottom: 1px #BDC2BD dashed;">
-					<p style="font-style:italic;font-size:12px;margin-bottom:3px;">You are limited to <b>ONE</b> name change to correct errors. Changes for any other reason will result in account deactivation</p>
-					
-					<div class="field">
-						<label>First Name:</label>
-						<input class="input" maxlength="30" type="text" name="firstname" id="firstname" value="<?echo $_SESSION['firstname'];?>"/>
-					</div>
-					
-					<div class="field">
-						<label>Last Name:</label>
-						<input class="input" maxlength="30" type="text" name="lastname" id="lastname" value="<?echo $_SESSION['lastname'];?>"/>
-					</div>
-					
-					<input class="input" id='changenameb' style="width:150px;font-weight:bold;margin-left:110px;" type="button" name="submit" value="Change my name!"/>
-				</div>
 				
+				<?
+				$settingGroup = new SettingGroup("changename", "Change My Name!");
+			
+				$textSetting = new TextSetting("First Name", "firstname");
+				$textSetting->setDefault($_SESSION['firstname']);
+				
+				$textSetting1 = new TextSetting("Last Name", "lastname");
+				$textSetting1->setDefault($_SESSION['lastname']);
+				
+				$settingGroup->addText("You may only change your name <b>once</b>. Changes for anything other than a correction may result in your account being deactivated");
+				$settingGroup->addSetting($textSetting);
+				$settingGroup->addSetting($textSetting1);
+				$settingGroup->render();
+				
+				$settingGroup = new SettingGroup("changebio", "Change My Bio!");
+			
+				$textSetting = new TextSetting("Bio", "bio");
+				$textSetting->setDefault($bio);
+				$textSetting->setType(1);
+				$textSetting->setLength(1000);
+				
+				$settingGroup->addSetting($textSetting);
+				$settingGroup->render();
+				
+				?>
 				
 				<div id="changepass" style="margin-bottom:10px;padding-bottom:10px;border-bottom: 1px #BDC2BD dashed;">
 					
 					<div class="field">
-						<label>Password:</label>
+						<label>Password</label>
 						<input maxlength="20" class="input" type="password" name="pass" id="pass" value=""/>
 						<span class="hint">Type a secure password (20 characters max.)</span>
 					</div>
@@ -124,7 +134,7 @@
 				<div id="changetz" style="margin-bottom:10px;padding-bottom:10px;border-bottom: 1px #BDC2BD dashed;">
 					
 					<div class="field">
-						<label>Timezone:</label>
+						<label>Timezone</label>
 						<?drawTimeZoneDropDown("class='input' id='timezone' name='timezone'", getTimeZone());?>
 						<span class="hint">Select a timezone near you</span>
 					</div>
@@ -134,16 +144,6 @@
 				
 			</div>
 			
-			<?
-				$settingGroup = new SettingGroup("changebio", "Touch the Butt");
-			
-				$textSetting = new TextSetting("Poopie", "bio");
-				$textSetting->setDefault("goats");
-				
-				$settingGroup->addSetting($textSetting);
-				$settingGroup->render();
-				
-			?>
 			
 		</form>
 

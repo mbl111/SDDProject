@@ -4,6 +4,7 @@ class SettingGroup{
 	var $settings = array();
 	var $name = "";
 	var $buttontext = "";
+	var $buttonWidth = 150;
 
 function __construct($settingName, $buttontext = "Change my text"){
 	$this->name = $settingName;
@@ -22,18 +23,22 @@ function addText($text){
 	$this->settings[] = $text;
 }
 
+function setButtonWidth($width){
+	$this->buttonWidth = $width;
+}
+
 function render(){
 
 	echo '<script>$(document).ready(function() {$("#'.$this->name.'b").click(function(e){';
 	foreach($this->settings as $set){
-		echo ' var '.$set->ident.' = $(#'.$set->ident.'.'.$set->cls.').val();';
+		echo ' var '.$set->ident.' = $("#'.$set->ident.'.'.$set->cls.'").val();';
 	}
-	echo ' $("#'.$this->name.'").html("<span style="color:#990000">Updating... Please wait</span>");';
+	echo ' $("#'.$this->name.'").html("<span style=\'color:#990000\'>Updating... Please wait</span>");';
 	echo '  $.post("ajax/setting/'.$this->name.'.php", {';
 	foreach($this->settings as $set){
 		echo $set->ident.':'.$set->ident;
 	}
-	echo ' , function(data) {
+	echo '} , function(data) {
 				if (data=="true"){
 					$("#'.$this->name.'").html("Your bio has been changed.");
 				}else{
@@ -55,7 +60,7 @@ function render(){
 		}
 	}
 	
-	echo "<input class='input' id='{$this->name}b' style='width:150px;font-weight:bold;margin-left:110px;' type='button' name='submit' value='{$this->buttontext}'/>";
+	echo "<input class='input' id='{$this->name}b' style='width:{$this->buttonWidth}px;font-weight:bold;margin-left:110px;' type='button' name='submit' value='{$this->buttontext}'/>";
 	
 	echo '</div>';
 }
@@ -108,7 +113,7 @@ class TextSetting extends BaseSetting{
 	function render(){
 		echo "<div class='field'>
 			<label>".$this->name."</label>
-			<input class='".$this->cls."' maxlength='".$this->length."' type='".$this->type."' name='".$this->ident."' id='".$this->ident."' value='".$this->default."'/>";
+			<".$this->cls." class='".$this->cls."' maxlength='".$this->length."' type='".$this->type."' name='".$this->ident."' id='".$this->ident."' value='".$this->default."'></".$this->cls.">";
 			if (isset($this->hint)){
 				echo "<span class='hint'>{$this->hint}</span>";
 			}
