@@ -1,7 +1,7 @@
 <?
 session_start();
-include("../includes/include.php");
-include_once("../includes/dbConnect.php");
+include("../../includes/include.php");
+include_once("../../includes/dbConnect.php");
 mustBeLoggedIn();
 if (isset($_POST['pass'])){
 	$first = md5($_POST['pass']);

@@ -1,7 +1,7 @@
 <?
 session_start();
-include("../includes/include.php");
-include_once("../includes/dbConnect.php");
+include("../../includes/include.php");
+include_once("../../includes/dbConnect.php");
 mustBeLoggedIn();
 if ($_SESSION['namechanged'] == 1){
 echo "Name already changed!";
