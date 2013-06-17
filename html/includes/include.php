@@ -2,7 +2,10 @@
 
 define("SITENAME","Online Creative Neuro-Learning Tools");
 
-include("template.class.php");
+if (isset($usesettings)){
+	include("setting.class.php");
+	include("textsetting.class.php");
+}
 
 $timeConstant = array('decade' => 315576000, 'year' => 31557600, 'month' => 2629800, 'week' => 604800, 'day' => 86400, 'hour' => 3600, 'min' => 60, 'sec' => 1);
 $dateFormat = "H:i, d M Y";

@@ -1,5 +1,5 @@
 <?
-
+	$usesettings = true;
 	include("includes/header.php");
 	drawToolBoxes();
 	beginMainContent();
@@ -44,20 +44,6 @@
 				});
 			});
 			
-			$("#changebiob").click(function(e){
-				var b = $("#bio.textarea").val();
-				$("#changebio").html("<span style='color:#990000'>Changing bio... Please wait</span>");
-				$.post('ajax/changebio.php', {bio:b}, function(data) {
-					if (data=="true"){
-						$("#changebio").html("Your bio has been changed.");
-					}else{
-						$("#changebio").html("Failed to change your bio. ("+ data +") Refresh to try again");
-					}
-				}).done(function() {})
-				.fail(function() { 
-					$("#changebio").html("Request time out. Refresh to try again");
-				});
-			});
 			
 			$("#changepassb").click(function(e){
 				var b = $("#pass.input").val();
@@ -113,28 +99,16 @@
 					<div class="field">
 						<label>First Name:</label>
 						<input class="input" maxlength="30" type="text" name="firstname" id="firstname" value="<?echo $_SESSION['firstname'];?>"/>
-						<span class="hint">A brief one line description of the bug</span>
 					</div>
 					
 					<div class="field">
 						<label>Last Name:</label>
 						<input class="input" maxlength="30" type="text" name="lastname" id="lastname" value="<?echo $_SESSION['lastname'];?>"/>
-						<span class="hint">Last name</span>
 					</div>
 					
 					<input class="input" id='changenameb' style="width:150px;font-weight:bold;margin-left:110px;" type="button" name="submit" value="Change my name!"/>
 				</div>
 				
-				<div id="changebio" style="margin-bottom:10px;padding-bottom:10px;border-bottom: 1px #BDC2BD dashed;">
-					
-					<div class="field">
-						<label>Bio:</label>
-						<textarea maxlength="1000" class="textarea" type="text" name="bio" id="bio" value="<? echo $bio; ?>"><? echo $bio; ?></textarea>
-						<span class="hint">A small paragraph about yourself. (1000 characters max)</span>
-					</div>
-					
-					<input class="input" id='changebiob' style="width:150px;font-weight:bold;margin-left:110px;" type="button" name="submit" value="Change my bio!"/>
-				</div>
 				
 				<div id="changepass" style="margin-bottom:10px;padding-bottom:10px;border-bottom: 1px #BDC2BD dashed;">
 					
@@ -159,6 +133,18 @@
 				</div>
 				
 			</div>
+			
+			<?
+				$settingGroup = new SettingGroup("changebio", "Touch the Butt");
+			
+				$textSetting = new TextSetting("Poopie", "bio");
+				$textSetting->setDefault("goats");
+				
+				$settingGroup->addSetting($textSetting);
+				$settingGroup->render();
+				
+			?>
+			
 		</form>
 
 
