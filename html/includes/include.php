@@ -230,10 +230,6 @@ function getContentGeneral($contentID){
 	return mysql_fetch_assoc(dbQuery("SELECT * FROM content WHERE `nid`=$contentID"));
 }
 
-function getTemplate($type){
-	return file_get_contents("templates/".$type.".html");
-}
-
 function getContentSpecifics($dataTable, $contentID){
 	return mysql_fetch_assoc(dbQuery("SELECT * FROM $dataTable WHERE `id`=$contentID LIMIT 1"));
 }
@@ -300,34 +296,21 @@ function generateIndex(){
 	}else{
 		$query = dbQuery("SELECT * FROM content WHERE `type`='news' AND `class`=-1  ORDER BY `timestamp` ASC LIMIT 10");
 	}
-	$contentTemplate = getTemplate('news');
 	$overallPage = "";
 	while(($contentDetails = mysql_fetch_assoc($query))==true){
-		$displayableContent = $contentTemplate;
+		$template = new Template;
 		$content = getContentSpecifics("content_news", $contentDetails['nid']);
 		
-		$displayableContent = str_replace('$$CONTENT_TITLE', $contentDetails['title'], $displayableContent);
-		$displayableContent = str_replace('$$CONTENT_ID', $contentDetails['nid'], $displayableContent);
-		$displayableContent = str_replace('$$CONTENT_TIME', date($dateFormat, getTimeWithZone($contentDetails['timestamp'], +10)), $displayableContent);
-		$displayableContent = str_replace('$$CONTENT_USER', resolveFullnameFromID($content['poster']), $displayableContent);
-		$displayableContent = str_replace('$$CONTENT_BODY', $content['body'], $displayableContent);
-		if ($content['lasteditor'] > 0){
-			$displayableContent = str_replace('$$?IF_EDIT', "", $displayableContent);
-			$displayableContent = str_replace('$$?ENDIF_EDIT', "", $displayableContent);
-			$displayableContent = str_replace('$$CONTENT_EDITOR', resolveFullnameFromID($content['lasteditor']), $displayableContent);
-			$displayableContent = str_replace('$$CONTENT_EDIT_TIME', resolveFullnameFromID($content['edittime']), $displayableContent);
-		}else{
-			$parts = explode('$$IF_EDIT', $displayableContent);
-			$rebuilt = "";
-			for ($i = 0; $i < count($parts); $i++){
-				if (($i % 2) == 0){
-					$rebuilt .= $parts[$i];
-				}
-			}
-			$displayableContent = $rebuilt;
-		}
+		$template->assign("CONTENT_TITLE", $contentDetails['title']);
+		$template->assign("CONTENT_ID", $contentDetails['nid']);
+		$template->assign("CONTENT_TIME", date($dateFormat, getTimeWithZone($contentDetails['timestamp'], +10)));
+		$template->assign("CONTENT_USER", resolveFullnameFromID($content['poster']));
+		$template->assign("CONTENT_BODY", $content['body']);
+		$template->assign("CONTENT_EDITED", ($content['lasteditor'] > 0) ? "true" : "false");
+		$template->assign("CONTENT_EDITOR", resolveFullnameFromID($content['lasteditor']));
+		$template->assign("CONTENT_EDIT_TIME", date($dateFormat, getTimeWithZone($content['edittime'], +10)));
 		
-		$overallPage .= $displayableContent;
+		$overallPage .= $template->render('news');
 	}
 	return $overallPage;
 }
@@ -348,19 +331,24 @@ function getNewsForClass($id){
 	$stories = array();
 	
 	global $dateFormat;
-	$query = dbQuery("SELECT * FROM content WHERE `type`='news' AND `class`=$id ORDER BY `timestamp` ASC LIMIT 10");
-	$contentTemplate = getTemplate('news');
+	$query = dbQuery("SELECT * FROM content WHERE `class`=$id ORDER BY `timestamp` ASC LIMIT 10");
+	$contentTemplate['news'] = getTemplate('news');
+	$contentTemplate['quiz'] = getTemplate('quiz');
 	$overallPage = "";
 	while(($contentDetails = mysql_fetch_assoc($query))==true){
-		$displayableContent = $contentTemplate;
-		$content = getContentSpecifics("content_news", $contentDetails['nid']);
-		
+		$displayableContent = $contentTemplate[$contentDetails['type']];
+		$content = getContentSpecifics("content_".$contentDetails['type'], $contentDetails['nid']);
+		$status = "Not Completed";
+		if (userHasDoneQuiz()){
+			$status = "Completed!";
+		}
 		$displayableContent = str_replace('$$CONTENT_TITLE', $contentDetails['title'], $displayableContent);
+		$displayableContent = str_replace('$$QUIZ_STATUS', $status, $displayableContent);
 		$displayableContent = str_replace('$$CONTENT_ID', $contentDetails['nid'], $displayableContent);
 		$displayableContent = str_replace('$$CONTENT_TIME', date($dateFormat, getTimeWithZone($contentDetails['timestamp'], +10)), $displayableContent);
 		$displayableContent = str_replace('$$CONTENT_USER', resolveFullnameFromID($content['poster']), $displayableContent);
 		$displayableContent = str_replace('$$CONTENT_BODY', $content['body'], $displayableContent);
-		if ($content['lasteditor'] > 0){
+		if ($contentDetails['type'] == 'news' && $content['lasteditor'] > 0){
 			$displayableContent = str_replace('$$?IF_EDIT', "", $displayableContent);
 			$displayableContent = str_replace('$$?ENDIF_EDIT', "", $displayableContent);
 			$displayableContent = str_replace('$$CONTENT_EDITOR', resolveFullnameFromID($content['lasteditor']), $displayableContent);
@@ -380,6 +368,10 @@ function getNewsForClass($id){
 	}
 	
 	return $stories;
+}
+
+function userHasDoneQuiz(){
+return false;
 }
 
 ?>

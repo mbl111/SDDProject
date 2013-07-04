@@ -34,6 +34,7 @@ function logincancel() {
 	session_start();
 	include_once("dbConnect.php");
 	include_once("include.php");
+	include_once("engine.php");
 	
 	if (loggedIn()){
 		$q = dbQuery("SELECT active FROM users WHERE `id`={$_SESSION['userid']}");
