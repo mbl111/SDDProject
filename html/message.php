@@ -23,6 +23,9 @@
 		case 4:
 			echo "<p class='error'>Your account has been disabled... You have also been logged out!</p>";
 			break;
+		case 5:
+			echo "<p class='error'>Quiz does not exist or no quiz specified!</p>";
+			break;
 		default: 
 			echo "<p class='error'>No message found</p>";
 			break;

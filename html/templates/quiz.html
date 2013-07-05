@@ -1,5 +1,15 @@
 <div id="contentbox">
-	<div class="contentboxheader"><a href="viewcontent.php?id=[CONTENT_ID]" class="contentboxheadertext">[CONTENT_TITLE]</a> - [QUIZ_STATUS]</div>
-	<div class="contentboxbody">[CONTENT_BODY]</div>
+	<div class="contentboxheader"><a href="viewcontent.php?id=[CONTENT_ID]" class="contentboxheadertext">[CONTENT_TITLE]</a></div>
+	<div class="contentboxbody">
+		<p>[QUIZ_STATUS] - Due 
+			<!-- IF [QUIZ_OVERDUE] -->
+				<span style='color:#FF3333'>[QUIZ_DUE]</span>
+			<!-- ELSE -->
+				<span style='color:#33FF33'>[QUIZ_DUE]</span>
+			<!-- ENDIF -->
+		</p>
+		<br/>
+		[CONTENT_BODY]
+	</div>
 	<div class="contentboxfooter">Quiz set [CONTENT_TIME] by [CONTENT_USER]</div>
 </div>

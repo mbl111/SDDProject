@@ -292,25 +292,31 @@ function generateIndex(){
 	if (loggedIn()){
 		$query = dbQuery("SELECT class FROM users WHERE `id`={$_SESSION['userid']} LIMIT 1");
 		$user = mysql_fetch_assoc($query);
-		$query = dbQuery("SELECT * FROM content WHERE `type`='news' AND `class` IN ({$user['class']}, -1)  ORDER BY `timestamp` ASC LIMIT 10");
+		$query = dbQuery("SELECT * FROM content WHERE `class` IN ({$user['class']}, -1)  ORDER BY `timestamp` ASC LIMIT 10");
 	}else{
 		$query = dbQuery("SELECT * FROM content WHERE `type`='news' AND `class`=-1  ORDER BY `timestamp` ASC LIMIT 10");
 	}
 	$overallPage = "";
 	while(($contentDetails = mysql_fetch_assoc($query))==true){
 		$template = new Template;
-		$content = getContentSpecifics("content_news", $contentDetails['nid']);
+		$content = getContentSpecifics("content_".$contentDetails['type'], $contentDetails['nid']);
 		
 		$template->assign("CONTENT_TITLE", $contentDetails['title']);
 		$template->assign("CONTENT_ID", $contentDetails['nid']);
 		$template->assign("CONTENT_TIME", date($dateFormat, getTimeWithZone($contentDetails['timestamp'], +10)));
 		$template->assign("CONTENT_USER", resolveFullnameFromID($content['poster']));
 		$template->assign("CONTENT_BODY", $content['body']);
-		$template->assign("CONTENT_EDITED", ($content['lasteditor'] > 0) ? "true" : "false");
-		$template->assign("CONTENT_EDITOR", resolveFullnameFromID($content['lasteditor']));
-		$template->assign("CONTENT_EDIT_TIME", date($dateFormat, getTimeWithZone($content['edittime'], +10)));
 		
-		$overallPage .= $template->render('news');
+		if ($contentDetails['type'] == 'news'){
+			$template->assign("CONTENT_EDITED", ($content['lasteditor'] > 0) ? "true" : "false");
+			$template->assign("CONTENT_EDITOR", resolveFullnameFromID($content['lasteditor']));
+			$template->assign("CONTENT_EDIT_TIME", date($dateFormat, getTimeWithZone($content['edittime'], +10)));
+		}elseif ($contentDetails['type'] == 'quiz'){
+			$template->assign("QUIZ_OVERDUE", $content['due'] < time() ? 'true' : 'false');
+			$template->assign("QUIZ_DUE", date($dateFormat, getTimeWithZone($content['due'], +10)));
+			$template->assign("QUIZ_STATUS", userHasDoneQuiz($contentDetails['nid'], $_SESSION['userid']) ? "Quiz Completed" : "Not Complete");
+		}
+		$overallPage .= $template->render($contentDetails['type']);
 	}
 	return $overallPage;
 }
@@ -370,8 +376,8 @@ function getNewsForClass($id){
 	return $stories;
 }
 
-function userHasDoneQuiz(){
-return false;
+function userHasDoneQuiz($qid, $uid){
+return mysql_num_rows(dbQuery("SELECT `user_id` FROM user_quiz_answers WHERE `user_id`=$uid AND `quiz_id`=$qid")) == 1;
 }
 
 ?>
