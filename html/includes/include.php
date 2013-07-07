@@ -167,64 +167,66 @@ function buildContent($contentID){
 	global $dateFormat;
 
 	$contentDetails = getContentGeneral($contentID);
-	$contentTemplate = getTemplate($contentDetails['type']);
 	$content = getContentSpecifics("content_".$contentDetails['type'], $contentID);
 	
-	$displayableContent = $contentTemplate;
-	
-	$displayableContent = str_replace('$$CONTENT_TITLE', $contentDetails['title'], $displayableContent);
-	$displayableContent = str_replace('$$CONTENT_TIME', date($dateFormat, getTimeWithZone($contentDetails['timestamp'], +10)), $displayableContent);
-	$displayableContent = str_replace('$$CONTENT_ID', $contentDetails['nid'], $displayableContent);
-	$displayableContent = str_replace('$$CONTENT_USER', resolveFullnameFromID($content['poster']), $displayableContent);
-	
-	
-	switch($contentDetails['type']){
-		case "news":
-			$displayableContent = str_replace('$$CONTENT_USER', resolveFullnameFromID($content['poster']), $displayableContent);
-			$displayableContent = str_replace('$$CONTENT_BODY', $content['body'], $displayableContent);
-			
-			if ($content['lasteditor'] > 0){
-				$displayableContent = str_replace('$$?IF_EDIT', "", $displayableContent);
-				$displayableContent = str_replace('$$?ENDIF_EDIT', "", $displayableContent);
-				$displayableContent = str_replace('$$CONTENT_EDITOR', resolveFullnameFromID($content['lasteditor']), $displayableContent);
-				$displayableContent = str_replace('$$CONTENT_EDIT_TIME', resolveFullnameFromID($content['edittime']), $displayableContent);
-			}else{
-				$parts = explode('$$IF_EDIT', $displayableContent);
-				$rebuilt = "";
-				for ($i = 0; $i < count($parts); $i++){
-					if (($i % 2) == 0){
-						$rebuilt .= $parts[$i];
-					}
-				}
-				$displayableContent = $rebuilt;
-			}
-			break;
+	$template = new Template;
 		
-		case "quiz":
-			
-			$quizBody = "<div style='border-bottom:1px #CDD2CD dashed;margin:-8px -10px 8px -10px;padding:0px 10px 3px 10px;'><span style='font-weight:bold;'>Quiz Due: </span><span style='";
-			if ($content['due'] < time()){
-				$quizBody .= "color:#EC0000"; 
-			}else {
-				$quizBody .= "color:#11EC11"; 
-			}
-			$quizBody .= "';>".date($dateFormat, getTimeWithZone($content['due'], +10))."</div>";
-			
-			$quizBody .= $content['description']."";
-			
-			
-			
-			$displayableContent = str_replace('$$CONTENT_BODY', $quizBody, $displayableContent);
-			
-			break;
-	}
-	
-	
-	
-	return $displayableContent;
-	
+		$template->assign("CONTENT_TITLE", $contentDetails['title']);
+		$template->assign("CONTENT_ID", $contentDetails['nid']);
+		$template->assign("CONTENT_TIME", date($dateFormat, getTimeWithZone($contentDetails['timestamp'], +10)));
+		$template->assign("CONTENT_USER", resolveFullnameFromID($content['poster']));
+		$template->assign("CONTENT_BODY", $content['body']);
+		
+		$template->assign("GLOBAL_STORY", $contentDetails['class'] == -1 ? "true" : "false");
+		if ($contentDetails['class'] != -1){
+			$template->assign("CLASS_NAME", getClassName($contentDetails['class']));
+			$template->assign("CLASS_ID", $contentDetails['class']);
+		}
+		
+		if ($contentDetails['type'] == 'news'){
+			$template->assign("CONTENT_EDITED", ($content['lasteditor'] > 0) ? "true" : "false");
+			$template->assign("CONTENT_EDITOR", resolveFullnameFromID($content['lasteditor']));
+			$template->assign("CONTENT_EDIT_TIME", date($dateFormat, getTimeWithZone($content['edittime'], +10)));
+		}elseif ($contentDetails['type'] == 'quiz'){
+			$template->assign("QUIZ_OVERDUE", $content['due'] < time() ? 'true' : 'false');
+			$template->assign("QUIZ_DUE", date($dateFormat, getTimeWithZone($content['due'], +10)));
+			$template->assign("QUIZ_STATUS", userHasDoneQuiz($contentDetails['nid'], $_SESSION['userid']) ? "Quiz Completed" : "Not Complete");
+		}
+		$template->render($contentDetails['type']);
 }
 
+function getNewsForClass($id){
+	
+	global $dateFormat;
+	$query = dbQuery("SELECT * FROM content WHERE `class`=$id ORDER BY `timestamp` ASC LIMIT 10");
+	while(($contentDetails = mysql_fetch_assoc($query))==true){
+		$template = new Template;
+		$content = getContentSpecifics("content_".$contentDetails['type'], $contentDetails['nid']);
+		
+		$template->assign("CONTENT_TITLE", $contentDetails['title']);
+		$template->assign("CONTENT_ID", $contentDetails['nid']);
+		$template->assign("CONTENT_TIME", date($dateFormat, getTimeWithZone($contentDetails['timestamp'], +10)));
+		$template->assign("CONTENT_USER", resolveFullnameFromID($content['poster']));
+		$template->assign("CONTENT_BODY", $content['body']);
+		
+		$template->assign("GLOBAL_STORY", $contentDetails['class'] == -1 ? "true" : "false");
+		if ($contentDetails['class'] != -1){
+			$template->assign("CLASS_NAME", getClassName($contentDetails['class']));
+			$template->assign("CLASS_ID", $contentDetails['class']);
+		}
+		
+		if ($contentDetails['type'] == 'news'){
+			$template->assign("CONTENT_EDITED", ($content['lasteditor'] > 0) ? "true" : "false");
+			$template->assign("CONTENT_EDITOR", resolveFullnameFromID($content['lasteditor']));
+			$template->assign("CONTENT_EDIT_TIME", date($dateFormat, getTimeWithZone($content['edittime'], +10)));
+		}elseif ($contentDetails['type'] == 'quiz'){
+			$template->assign("QUIZ_OVERDUE", $content['due'] < time() ? 'true' : 'false');
+			$template->assign("QUIZ_DUE", date($dateFormat, getTimeWithZone($content['due'], +10)));
+			$template->assign("QUIZ_STATUS", userHasDoneQuiz($contentDetails['nid'], $_SESSION['userid']) ? "Quiz Completed" : "Not Complete");
+		}
+		$template->render($contentDetails['type']);
+	}
+}
 
 function getContentGeneral($contentID){
 	return mysql_fetch_assoc(dbQuery("SELECT * FROM content WHERE `nid`=$contentID"));
@@ -285,41 +287,6 @@ function getQuiz($contentID){
 	return mysql_fetch_assoc(dbQuery("SELECT * FROM content WHERE `quiz_id`=$contentID"));
 }
 
-//Reusing this code as its faster for showing JUST news on the home page
-function generateIndex(){
-	global $dateFormat;
-	
-	if (loggedIn()){
-		$query = dbQuery("SELECT class FROM users WHERE `id`={$_SESSION['userid']} LIMIT 1");
-		$user = mysql_fetch_assoc($query);
-		$query = dbQuery("SELECT * FROM content WHERE `class` IN ({$user['class']}, -1)  ORDER BY `timestamp` ASC LIMIT 10");
-	}else{
-		$query = dbQuery("SELECT * FROM content WHERE `type`='news' AND `class`=-1  ORDER BY `timestamp` ASC LIMIT 10");
-	}
-	$overallPage = "";
-	while(($contentDetails = mysql_fetch_assoc($query))==true){
-		$template = new Template;
-		$content = getContentSpecifics("content_".$contentDetails['type'], $contentDetails['nid']);
-		
-		$template->assign("CONTENT_TITLE", $contentDetails['title']);
-		$template->assign("CONTENT_ID", $contentDetails['nid']);
-		$template->assign("CONTENT_TIME", date($dateFormat, getTimeWithZone($contentDetails['timestamp'], +10)));
-		$template->assign("CONTENT_USER", resolveFullnameFromID($content['poster']));
-		$template->assign("CONTENT_BODY", $content['body']);
-		
-		if ($contentDetails['type'] == 'news'){
-			$template->assign("CONTENT_EDITED", ($content['lasteditor'] > 0) ? "true" : "false");
-			$template->assign("CONTENT_EDITOR", resolveFullnameFromID($content['lasteditor']));
-			$template->assign("CONTENT_EDIT_TIME", date($dateFormat, getTimeWithZone($content['edittime'], +10)));
-		}elseif ($contentDetails['type'] == 'quiz'){
-			$template->assign("QUIZ_OVERDUE", $content['due'] < time() ? 'true' : 'false');
-			$template->assign("QUIZ_DUE", date($dateFormat, getTimeWithZone($content['due'], +10)));
-			$template->assign("QUIZ_STATUS", userHasDoneQuiz($contentDetails['nid'], $_SESSION['userid']) ? "Quiz Completed" : "Not Complete");
-		}
-		$overallPage .= $template->render($contentDetails['type']);
-	}
-	return $overallPage;
-}
 
 $classnameById = array();
 
@@ -333,51 +300,18 @@ function getClassName($id){
 	return $class['name'];
 }
 
-function getNewsForClass($id){
-	$stories = array();
-	
-	global $dateFormat;
-	$query = dbQuery("SELECT * FROM content WHERE `class`=$id ORDER BY `timestamp` ASC LIMIT 10");
-	$contentTemplate['news'] = getTemplate('news');
-	$contentTemplate['quiz'] = getTemplate('quiz');
-	$overallPage = "";
-	while(($contentDetails = mysql_fetch_assoc($query))==true){
-		$displayableContent = $contentTemplate[$contentDetails['type']];
-		$content = getContentSpecifics("content_".$contentDetails['type'], $contentDetails['nid']);
-		$status = "Not Completed";
-		if (userHasDoneQuiz()){
-			$status = "Completed!";
-		}
-		$displayableContent = str_replace('$$CONTENT_TITLE', $contentDetails['title'], $displayableContent);
-		$displayableContent = str_replace('$$QUIZ_STATUS', $status, $displayableContent);
-		$displayableContent = str_replace('$$CONTENT_ID', $contentDetails['nid'], $displayableContent);
-		$displayableContent = str_replace('$$CONTENT_TIME', date($dateFormat, getTimeWithZone($contentDetails['timestamp'], +10)), $displayableContent);
-		$displayableContent = str_replace('$$CONTENT_USER', resolveFullnameFromID($content['poster']), $displayableContent);
-		$displayableContent = str_replace('$$CONTENT_BODY', $content['body'], $displayableContent);
-		if ($contentDetails['type'] == 'news' && $content['lasteditor'] > 0){
-			$displayableContent = str_replace('$$?IF_EDIT', "", $displayableContent);
-			$displayableContent = str_replace('$$?ENDIF_EDIT', "", $displayableContent);
-			$displayableContent = str_replace('$$CONTENT_EDITOR', resolveFullnameFromID($content['lasteditor']), $displayableContent);
-			$displayableContent = str_replace('$$CONTENT_EDIT_TIME', resolveFullnameFromID($content['edittime']), $displayableContent);
-		}else{
-			$parts = explode('$$IF_EDIT', $displayableContent);
-			$rebuilt = "";
-			for ($i = 0; $i < count($parts); $i++){
-				if (($i % 2) == 0){
-					$rebuilt .= $parts[$i];
-				}
-			}
-			$displayableContent = $rebuilt;
-		}
-		
-		$stories[] = $displayableContent;
-	}
-	
-	return $stories;
-}
-
 function userHasDoneQuiz($qid, $uid){
 return mysql_num_rows(dbQuery("SELECT `user_id` FROM user_quiz_answers WHERE `user_id`=$uid AND `quiz_id`=$qid")) == 1;
+}
+
+function studentBelongsTo($idToTest, $student){
+	$query = dbQuery("SELECT id FROM users WHERE `id`=$student AND `teacher`=$idToTest LIMIT 1");
+	if ($query){
+		if (mysql_num_rows($query) == 1){
+			return true;
+		}
+	}
+	return false;
 }
 
 ?>
