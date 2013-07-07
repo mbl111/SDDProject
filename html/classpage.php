@@ -21,7 +21,7 @@
 	$class = mysql_fetch_assoc($query);
 		
 	$tlinks = "";
-	if ($_SESSION['usertype'] == USER_TEACHER){
+	if ($_SESSION['usertype'] == USER_TEACHER && $_SESSION['userid'] == $class['teacher']){
 		$tlinks = "<li><a href='classpage.php?id=$id&cpt=2' class='toolboxlink'>Class Setting</a></li>
 			<li><a href='classpage.php?id=$id&cpt=3' class='toolboxlink'>Add Student to class</a></li>";
 	}
@@ -41,9 +41,6 @@
 		echo "</div></div><br/><p style='text-align:left;font-size:24px;margin-bottom:4px;'>Latest News</p>";
 		
 		$news = getNewsForClass($id);
-		foreach ($news as $story){
-			echo $story;
-		}
 	}elseif ($classPageType == 1){
 		echo '
 		<script>
@@ -165,20 +162,24 @@
 				echo "</table></div>";
 			}
 	}elseif ($classPageType == 2){
-		echo '<form id="contentbox">
-			<div class="contentboxbody">';
-			$groupdesc = new TextSetting("Class Description", "cdesc");
-			$groupdesc->setType(1);
-			$groupdesc->setLength(800);
-			$groupdesc->setDefault($class['description']);
-			
-			$descSettingGroup = new SettingGroup('changegroupdesc', 'Change Description');
-			$descSettingGroup->addSetting($groupdesc);
-			$descSettingGroup->setButtonWidth(200);
-			$descSettingGroup->render();
-		echo '</div></form>';
+		if ($_SESSION['usertype']==USER_TEACHER  && $_SESSION['userid'] == $class['teacher']){
+			echo '
+			<link rel="stylesheet" type="text/css" href="css/form.css" />
+			<form id="contentbox">
+				<div class="contentboxbody">';
+				$groupdesc = new TextSetting("Class Description", "cdesc");
+				$groupdesc->setType(1);
+				$groupdesc->setLength(800);
+				$groupdesc->setDefault($class['description']);
+				
+				$descSettingGroup = new SettingGroup('changegroupdesc', 'Change Description');
+				$descSettingGroup->addSetting($groupdesc);
+				$descSettingGroup->setButtonWidth(200);
+				$descSettingGroup->render();
+			echo '</div></form>';
+		}
 	}elseif ($classPageType == 3){
-		if ($_SESSION['usertype']==USER_TEACHER){
+		if ($_SESSION['usertype']==USER_TEACHER  && $_SESSION['userid'] == $class['teacher']){
 			echo '<script type="text/javascript">
 				$(document).ready(function() {
 					$("#query.input").keyup(function() {
