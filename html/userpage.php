@@ -83,10 +83,11 @@
 			
 			$bonuslink = "";
 			if (loggedIn() and $_SESSION['usertype']==USER_TEACHER and $_SESSION['userid'] == $user['teacher']){
+				$bonuslink .= "<li><a href='settings.php?masquerade=$id' class='toolboxlink'>User Settings</a></li>";
 				if ($user['active']==0){
-					$bonuslink = "<li class='studentactivate'><a href='javascript:activateStudent($id)' class='toolboxlink'>Activate Student</a></li>";
+					$bonuslink .= "<li class='studentactivate'><a href='javascript:activateStudent($id)' class='toolboxlink'>Activate Student</a></li>";
 				}else{
-					$bonuslink = "<li class='studentactivate'><a href='javascript:deactivateStudent($id)' class='toolboxlink'>Deactivate Student</a></li>";
+					$bonuslink .= "<li class='studentactivate'><a href='javascript:deactivateStudent($id)' class='toolboxlink'>Deactivate Student</a></li>";
 				}
 			}
 			
