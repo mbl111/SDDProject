@@ -9,7 +9,12 @@
 			<!-- ENDIF -->
 		</p>
 		<br/>
-		[CONTENT_BODY]
+		[CONTENT_BODY]<br/>
+		<a class='toolboxlink' style='font-weight:bold;font-size:14px;padding-top:3px;' href='viewQuiz.php?id=[CONTENT_ID]'>View Quiz</a>
 	</div>
-	<div class="contentboxfooter">Quiz set [CONTENT_TIME] by [CONTENT_USER]</div>
+	<div class="contentboxfooter">Quiz set [CONTENT_TIME] by [CONTENT_USER]
+	<!-- IF ![GLOBAL_STORY] -->
+		in [CLASS_NAME]
+	<!-- ENDIF -->
+	</div>
 </div>
