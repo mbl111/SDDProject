@@ -26,6 +26,9 @@
 		case 5:
 			echo "<p class='error'>Quiz does not exist or no quiz specified!</p>";
 			break;
+		case 5:
+			echo "<p class='error'>Failed to add news!</p>";
+			break;
 		default: 
 			echo "<p class='error'>No message found</p>";
 			break;

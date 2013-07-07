@@ -22,8 +22,27 @@
 		
 	$tlinks = "";
 	if ($_SESSION['usertype'] == USER_TEACHER && $_SESSION['userid'] == $class['teacher']){
-		$tlinks = "<li><a href='classpage.php?id=$id&cpt=2' class='toolboxlink'>Class Setting</a></li>
+		$tlinks = "<li><a href='classpage.php?id=$id&cpt=4' class='toolboxlink'>Post News</a></li>
+			<li><a href='classpage.php?id=$id&cpt=2' class='toolboxlink'>Class Setting</a></li>
 			<li><a href='classpage.php?id=$id&cpt=3' class='toolboxlink'>Add Student to class</a></li>";
+			
+			if (isset($_POST['submitnews'])){
+				$title = $_POST['title'];
+				$body = $_POST['body'];
+				$title = strip_tags(mysql_real_escape_string($title));
+				$body = strip_tags(mysql_real_escape_string($body));
+				$body = str_replace("\\r\\n", "<br/>", $body);
+				$timestamp = time();
+				$insert = dbQuery("INSERT INTO content (`title`,`class`,`type`, `timestamp`) VALUES ('$title', $id, 'news', ".$timestamp.")");
+				if ($insert){
+					$q = dbQuery("SELECT `nid` FROM content WHERE `timestamp`=$timestamp");
+					$data = mysql_fetch_assoc($q);
+					dbQuery("INSERT INTO content_news (`id`, `body`, `poster`) VALUES ({$data['nid']}, '$body', {$_SESSION['userid']})");
+				}else{
+					header("Location:message.php?id=6");
+				}
+				header("Location:classpage.php?id=$id");
+			}
 	}
 	
 	addToolBox($class['name'],"<ul class='toolboxlinklist'>
@@ -229,6 +248,11 @@
                     <ul class='result'></ul>
                 </div></div>";
 		}
+	}elseif ($classPageType == 4){
+	//Submit news! :D
+		$template = new Template;
+		$template->render("submitnews");
+	
 	}
 	
 ?>

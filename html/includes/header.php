@@ -26,7 +26,7 @@
 		$profile = dbQuery("SELECT firstname, lastname, timezone FROM users WHERE `id`={$_SESSION['userid']} LIMIT 1");
 		$profile = mysql_fetch_assoc($profile);
 		$_SESSION['firstname'] = $profile['firstname'];
-		$_SESSION['lastddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddname'] = $profile['lastname'];
+		$_SESSION['lastname'] = $profile['lastname'];
 		$_SESSION['timezone'] = $profile['timezone'];
 		$teacherLinks = "";
 		if ($_SESSION['usertype']==USER_TEACHER){

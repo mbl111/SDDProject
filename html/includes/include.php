@@ -198,7 +198,7 @@ function buildContent($contentID){
 function getNewsForClass($id){
 	
 	global $dateFormat;
-	$query = dbQuery("SELECT * FROM content WHERE `class`=$id ORDER BY `timestamp` ASC LIMIT 10");
+	$query = dbQuery("SELECT * FROM content WHERE `class`=$id ORDER BY `timestamp` DESC LIMIT 10");
 	while(($contentDetails = mysql_fetch_assoc($query))==true){
 		$template = new Template;
 		$content = getContentSpecifics("content_".$contentDetails['type'], $contentDetails['nid']);
