@@ -19,6 +19,10 @@ function addSetting($setting){
 	}
 }
 
+function addConstant($ident, $value){
+	
+}
+
 function addText($text){
 	$this->settings[] = $text;
 }
@@ -31,18 +35,24 @@ function render(){
 
 	echo '<script>$(document).ready(function() {$("#'.$this->name.'b").click(function(e){';
 	foreach($this->settings as $set){
-		echo ' var '.$set->ident.' = $("#'.$set->ident.'.'.$set->cls.'").val();';
+		if (is_subclass_of($set, "BaseSetting")){
+			echo ' var '.$set->ident.' = $("#'.$set->ident.'.'.$set->cls.'").val();';
+		}
 	}
 	echo ' $("#'.$this->name.'").html("<span style=\'color:#990000\'>Updating... Please wait</span>");';
 	echo '  $.post("ajax/setting/'.$this->name.'.php", {';
+	$string = "";
 	foreach($this->settings as $set){
-		echo $set->ident.':'.$set->ident;
+		if (is_subclass_of($set, "BaseSetting")){
+			$string .= $set->ident.':'.$set->ident.",";
+		}
 	}
+	echo rtrim($string, ",");
 	echo '} , function(data) {
 				if (data=="true"){
-					$("#'.$this->name.'").html("Your bio has been changed.");
+					$("#'.$this->name.'").html("Your settings have been updated.");
 				}else{
-					$("#'.$this->name.'").html("Failed to change your bio. ("+ data +") Refresh to try again");
+					$("#'.$this->name.'").html("Failed to change setting. ("+ data +") Refresh to try again");
 				}
 			}).done(function() {})
 			.fail(function() { 
@@ -91,6 +101,22 @@ function setHint($hint){
 abstract function render();
 
 }
+class HiddenField extends BaseSetting{
+	
+	var $cls = 'input';
+	
+	function __construct($name="No Name",$ident="noname",$value="novalue"){
+		$this->name = $name;
+		$this->ident = $ident;
+		$this->default = $value;
+	}
+	
+	function render(){
+		echo "<".$this->cls." class='input' style='visibility:hidden;position:absolute;' name='".$this->ident."' id='".$this->ident."' value='".$this->default."'/>";
+	}
+
+}
+
 class TextSetting extends BaseSetting{
 
 	var $type = 'text';
@@ -113,7 +139,14 @@ class TextSetting extends BaseSetting{
 	function render(){
 		echo "<div class='field'>
 			<label>".$this->name."</label>
-			<".$this->cls." class='".$this->cls."' maxlength='".$this->length."' type='".$this->type."' name='".$this->ident."' id='".$this->ident."' value='".$this->default."'>".$this->default."</".$this->cls.">";
+			<".$this->cls." class='".$this->cls."' maxlength='".$this->length."' type='".$this->type."' name='".$this->ident."' id='".$this->ident."' value='".$this->default."'";
+			if ($this->cls == "textarea"){
+				echo ">".$this->default;
+				echo "</".$this->cls.">";
+			}else{
+				echo "/>";
+			}
+			
 			if (isset($this->hint)){
 				echo "<span class='hint'>{$this->hint}</span>";
 			}

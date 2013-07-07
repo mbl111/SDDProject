@@ -6,7 +6,19 @@
 
 	$errors = array();
 	mustBeLoggedin();
-	if ($_SESSION['namechanged'] == 1){
+	
+	$userId = $_SESSION['userid'];
+	$pretendingToBeStudent = false;
+	if ($_SESSION['usertype']==USER_TEACHER){
+		if (isset($_GET['masquerade'])){
+			if (studentBelongsTo($_SESSION['userid'], $_GET['masquerade'])){
+				$userId = $_GET['masquerade'];
+				$pretendingToBeStudent = true;
+			}
+		}
+	}
+	
+	if ($_SESSION['namechanged'] == 1 && !$pretendingToBeStudent){
 		echo "<script>
 		$(document).ready(function() {
 			$('#changename').hide();
@@ -14,9 +26,11 @@
 		</script>";
 	}
 	
-	$q = dbQuery("SELECT * FROM user_details WHERE id={$_SESSION['userid']}");
+	$q = dbQuery("SELECT * FROM user_details WHERE id=$userId");
+	$q2 = dbQuery("SELECT * FROM users WHERE id=$userId");
 	$bio = "";
 	$detail = mysql_fetch_assoc($q);
+	$detail = array_merge($detail, mysql_fetch_assoc($q2));
 	$bio = $detail['bio'];
 	
 	?>
@@ -76,23 +90,31 @@
 	</script>
 	
 		<form id="contentbox">
+			<p style='margin-bottom:10px;padding:10px;border-bottom: 1px #BDC2BD dashed;font-size:18px;'>You are editing the profile of <b><? echo $detail['firstname']." ".$detail['lastname'];?></b></p>
 			<div class="contentboxbody">
 				
 				<?
-				$settingGroup = new SettingGroup("changename", "Change My Name!");
+				$settingGroup = new SettingGroup("changename", $pretendingToBeStudent ? "Change name" : "Change My Name!");
+				
 			
 				$textSetting = new TextSetting("First Name", "firstname");
-				$textSetting->setDefault($_SESSION['firstname']);
+				$textSetting->setDefault($detail['firstname']);
 				
 				$textSetting1 = new TextSetting("Last Name", "lastname");
-				$textSetting1->setDefault($_SESSION['lastname']);
+				
+				$textSetting1->setDefault($detail['lastname']);
+				
+				$hiddenSetting1 = new HiddenField("id", "id", $userId);
 				
 				$settingGroup->addText("You may only change your name <b>once</b>. Changes for anything other than a correction may result in your account being deactivated");
 				$settingGroup->addSetting($textSetting);
 				$settingGroup->addSetting($textSetting1);
+				$settingGroup->addSetting($hiddenSetting1);
 				$settingGroup->render();
 				
-				$settingGroup = new SettingGroup("changebio", "Change My Bio!");
+				$settingGroup = new SettingGroup("changebio", $pretendingToBeStudent ? "Change bio" : "Change My Bio!");
+			
+				$hiddenSetting2 = new HiddenField("id", "id", $userId);
 			
 				$textSetting = new TextSetting("Bio", "bio");
 				$textSetting->setDefault($bio);
@@ -100,6 +122,7 @@
 				$textSetting->setLength(1000);
 				
 				$settingGroup->addSetting($textSetting);
+				$settingGroup->addSetting($hiddenSetting2);
 				$settingGroup->render();
 				
 				?>
@@ -112,7 +135,7 @@
 						<span class="hint">Type a secure password (20 characters max.)</span>
 					</div>
 					
-					<input class="input" id='changepassb' style="width:180px;font-weight:bold;margin-left:110px;" type="button" name="submit" value="Change my password!"/>
+					<input class="input" id='changepassb' style="width:180px;font-weight:bold;margin-left:110px;" type="button" name="submit" value="<?echo $pretendingToBeStudent ? "Change password" : "Change My Password!";?>"/>
 				</div>
 				
 				<div id="changetz" style="margin-bottom:10px;padding-bottom:10px;border-bottom: 1px #BDC2BD dashed;">
@@ -123,7 +146,7 @@
 						<span class="hint">Select a timezone near you</span>
 					</div>
 					
-					<input class="input" id='changetzb' style="width:180px;font-weight:bold;margin-left:110px;" type="button" name="submit" value="Change my timezone!"/>
+					<input class="input" id='changetzb' style="width:180px;font-weight:bold;margin-left:110px;" type="button" name="submit" value="<? echo $pretendingToBeStudent ? "Change timezone" : "Change My timezone!"?>"/>
 				</div>
 				
 			</div>
