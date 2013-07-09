@@ -46,7 +46,7 @@
 			$("#changepassb").click(function(e){
 				var b = $("#pass.input").val();
 				$("#changepass").html("<span style='color:#990000'>Changing password... Please wait</span>");
-				$.post('ajax/setting/changepass.php', {pass:b}, function(data) {
+				$.post('ajax/setting/changepass.php', {pass:b, id:<?echo $userId;?>}, function(data) {
 					if (data=="true"){
 						$("#changepass").html("Your password has been changed.");
 					}else{
@@ -74,7 +74,7 @@
 			$("#changetzb").click(function(e){
 				var b = $("#timezone.input").val();
 				$("#changetz").html("<span style='color:#990000'>Changing timezone... Please wait</span>");
-				$.post('ajax/setting/changetimezone.php', {tz:b}, function(data) {
+				$.post('ajax/setting/changetimezone.php', {tz:b, id:<?echo $userId;?>}, function(data) {
 					if (data=="true"){
 						$("#changetz").html("Your timezone has been changed.");
 					}else{
@@ -90,7 +90,8 @@
 	</script>
 	
 		<form id="contentbox">
-			<p style='margin-bottom:10px;padding:10px;border-bottom: 1px #BDC2BD dashed;font-size:18px;'>You are editing the profile of <b><? echo $detail['firstname']." ".$detail['lastname'];?></b></p>
+			<p style='margin-bottom:10px;padding:10px;border-bottom: 1px #BDC2BD dashed;font-size:18px;'>You are editing the profile of <b><? echo $detail['firstname']." ".$detail['lastname'];?></b><br/>
+			<span style='font-size:16'>Username: <? echo $detail['username'] ?></span></p>
 			<div class="contentboxbody">
 				
 				<?
@@ -106,7 +107,9 @@
 				
 				$hiddenSetting1 = new HiddenField("id", "id", $userId);
 				
-				$settingGroup->addText("You may only change your name <b>once</b>. Changes for anything other than a correction may result in your account being deactivated");
+				if (!$pretendingToBeStudent){
+					$settingGroup->addText("You may only change your name <b>once</b>. Changes for anything other than a correction may result in your account being deactivated");
+				}
 				$settingGroup->addSetting($textSetting);
 				$settingGroup->addSetting($textSetting1);
 				$settingGroup->addSetting($hiddenSetting1);
@@ -134,7 +137,7 @@
 						<input maxlength="20" class="input" type="password" name="pass" id="pass" value=""/>
 						<span class="hint">Type a secure password (20 characters max.)</span>
 					</div>
-					
+					<input class="input" name="id" type="hidden" value="<?echo $_SESSION['userid'];?>"/>
 					<input class="input" id='changepassb' style="width:180px;font-weight:bold;margin-left:110px;" type="button" name="submit" value="<?echo $pretendingToBeStudent ? "Change password" : "Change My Password!";?>"/>
 				</div>
 				
@@ -145,7 +148,7 @@
 						<?drawTimeZoneDropDown("class='input' id='timezone' name='timezone'", getTimeZone());?>
 						<span class="hint">Select a timezone near you</span>
 					</div>
-					
+					<input class="input" name="id" type="hidden" value="<?echo $_SESSION['userid'];?>"/>
 					<input class="input" id='changetzb' style="width:180px;font-weight:bold;margin-left:110px;" type="button" name="submit" value="<? echo $pretendingToBeStudent ? "Change timezone" : "Change My timezone!"?>"/>
 				</div>
 				

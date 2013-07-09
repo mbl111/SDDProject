@@ -17,8 +17,9 @@
 	if (loggedIn()){
 		$query = dbQuery("SELECT class FROM users WHERE `id`={$_SESSION['userid']} LIMIT 1");
 		$user = mysql_fetch_assoc($query);
-		$query = dbQuery("SELECT * FROM content WHERE `class` IN ({$user['class']}, -1)  ORDER BY `timestamp` DESC LIMIT $offset, $limit");
-		$items = dbQuery("SELECT COUNT(*) FROM content WHERE `class` IN ({$user['class']}, -1)");
+		$classes = trim(rtrim($user['class'], ","), ",");
+		$query = dbQuery("SELECT * FROM content WHERE `class` IN ($classes, -1)  ORDER BY `timestamp` DESC LIMIT $offset, $limit");
+		$items = dbQuery("SELECT COUNT(*) FROM content WHERE `class` IN ($classes, -1)");
 	}else{
 		$query = dbQuery("SELECT * FROM content WHERE `type`='news' AND `class`=-1  ORDER BY `timestamp` DESC LIMIT $offset, $limit");
 		$items = dbQuery("SELECT COUNT(*) FROM content WHERE `type`='news' AND `class`=-1");

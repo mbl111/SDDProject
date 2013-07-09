@@ -52,7 +52,7 @@
 	}
 	
 	if ($id > 0){
-		$columns = "firstname, lastname, usertype, joined, lastactive";
+		$columns = "firstname, lastname, usertype, joined, lastactive, username";
 		if (loggedIn() and $_SESSION['usertype'] == USER_TEACHER){
 			$columns .= ", teacher, class, active";
 		}elseif (loggedIn() and $id == $_SESSION['userid']){
@@ -77,7 +77,8 @@
 			}
 			$classes = array();
 			if (isset($user['class']) and $user['class']!=""){
-				$classes = explode(",", $user['class']);
+				$classes = trim(rtrim($user['class'], ","), ",");
+				$classes = explode(",", $classes);
 			}
 			
 			
@@ -103,7 +104,10 @@
 			beginMainContent();
 			
 			echo "
-			<p style='padding-bottom:3px;text-align:left;'><span class='text'>{$user['firstname']} {$user['lastname']}</span> <span class='label'>(".$typestring.")</span>";
+			<p style='padding-bottom:3px;text-align:left;'><span class='text' style='font-size:18px'>{$user['firstname']} {$user['lastname']}</span> <span class='label' style='font-size:18px'>(".$typestring.")</span>";
+			if (loggedIn() and (($_SESSION['usertype']==USER_TEACHER and $_SESSION['userid'] == $user['teacher']) or ($_SESSION['userid'] == $id))){
+				echo "<br/><span class='text' style='font-size:16px'>Username: {$user['username']}</span>";
+			}
 			if (loggedIn() and $_SESSION['usertype'] == USER_TEACHER and $user['active'] == 0){
 				echo "  <span id='isactive' style='font-style:italic;font-size:14px;color:#990000'>This user is inactive (<a href='javascript:activateStudent($id)' class='toolboxlink'>Activate Student</a>)</span>";
 			}else{

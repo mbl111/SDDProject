@@ -307,6 +307,9 @@ function getQuiz($contentID){
 $classnameById = array();
 
 function getClassName($id){
+	if (!isset($id) or $id == ""){
+		return "ID NOT SET!! getClassName(id)";
+	}
 	if (isset($classnameById[$id])){
 		return $classnameById[$id];
 	}
@@ -334,7 +337,7 @@ function getUserMarksForQuiz($qid, $uid){
 }
 
 function getNumberOfQuestionsForQuiz($qid){
-	$q = dbQuery("SELECT `user_id` FROM user_quiz_answers WHERE `quiz_id`=$qid");
+	$q = dbQuery("SELECT `id` FROM content_quiz_questions WHERE `quiz_id`=$qid");
 	if ($q){
 		return mysql_num_rows($q);
 	}
