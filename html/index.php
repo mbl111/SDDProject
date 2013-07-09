@@ -49,9 +49,17 @@
 			$template->assign("CONTENT_EDITOR", resolveFullnameFromID($content['lasteditor']));
 			$template->assign("CONTENT_EDIT_TIME", date($dateFormat, getTimeWithZone($content['edittime'], +10)));
 		}elseif ($contentDetails['type'] == 'quiz'){
+			$doneQuiz = userHasDoneQuiz($contentDetails['nid'], $_SESSION['userid']);
+		
+			if ($doneQuiz){
+				$template->assign("QUIZ_MARKS", getUserMarksForQuiz($contentDetails['nid'], $_SESSION['userid']));
+			}
+			$template->assign("QUIZ_QUESTION_COUNT", getNumberOfQuestionsForQuiz($contentDetails['nid']));
 			$template->assign("QUIZ_OVERDUE", $content['due'] < time() ? 'true' : 'false');
 			$template->assign("QUIZ_DUE", date($dateFormat, getTimeWithZone($content['due'], +10)));
-			$template->assign("QUIZ_STATUS", userHasDoneQuiz($contentDetails['nid'], $_SESSION['userid']) ? "Quiz Completed" : "Not Complete");
+			$template->assign("QUIZ_STATUS", $doneQuiz ? "Quiz Completed" : "Not Complete");
+			$template->assign("QUIZ_PAGE", "false");
+			$template->assign("QUIZ_DONE", $doneQuiz ? "true" : "false");
 		}
 		$template->render($contentDetails['type']);
 	}

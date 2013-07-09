@@ -1,16 +1,24 @@
 <div id="contentbox">
 	<div class="contentboxheader"><a href="viewcontent.php?id=[CONTENT_ID]" class="contentboxheadertext">[CONTENT_TITLE]</a></div>
 	<div class="contentboxbody">
-		<p>[QUIZ_STATUS] - Due 
-			<!-- IF [QUIZ_OVERDUE] -->
-				<span style='color:#FF3333'>[QUIZ_DUE]</span>
+		<p>- [QUIZ_STATUS] 
+			<!-- IF [QUIZ_DONE] -->
+				<br/>- Marks: [QUIZ_MARKS] / [QUIZ_QUESTION_COUNT]
 			<!-- ELSE -->
-				<span style='color:#33FF33'>[QUIZ_DUE]</span>
+				<br/>- Questions: [QUIZ_QUESTION_COUNT]
+				<br/>- Due 
+				<!-- IF [QUIZ_OVERDUE] -->
+					<span style='color:#FF3333'>[QUIZ_DUE]</span>
+				<!-- ELSE -->
+					<span style='color:#33FF33'>[QUIZ_DUE]</span>
+				<!-- ENDIF -->
 			<!-- ENDIF -->
 		</p>
 		<br/>
-		[CONTENT_BODY]<br/>
-		<a class='toolboxlink' style='font-weight:bold;font-size:14px;padding-top:3px;' href='viewQuiz.php?id=[CONTENT_ID]'>View Quiz</a>
+		[CONTENT_BODY]
+		<!-- IF ![QUIZ_PAGE] -->
+		<br/><a class='toolboxlink' style='font-weight:bold;font-size:14px;padding-top:3px;' href='viewQuiz.php?id=[CONTENT_ID]'>View Quiz</a>
+		<!-- ENDIF -->
 	</div>
 	<div class="contentboxfooter">Quiz set [CONTENT_TIME] by [CONTENT_USER]
 	<!-- IF ![GLOBAL_STORY] -->

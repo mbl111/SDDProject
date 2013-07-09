@@ -188,9 +188,17 @@ function buildContent($contentID){
 			$template->assign("CONTENT_EDITOR", resolveFullnameFromID($content['lasteditor']));
 			$template->assign("CONTENT_EDIT_TIME", date($dateFormat, getTimeWithZone($content['edittime'], +10)));
 		}elseif ($contentDetails['type'] == 'quiz'){
+			$doneQuiz = userHasDoneQuiz($contentDetails['nid'], $_SESSION['userid']);
+		
 			$template->assign("QUIZ_OVERDUE", $content['due'] < time() ? 'true' : 'false');
 			$template->assign("QUIZ_DUE", date($dateFormat, getTimeWithZone($content['due'], +10)));
-			$template->assign("QUIZ_STATUS", userHasDoneQuiz($contentDetails['nid'], $_SESSION['userid']) ? "Quiz Completed" : "Not Complete");
+			$template->assign("QUIZ_STATUS", $doneQuiz ? "Quiz Completed" : "Not Complete");
+			$template->assign("QUIZ_PAGE", "false");
+			if ($doneQuiz){
+				$template->assign("QUIZ_MARKS", getUserMarksForQuiz($contentDetails['nid'], $_SESSION['userid']));
+			}
+			$template->assign("QUIZ_QUESTION_COUNT", getNumberOfQuestionsForQuiz($contentDetails['nid']));
+			$template->assign("QUIZ_DONE", $doneQuiz ? "true" : "false");
 		}
 		$template->render($contentDetails['type']);
 }
@@ -220,9 +228,17 @@ function getNewsForClass($id){
 			$template->assign("CONTENT_EDITOR", resolveFullnameFromID($content['lasteditor']));
 			$template->assign("CONTENT_EDIT_TIME", date($dateFormat, getTimeWithZone($content['edittime'], +10)));
 		}elseif ($contentDetails['type'] == 'quiz'){
+			$doneQuiz = userHasDoneQuiz($contentDetails['nid'], $_SESSION['userid']);
+		
 			$template->assign("QUIZ_OVERDUE", $content['due'] < time() ? 'true' : 'false');
 			$template->assign("QUIZ_DUE", date($dateFormat, getTimeWithZone($content['due'], +10)));
-			$template->assign("QUIZ_STATUS", userHasDoneQuiz($contentDetails['nid'], $_SESSION['userid']) ? "Quiz Completed" : "Not Complete");
+			$template->assign("QUIZ_STATUS", $doneQuiz ? "Quiz Completed" : "Not Complete");
+			$template->assign("QUIZ_PAGE", "false");
+			if ($doneQuiz){
+				$template->assign("QUIZ_MARKS", getUserMarksForQuiz($contentDetails['nid'], $_SESSION['userid']));
+			}
+			$template->assign("QUIZ_QUESTION_COUNT", getNumberOfQuestionsForQuiz($contentDetails['nid']));
+			$template->assign("QUIZ_DONE", $doneQuiz ? "true" : "false");
 		}
 		$template->render($contentDetails['type']);
 	}
@@ -301,7 +317,28 @@ function getClassName($id){
 }
 
 function userHasDoneQuiz($qid, $uid){
-return mysql_num_rows(dbQuery("SELECT `user_id` FROM user_quiz_answers WHERE `user_id`=$uid AND `quiz_id`=$qid")) == 1;
+	$q = dbQuery("SELECT `user_id` FROM user_quiz_answers WHERE `user_id`=$uid AND `quiz_id`=$qid");
+	if ($q){
+		return mysql_num_rows($q) > 0;
+	}
+	return false;
+
+}
+
+function getUserMarksForQuiz($qid, $uid){
+	$q = dbQuery("SELECT `user_id` FROM user_quiz_answers WHERE `user_id`=$uid AND `quiz_id`=$qid AND `answer`=1");
+	if ($q){
+		return mysql_num_rows($q);
+	}
+	return -1;
+}
+
+function getNumberOfQuestionsForQuiz($qid){
+	$q = dbQuery("SELECT `user_id` FROM user_quiz_answers WHERE `quiz_id`=$qid");
+	if ($q){
+		return mysql_num_rows($q);
+	}
+	return -1;
 }
 
 function studentBelongsTo($idToTest, $student){

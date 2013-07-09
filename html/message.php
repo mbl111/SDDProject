@@ -26,8 +26,14 @@
 		case 5:
 			echo "<p class='error'>Quiz does not exist or no quiz specified!</p>";
 			break;
-		case 5:
+		case 6:
 			echo "<p class='error'>Failed to add news!</p>";
+			break;
+		case 7:
+			echo "<p class='error'>Failed to submit quiz!</p>";
+			break;
+		case 8:
+			echo "<p class='error'>You cant submit this quiz! You have already done it</p>";
 			break;
 		default: 
 			echo "<p class='error'>No message found</p>";
