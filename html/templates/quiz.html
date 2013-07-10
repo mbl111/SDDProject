@@ -17,7 +17,11 @@
 		<br/>
 		[CONTENT_BODY]
 		<!-- IF ![QUIZ_PAGE] -->
-		<br/><a class='toolboxlink' style='font-weight:bold;font-size:14px;padding-top:3px;' href='viewQuiz.php?id=[CONTENT_ID]'>View Quiz</a>
+			<br/><a class='styledLink' style='font-size:14px;padding-top:3px;' href='viewQuiz.php?id=[CONTENT_ID]'>View Quiz</a>
+		<!-- ELSE -->
+			<!-- IF [QUIZ_DONE] -->
+				<br/>Key: <span class='highlightGreen'>Correct Answer</span> | <span class='highlightRed'>Your answer (wrong)</span>
+			<!-- ENDIF -->
 		<!-- ENDIF -->
 	</div>
 	<div class="contentboxfooter">Quiz set [CONTENT_TIME] by [CONTENT_USER]
