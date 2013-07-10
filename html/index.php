@@ -18,51 +18,23 @@
 		$query = dbQuery("SELECT class FROM users WHERE `id`={$_SESSION['userid']} LIMIT 1");
 		$user = mysql_fetch_assoc($query);
 		$classes = trim(rtrim($user['class'], ","), ",");
-		$query = dbQuery("SELECT * FROM content WHERE `class` IN ($classes, -1)  ORDER BY `timestamp` DESC LIMIT $offset, $limit");
-		$items = dbQuery("SELECT COUNT(*) FROM content WHERE `class` IN ($classes, -1)");
+		//$query = dbQuery("SELECT * FROM content WHERE `class` IN ($classes, -1)  ORDER BY `timestamp` DESC LIMIT $offset, $limit");
+		$items = dbQuery("SELECT `nid` FROM content WHERE `class` IN ($classes, -1) ORDER BY `timestamp` DESC");
 	}else{
-		$query = dbQuery("SELECT * FROM content WHERE `type`='news' AND `class`=-1  ORDER BY `timestamp` DESC LIMIT $offset, $limit");
-		$items = dbQuery("SELECT COUNT(*) FROM content WHERE `type`='news' AND `class`=-1");
+		//$query = dbQuery("SELECT * FROM content WHERE `type`='news' AND `class`=-1  ORDER BY `timestamp` DESC LIMIT $offset, $limit");
+		$items = dbQuery("SELECT `nid` FROM content WHERE `type`='news' AND `class`=-1  ORDER BY `timestamp` DESC");
 	}
 	
-	$result  = mysql_fetch_array($items);
-	$existingItems  = $result[0];
+	$existingItems  = mysql_num_rows($items);
 	
 	
 	$overallPage = "";
-	while(($contentDetails = mysql_fetch_assoc($query))==true){
-		$template = new Template;
-		$content = getContentSpecifics("content_".$contentDetails['type'], $contentDetails['nid']);
-		
-		$template->assign("CONTENT_TITLE", $contentDetails['title']);
-		$template->assign("CONTENT_ID", $contentDetails['nid']);
-		$template->assign("CONTENT_TIME", date($dateFormat, getTimeWithZone($contentDetails['timestamp'], +10)));
-		$template->assign("CONTENT_USER", resolveFullnameFromID($content['poster']));
-		$template->assign("CONTENT_BODY", $content['body']);
-		$template->assign("GLOBAL_STORY", $contentDetails['class'] == -1 ? "true" : "false");
-		if ($contentDetails['class'] != -1){
-			$template->assign("CLASS_NAME", getClassName($contentDetails['class']));
-			$template->assign("CLASS_ID", $contentDetails['class']);
+	$count = 1;
+	while(($contentDetails = mysql_fetch_assoc($items)) and ($count <= $limit + $offset)){
+		if ($count > $offset){
+			buildContent($contentDetails['nid']);
 		}
-		
-		if ($contentDetails['type'] == 'news'){
-			$template->assign("CONTENT_EDITED", ($content['lasteditor'] > 0) ? "true" : "false");
-			$template->assign("CONTENT_EDITOR", resolveFullnameFromID($content['lasteditor']));
-			$template->assign("CONTENT_EDIT_TIME", date($dateFormat, getTimeWithZone($content['edittime'], +10)));
-		}elseif ($contentDetails['type'] == 'quiz'){
-			$doneQuiz = userHasDoneQuiz($contentDetails['nid'], $_SESSION['userid']);
-		
-			if ($doneQuiz){
-				$template->assign("QUIZ_MARKS", getUserMarksForQuiz($contentDetails['nid'], $_SESSION['userid']));
-			}
-			$template->assign("QUIZ_QUESTION_COUNT", getNumberOfQuestionsForQuiz($contentDetails['nid']));
-			$template->assign("QUIZ_OVERDUE", $content['due'] < time() ? 'true' : 'false');
-			$template->assign("QUIZ_DUE", date($dateFormat, getTimeWithZone($content['due'], +10)));
-			$template->assign("QUIZ_STATUS", $doneQuiz ? "Quiz Completed" : "Not Complete");
-			$template->assign("QUIZ_PAGE", "false");
-			$template->assign("QUIZ_DONE", $doneQuiz ? "true" : "false");
-		}
-		$template->render($contentDetails['type']);
+		$count++;
 	}
 	
 	$adjacents = 2;
