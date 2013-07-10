@@ -118,6 +118,10 @@ function loggedIn(){
 	return isset($_SESSION['userid']);
 }
 
+function isAdmin(){
+	return isset($_SESSION['admin']) and $_SESSION['admin'] > 0;
+}
+
 function drawToolBoxes(){
 	global $toolboxes;
 	if (isset($toolboxes)){
@@ -147,7 +151,41 @@ echo '</aside><div id="centerelement">';
 }
 
 function endMainContent(){
-echo "</div></div>";
+	if (loggedIn()){
+		global $timeConstant;
+		$timeCheck = time() - ($timeConstant['min'] * 5);
+		$query = dbQuery("SELECT `firstname`, `lastname`, `id` FROM users WHERE `lastactive` > $timeCheck AND `id`!={$_SESSION['userid']}");
+		if ($query){
+			echo "<div style='padding-top:4px;'><span class='usersonlinetitlespan' style='font-weight:bold;'>Users online (Based on activity from the past 5 minutes)</span><br/><span class='usersonlinespan'>";
+			$num = mysql_num_rows($query);
+			if ($num == 0){
+				echo "No one else is online :(";
+			}elseif ($num <= 5){
+				while (($user = mysql_fetch_assoc($query))){
+						echo "<a href='userpage.php?id=".$user['id']."' class='styledLink'>".$user['firstname']." ".$user['lastname']."</a>";
+						if ($num == 1){
+							echo "."; 
+						}else{
+							echo ", ";
+						}
+						$num--;
+				}
+			}else{
+				$count = 5;
+				while (($user = mysql_fetch_assoc($query)) and $count > 0){
+						echo "<a href='userpage.php?id=" . $user['id'] . "' class='styledLink'>".$user['firstname']." ".$user['lastname']."</a>";
+						if ($count == 1) {
+							echo " and ".$num--." others.";
+						}else{
+							echo ", ";
+						}
+						$num--;
+						$count--;
+				}
+			}
+		}
+	}
+echo "</span></div></div></div>";
 }
 
 function footer(){
@@ -206,41 +244,9 @@ function buildContent($contentID){
 function getNewsForClass($id){
 	
 	global $dateFormat;
-	$query = dbQuery("SELECT * FROM content WHERE `class`=$id ORDER BY `timestamp` DESC LIMIT 10");
-	while(($contentDetails = mysql_fetch_assoc($query))==true){
-		$template = new Template;
-		$content = getContentSpecifics("content_".$contentDetails['type'], $contentDetails['nid']);
-		
-		$template->assign("CONTENT_TITLE", $contentDetails['title']);
-		$template->assign("CONTENT_ID", $contentDetails['nid']);
-		$template->assign("CONTENT_TIME", date($dateFormat, getTimeWithZone($contentDetails['timestamp'], +10)));
-		$template->assign("CONTENT_USER", resolveFullnameFromID($content['poster']));
-		$template->assign("CONTENT_BODY", $content['body']);
-		
-		$template->assign("GLOBAL_STORY", $contentDetails['class'] == -1 ? "true" : "false");
-		if ($contentDetails['class'] != -1){
-			$template->assign("CLASS_NAME", getClassName($contentDetails['class']));
-			$template->assign("CLASS_ID", $contentDetails['class']);
-		}
-		
-		if ($contentDetails['type'] == 'news'){
-			$template->assign("CONTENT_EDITED", ($content['lasteditor'] > 0) ? "true" : "false");
-			$template->assign("CONTENT_EDITOR", resolveFullnameFromID($content['lasteditor']));
-			$template->assign("CONTENT_EDIT_TIME", date($dateFormat, getTimeWithZone($content['edittime'], +10)));
-		}elseif ($contentDetails['type'] == 'quiz'){
-			$doneQuiz = userHasDoneQuiz($contentDetails['nid'], $_SESSION['userid']);
-		
-			$template->assign("QUIZ_OVERDUE", $content['due'] < time() ? 'true' : 'false');
-			$template->assign("QUIZ_DUE", date($dateFormat, getTimeWithZone($content['due'], +10)));
-			$template->assign("QUIZ_STATUS", $doneQuiz ? "Quiz Completed" : "Not Complete");
-			$template->assign("QUIZ_PAGE", "false");
-			if ($doneQuiz){
-				$template->assign("QUIZ_MARKS", getUserMarksForQuiz($contentDetails['nid'], $_SESSION['userid']));
-			}
-			$template->assign("QUIZ_QUESTION_COUNT", getNumberOfQuestionsForQuiz($contentDetails['nid']));
-			$template->assign("QUIZ_DONE", $doneQuiz ? "true" : "false");
-		}
-		$template->render($contentDetails['type']);
+	$query = dbQuery("SELECT nid FROM content WHERE `class`=$id ORDER BY `timestamp` DESC LIMIT 10");
+	while(($idSet = mysql_fetch_assoc($query))==true){
+		buildContent($idSet['nid']);
 	}
 }
 
