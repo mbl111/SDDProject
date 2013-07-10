@@ -22,7 +22,7 @@
 		
 	$tlinks = "";
 	if ($_SESSION['usertype'] == USER_TEACHER && $_SESSION['userid'] == $class['teacher']){
-		$tlinks = "<li><a href='classpage.php?id=$id&cpt=4' class='toolboxlink'>Post News</a></li>
+		$tlinks = "<li><a href='submitnews.php?class=$id' class='toolboxlink'>Post News</a></li>
 			<li><a href='classpage.php?id=$id&cpt=2' class='toolboxlink'>Class Setting</a></li>
 			<li><a href='classpage.php?id=$id&cpt=3' class='toolboxlink'>Add Student to class</a></li>";
 			
@@ -248,11 +248,9 @@
                     <ul class='result'></ul>
                 </div></div>";
 		}
-	}elseif ($classPageType == 4){
-	//Submit news! :D
+	}elseif ($classPageType == 5){
 		$template = new Template;
-		$template->render("submitnews");
-	
+		$template->render("submitquiz");
 	}
 	
 ?>
