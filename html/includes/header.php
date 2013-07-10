@@ -23,14 +23,16 @@
 			}
 		}
 		dbQuery("UPDATE users SET `lastactive`=".time()." WHERE `id`={$_SESSION['userid']}");
-		$profile = dbQuery("SELECT firstname, lastname, timezone FROM users WHERE `id`={$_SESSION['userid']} LIMIT 1");
+		$profile = dbQuery("SELECT firstname, lastname, timezone, admin FROM users WHERE `id`={$_SESSION['userid']} LIMIT 1");
 		$profile = mysql_fetch_assoc($profile);
 		$_SESSION['firstname'] = $profile['firstname'];
 		$_SESSION['lastname'] = $profile['lastname'];
 		$_SESSION['timezone'] = $profile['timezone'];
+		$_SESSION['admin'] = $profile['admin'];
 		$teacherLinks = "";
 		if ($_SESSION['usertype']==USER_TEACHER){
-			$teacherLinks = "<li><a href='students.php' class='toolboxlink'>Students</a></li>";
+			$teacherLinks = "<li><a href='students.php' class='toolboxlink'>Students</a></li>
+							<li><a href='submitnews.php' class='toolboxlink'>Post News</a></li>";
 		}
 		addToolBox(myFullName(), "
 		<ul class='toolboxlinklist'>
