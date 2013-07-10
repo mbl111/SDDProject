@@ -36,7 +36,8 @@
 <?
 	$template = new Template;
 	
-	$defaultSelectedClass = -1;
+	$defaultSelectedClass = -1;.
+	
 	if (isset($_GET['class'])){
 		$defaultSelectedClass = $_GET['class'];
 	}
