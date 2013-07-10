@@ -1,12 +1,23 @@
 <div id="contentbox" class='question[INCREMENTAL_ID]'>
 	<div id='question[INCREMENTAL_ID]' class="contentboxbody">
-		<p class='questionText' style='font-size:16px;font-weight:bold;'>[QUESTION_TEXT]</p>
+		<p class='questionText' style='font-size:16px;font-weight:bold;padding-bottom:2px;'>[QUESTION_TEXT]</p>
 		<input type='hidden' name='questionid[INCREMENTAL_ID]' value='[QUESTION_ID]'>
 		<ul class='quiz_answers'>
-			<li><input type="radio" name="answer[INCREMENTAL_ID]" value="[ANSWER_RANDOM_1]"> [ANSWER_RANDOM_1]<br></li>
-			<li><input type="radio" name="answer[INCREMENTAL_ID]" value="[ANSWER_RANDOM_2]"> [ANSWER_RANDOM_2]<br></li>
-			<li><input type="radio" name="answer[INCREMENTAL_ID]" value="[ANSWER_RANDOM_3]"> [ANSWER_RANDOM_3]<br></li>
-			<li><input type="radio" name="answer[INCREMENTAL_ID]" value="[ANSWER_RANDOM_4]"> [ANSWER_RANDOM_4]<br></li>
+			<!-- IF [ANSWER_1] -->
+				<li class='[HIGHLIGHT_1]'><input type="radio" name="answer[INCREMENTAL_ID]" value="[ANSWER_RANDOM_1]"> [ANSWER_RANDOM_1]<br></li>
+			<!-- ENDIF -->
+			
+			<!-- IF [ANSWER_2] -->
+				<li class='[HIGHLIGHT_2]'><input type="radio" name="answer[INCREMENTAL_ID]" value="[ANSWER_RANDOM_2]"> [ANSWER_RANDOM_2]<br></li>
+			<!-- ENDIF -->
+			
+			<!-- IF [ANSWER_3] -->
+				<li class='[HIGHLIGHT_3]'><input type="radio" name="answer[INCREMENTAL_ID]" value="[ANSWER_RANDOM_3]"> [ANSWER_RANDOM_3]<br></li>
+			<!-- ENDIF -->
+			
+			<!-- IF [ANSWER_4] -->
+				<li class='[HIGHLIGHT_4]'><input type="radio" name="answer[INCREMENTAL_ID]" value="[ANSWER_RANDOM_4]"> [ANSWER_RANDOM_4]<br></li>
+			<!-- ENDIF -->
 		</ul>
 	</div>
 </div>
