@@ -127,7 +127,7 @@
 				<ul class='contentboxbody' style='list-style-type: circle;list-style-position:inside;margin-left: 10px;line-height: 18px;'>";
 				if (!empty($classes)){
 					foreach ($classes as $class){
-						echo "<li><span class='text'><a href='classpage.php?id=$class' class='toolboxlink' style='font-weight:bold;text-decoration:underline;'>".getClassName($class)."</a></span></li>";
+						echo "<li><span class='text'><a href='classpage.php?id=$class' class='styledLink' style='font-size:16px;'>".getClassName($class)."</a></span></li>";
 					}
 				}else{
 					echo "{$user['firstname']} {$user['lastname']} is not in any classes";
