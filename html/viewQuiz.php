@@ -127,6 +127,17 @@
 					$question->assign('ANSWER_RANDOM_2', $answers[1]);
 					$question->assign('ANSWER_RANDOM_3', $answers[2]);
 					$question->assign('ANSWER_RANDOM_4', $answers[3]);
+					
+					$question->assign('ANSWER_1', $answers[0] == "" ? "false" : "true");
+					$question->assign('ANSWER_2', $answers[1] == "" ? "false" : "true");
+					$question->assign('ANSWER_3', $answers[2] == "" ? "false" : "true");
+					$question->assign('ANSWER_4', $answers[3] == "" ? "false" : "true");
+					
+					$question->assign('HIGHLIGHT_1', "");
+					$question->assign('HIGHLIGHT_2', "");
+					$question->assign('HIGHLIGHT_3', "");
+					$question->assign('HIGHLIGHT_4', "");
+					
 					$question->render('quiz_question_xchoice');
 					$incid = $incid + 1;
 				}
@@ -137,7 +148,64 @@
 				echo "<span style='font-size:16px;'>This quiz can not be completed after the due date!";
 			}
 		}else{
-			echo "You've done the quiz noob!";
+			$resultById = array();
+			$resultQuery = dbQuery("SELECT * FROM user_quiz_answers WHERE `user_id`={$_SESSION['userid']} AND `quiz_id`=$quizId");
+			while (($row = mysql_fetch_assoc($resultQuery))){
+				$resultById[$row['question_id']] = $row['answer'];
+			}
+			
+			$incid = 1;
+				while (($row = mysql_fetch_assoc($questionQuery))){
+					$answers = array();
+					$highlight = array();
+					
+					$answers[0] = $row['1'];
+					$answers[1] = $row['2'];
+					$answers[2] = $row['3'];
+					$answers[3] = $row['4'];
+					
+					$highlight[0] = "highlightGreen";
+					$highlight[1] = "";
+					$highlight[2] = "";
+					$highlight[3] = "";
+					
+					if (1 != $resultById[$row['id']]){
+						if (2 == $resultById[$row['id']]){
+							$highlight[1] = "highlightRed";
+						}
+						
+						if (3 == $resultById[$row['id']]){
+							$highlight[2] = "highlightRed";
+						}
+						
+						if (4 == $resultById[$row['id']]){
+							$highlight[3] = "highlightRed";
+						}
+					}
+					
+				
+					$question = new Template;
+					$question->assign('QUESTION_TEXT', $row['q']);
+					$question->assign('QUESTION_ID', $row['id']);
+					$question->assign('INCREMENTAL_ID', $incid);
+					$question->assign('ANSWER_RANDOM_1', $answers[0]);
+					$question->assign('ANSWER_RANDOM_2', $answers[1]);
+					$question->assign('ANSWER_RANDOM_3', $answers[2]);
+					$question->assign('ANSWER_RANDOM_4', $answers[3]);
+					
+					$question->assign('ANSWER_1', $answers[0] == "" ? "false" : "true");
+					$question->assign('ANSWER_2', $answers[1] == "" ? "false" : "true");
+					$question->assign('ANSWER_3', $answers[2] == "" ? "false" : "true");
+					$question->assign('ANSWER_4', $answers[3] == "" ? "false" : "true");
+					
+					$question->assign('HIGHLIGHT_1', $highlight[0]);
+					$question->assign('HIGHLIGHT_2', $highlight[1]);
+					$question->assign('HIGHLIGHT_3', $highlight[2]);
+					$question->assign('HIGHLIGHT_4', $highlight[3]);
+					
+					$question->render('quiz_question_xchoice');
+					$incid = $incid + 1;
+				}
 		}
 	}else{
 		echo "No questions for this quiz!";
@@ -154,8 +222,8 @@
 					for (var i = 1; i <= questions; i++){
 						var answered = $("input[type=radio][name=answer" + i + "]:checked").length;
 						if (answered < 1){
-							$("#question" + i).addClass('highlight', 2000);//.animate({backgroundColor:"#FFFF00",}, 1000 );
-							$(".question" + i).addClass('highlight', 2000);//.animate({backgroundColor:"#FFFF00",}, 1000 );
+							$("#question" + i).addClass('highlightYellow', 2000);//.animate({backgroundColor:"#FFFF00",}, 1000 );
+							$(".question" + i).addClass('highlightYellow', 2000);//.animate({backgroundColor:"#FFFF00",}, 1000 );
 						}
 					}
 					return false;
