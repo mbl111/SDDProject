@@ -4,6 +4,20 @@ body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fiel
     padding: 0px;
 }
 
+a.styledLink:hover{
+	color: #FF5566;
+	font-size:12px;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+a.styledLink,a.styledLink:visited{
+	color: #DD3344;
+	font-size:12px;
+	font-weight: bold;
+	text-decoration: none;
+}
+
 .quiz_answers
 {
 	list-style-type: none;
@@ -12,8 +26,16 @@ body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fiel
 	line-height: 18px;
 }
 
-.highlight{
+.highlightYellow{
 background-color: #FFFFBB;
+}
+
+.highlightGreen{
+background-color: #BBFFBB;
+}
+
+.highlightRed{
+background-color: #FFBBBB;
 }
 
 #contentarea {
@@ -49,7 +71,7 @@ background-color: #FFFFBB;
 }
 
 #contentbox{
-	border: 3px solid #F0F0F0;
+	border: 3px solid #CDD2CD;
 	margin-bottom: 10px;
 	width: 735px;
 	text-align: left;
@@ -180,4 +202,15 @@ background-color: #FFFFBB;
 	text-shadow: 0px 0px 10px white;
 	text-decoration: none;
 	float: right;
+}
+
+.usersonlinespan{
+	float:left;
+	font-size:12px;'
+}
+
+.usersonlinetitlespan{
+	float: left;
+	font-size: 12px;'
+	font-weight: bold;
 }
