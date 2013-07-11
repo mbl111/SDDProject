@@ -38,6 +38,7 @@
 		}
 		addToolBox(myFullName(), "
 		<ul class='toolboxlinklist'>
+			<li><a href='index.php' class='toolboxlink'>Home</a></li>
 			<li><a href='userpage.php?id={$_SESSION['userid']}' class='toolboxlink'>My Account</a></li>
 			$teacherLinks
 			<li><a href='' class='toolboxlink'>Notifications (6)</a></li>
