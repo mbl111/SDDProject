@@ -23,6 +23,7 @@
 	$tlinks = "";
 	if ($_SESSION['usertype'] == USER_TEACHER && $_SESSION['userid'] == $class['teacher']){
 		$tlinks = "<li><a href='submitnews.php?class=$id' class='toolboxlink'>Post News</a></li>
+			<li><a href='createquiz.php?class=$id' class='toolboxlink'>Create Quiz</a></li>
 			<li><a href='classpage.php?id=$id&cpt=2' class='toolboxlink'>Class Setting</a></li>
 			<li><a href='classpage.php?id=$id&cpt=3' class='toolboxlink'>Add Student to class</a></li>";
 			
@@ -216,7 +217,7 @@
 						$.post("ajax/validateuser.php", {name:inp}, function(data) {
 							if (data=="true"){
 								$.post("ajax/class/putinclass.php", {name:inp,id:'.$id.'}, function(data) {
-									if (data=="true"){
+									if (data.split(" ")[0]=="true"){
 										$("#feedback").html(inp + " added to class");
 										$("#query.input").val("");
 									}else{
