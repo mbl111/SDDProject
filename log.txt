@@ -1,0 +1,629 @@
+commit 5c111061f1978a6fdb41cd4033765df48564950c
+Author: mbl111 <matt@mbl111.com>
+Date:   Thu Jul 11 18:29:19 2013 +1000
+
+    We don't need to process new submissions here
+
+commit b3eedcf4f12dd3ec09ba0cfe3be594041cf7e0f5
+Author: mbl111 <matt@mbl111.com>
+Date:   Thu Jul 11 18:29:05 2013 +1000
+
+    Custom css for the settings
+
+commit 13f1155d3259fc179a25c54b4fe4771dbd2f9bd7
+Author: mbl111 <matt@mbl111.com>
+Date:   Thu Jul 11 18:28:53 2013 +1000
+
+    Allow admins to globalise news
+
+commit 0d7daf0dc906477fbf304715f0a19aafeb7a6e0b
+Author: mbl111 <matt@mbl111.com>
+Date:   Thu Jul 11 18:28:41 2013 +1000
+
+    Removed silly regex
+
+commit 71d43555572b2827591179fecb0d0cc20b4ba4c7
+Author: mbl111 <matt@mbl111.com>
+Date:   Thu Jul 11 18:28:28 2013 +1000
+
+    Changed styles
+
+commit 317297fe699bdc58957fc3313e09957226d60dc3
+Author: mbl111 <matt@mbl111.com>
+Date:   Thu Jul 11 18:28:21 2013 +1000
+
+    Link to home
+
+commit a0e3d2a7a558623d32f2d5874ffdeef213eb800f
+Author: mbl111 <matt@mbl111.com>
+Date:   Thu Jul 11 18:27:28 2013 +1000
+
+    If not logged in, take you to the home page
+
+commit 888934faf637c0513bfcb35bd467ab34299f0799
+Author: mbl111 <matt@mbl111.com>
+Date:   Thu Jul 11 18:27:11 2013 +1000
+
+    Correct Variable
+
+commit d2a0b2d515df82a71d108f5ffc5ee2dd878e5832
+Author: mbl111 <matt@mbl111.com>
+Date:   Thu Jul 11 18:26:26 2013 +1000
+
+    Direct the player to the class page
+
+commit b0eedb99c031991d70bed7dde9e358d435c2e6d7
+Author: mbl111 <matt@mbl111.com>
+Date:   Thu Jul 11 18:24:40 2013 +1000
+
+    Quiz Validation
+
+commit bc1f46969ba871a48d624f4cbd96794a072c0d0e
+Author: mbl111 <matt@mbl111.com>
+Date:   Thu Jul 11 18:24:17 2013 +1000
+
+    Redirect to class page
+
+commit 605ab83f72b52c956fe9059b50c0f20d44767fa9
+Author: mbl111 <matt@mbl111.com>
+Date:   Thu Jul 11 18:23:44 2013 +1000
+
+    Website favicon :D
+
+commit 2f56ce849a6cd405e908726073c49d063e4e69e7
+Author: mbl111 <matt@mbl111.com>
+Date:   Thu Jul 11 18:23:31 2013 +1000
+
+    Quiz form CSS
+
+commit 9f1b0df09ccc7dad70d24e3b7ec847a1c86bdc16
+Author: mbl111 <matt@mbl111.com>
+Date:   Thu Jul 11 18:23:17 2013 +1000
+
+    Script for deleting news
+
+commit 808219a91f736c186b8e2f96f39ffa873cc31075
+Author: mbl111 <matt@mbl111.com>
+Date:   Thu Jul 11 18:22:52 2013 +1000
+
+    Fixed bug that stopped users doing quized
+
+commit d886485f2093d47e27772125916fa8c01ad7b44b
+Author: mbl111 <matt@mbl111.com>
+Date:   Thu Jul 11 18:22:29 2013 +1000
+
+    Admins and posters can delete quizes
+
+commit eef5e1f39ae8187985daee542c836d02892752ce
+Author: mbl111 <matt@mbl111.com>
+Date:   Thu Jul 11 18:22:12 2013 +1000
+
+    Admins and posters can delete news
+
+commit f02761135fd56ac48f7624fb311861c466fce9be
+Author: mbl111 <matt@mbl111.com>
+Date:   Thu Jul 11 18:21:40 2013 +1000
+
+    Top div
+
+commit 58e74358ed9a3951ebdc4bfdb752fe173a153f28
+Author: mbl111 <matt@mbl111.com>
+Date:   Thu Jul 11 18:19:41 2013 +1000
+
+    Admins can post anywhere
+
+commit 3f20dd988ef7a9f411e4c7b507ad04a737fa17d2
+Author: mbl111 <matt@mbl111.com>
+Date:   Thu Jul 11 18:19:19 2013 +1000
+
+    Changed wording of buttons
+
+commit 3de54b5cfa98c0ef96763b07c6f71047aabf67d9
+Author: mbl111 <matt@mbl111.com>
+Date:   Thu Jul 11 18:19:09 2013 +1000
+
+    Added messages
+
+commit c45da5a30e19feac9ae7c9283eefc52d3dce7825
+Author: mbl111 <matt@mbl111.com>
+Date:   Thu Jul 11 18:18:56 2013 +1000
+
+    Admins can see all
+
+commit 2ad3c5b9e823d00523bab0e6b6371ccbb33423fc
+Author: mbl111 <matt@mbl111.com>
+Date:   Thu Jul 11 14:37:04 2013 +1000
+
+    Footer Layout, Users online, New Template fields, Visibility,
+
+commit 9e06d581da55eb6b2b8340d961bd2129010057a6
+Author: mbl111 <matt@mbl111.com>
+Date:   Thu Jul 11 14:36:00 2013 +1000
+
+    Title Function, Admins can post news
+
+commit 19fac40392b9bc11fb58ee868133219e410e429a
+Author: mbl111 <matt@mbl111.com>
+Date:   Thu Jul 11 14:35:36 2013 +1000
+
+    Content dropdowns (For Delete OPtions)
+
+commit ab99d2b68b2885d672dcc6b07b08120038347005
+Author: mbl111 <matt@mbl111.com>
+Date:   Thu Jul 11 14:35:14 2013 +1000
+
+    Create and submit quizes
+
+commit a72efb369f0ddac548934cd6be5a31202a70c74b
+Author: mbl111 <matt@mbl111.com>
+Date:   Thu Jul 11 14:34:39 2013 +1000
+
+    Handle the new validation return
+
+commit 0a9708f84058d8b9a0c804328c9901361454d5e4
+Author: mbl111 <matt@mbl111.com>
+Date:   Thu Jul 11 14:34:09 2013 +1000
+
+    Return user ID with validation
+
+commit fbbbb3e5d7e0889c5278617c76c473e5fce24192
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jul 10 22:20:10 2013 +1000
+
+    CreateQuiz Begin
+
+commit 60d0bb605e8f37a7c735df0998784a0217849e22
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jul 10 22:20:00 2013 +1000
+
+    Formatting
+
+commit 2fad2b1d86d6d030b93d1442dba778a3aa2b3503
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jul 10 22:19:48 2013 +1000
+
+    Template for a PHP page
+
+commit 25c9ec18274cc69d5ff1ea5d84eb58689858fac8
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jul 10 22:19:40 2013 +1000
+
+    Get out! Private :p
+
+commit fab7525633a9e7ed9a1de85108719967ce0a8e12
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jul 10 22:19:30 2013 +1000
+
+    Fully update the web dir
+
+commit 649fc6522fd2bacf27f0a90754043d9006809e89
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jul 10 21:49:22 2013 +1000
+
+    Submit news from a single page to classes
+
+commit cd0d23cc0fdf4b0422dbadbfce17c845b6e6a6ec
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jul 10 21:49:04 2013 +1000
+
+    Added question marking + OPtional questions
+
+commit 555e41d3ff84c1c5a7bc85ef921cfef0c6c63e83
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jul 10 21:48:08 2013 +1000
+
+    Made the classes list look nicer
+
+commit daa3ba9fae0dfa5c17a561682dfe4f4199e6a1b9
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jul 10 21:47:49 2013 +1000
+
+    Added class selection
+
+commit b9213bd5751671a870ea7165d3952b0b88d97f8b
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jul 10 21:47:21 2013 +1000
+
+    Quiz marking info + Optional questions
+
+commit 9bc071d6c01571b0430ebd2309697e2c485d5ec7
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jul 10 21:47:04 2013 +1000
+
+    Quiz marking info
+
+commit 59da48044671b77cedaf130b7e357eaa8ce260cb
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jul 10 21:46:52 2013 +1000
+
+    Updated to work with new content build system
+
+commit aec66635c421771be71e9a77167ce7978f7aa3e9
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jul 10 21:46:33 2013 +1000
+
+    Cleaned content building, users online, isAdmin()
+
+commit cb08c3a9afff98d5a308b63ae0dbcc2e8261d944
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jul 10 21:45:32 2013 +1000
+
+    Post news link + Admin check
+
+commit e2915c71e9b70bfd1377bda020dfe5919f3008a7
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jul 10 21:45:07 2013 +1000
+
+    Link colors and quiz highlighting
+
+commit 72fa56bd3240d4aab280fbd87c598fc55b4bffa5
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jul 10 21:44:44 2013 +1000
+
+    Moved news submission to its own page
+
+commit b6b8b35113b905c450e6055b4146f3aed852b322
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jul 10 21:44:17 2013 +1000
+
+    New line retainment
+
+commit 0aed741dd690cea936a1dc804807da7f7214e0f2
+Author: mbl111 <matt@mbl111.com>
+Date:   Tue Jul 9 21:06:45 2013 +1000
+
+    Bug Fixes
+
+commit 8a0fdb97fdfebd09192d2d8d145ed1379678a4fb
+Author: mbl111 <matt@mbl111.com>
+Date:   Tue Jul 9 19:42:50 2013 +1000
+
+    Implemented Quizes and Submitting :D
+
+commit d26ab6cac73bf2cdb4b0d8b62b957e762c8546c1
+Author: mbl111 <matt@mbl111.com>
+Date:   Sun Jul 7 21:40:15 2013 +1000
+
+    Teachers can post news to their class
+
+commit 88c9865af5aa8c77071bc29aa72423a986dac514
+Author: mbl111 <matt@mbl111.com>
+Date:   Sun Jul 7 21:04:30 2013 +1000
+
+    Function updates
+
+commit 43b0178bbcf84519b2b479fca9d1ac9856af9c69
+Author: mbl111 <matt@mbl111.com>
+Date:   Sun Jul 7 21:04:23 2013 +1000
+
+    PAGINATION + Custom news getting
+
+commit fbeb0cd41d6342a4c1c0a2c1bae4b32ec883ca62
+Author: mbl111 <matt@mbl111.com>
+Date:   Sun Jul 7 21:04:12 2013 +1000
+
+    Added function for where the news is from
+
+commit 48ebb1ab61dc184369a726d9e70e7db3eef87afe
+Author: mbl111 <matt@mbl111.com>
+Date:   Sun Jul 7 21:03:53 2013 +1000
+
+    Teachers can now change student settings
+
+commit 36e8ebba2b2e70c743256c04acc6315124444836
+Author: mbl111 <matt@mbl111.com>
+Date:   Sun Jul 7 21:03:44 2013 +1000
+
+    Fixed bugs
+
+commit 5468663a66df92a8f3656605c3f0f29c6d283f68
+Author: mbl111 <matt@mbl111.com>
+Date:   Sun Jul 7 21:03:30 2013 +1000
+
+    Only owning teacher can edit
+
+commit 4930c731f2e6795810d65040fd7d372bde7ba17f
+Author: mbl111 <matt@mbl111.com>
+Date:   Sun Jul 7 21:03:13 2013 +1000
+
+    Changed the values to constants
+
+commit b1a67f8b8ad93c3e699b4af468b2d039aa577944
+Author: mbl111 <matt@mbl111.com>
+Date:   Sun Jul 7 21:03:02 2013 +1000
+
+    Templatamafied the header section of the page
+
+commit d0becb8a36329eb8e4a8a188554190b8b85affcb
+Author: mbl111 <matt@mbl111.com>
+Date:   Sun Jul 7 21:02:27 2013 +1000
+
+    Teachers can now change user settings
+
+commit 210e8746c6a3bfebda77bf3f1632ef0c74d8eeee
+Author: mbl111 <matt@mbl111.com>
+Date:   Fri Jul 5 15:58:43 2013 +1000
+
+    Template work. Implementing Quizs
+
+commit 5a97bcd9a1e2980b6b16edd3534e7f6edfec219b
+Author: mbl111 <matt@mbl111.com>
+Date:   Thu Jul 4 15:34:54 2013 +1000
+
+    Implemented a better template engine
+
+commit 2aa0b9e5534e5fb8636853e6d71f223581f3666f
+Author: mbl111 <matt@mbl111.com>
+Date:   Mon Jun 17 23:48:14 2013 +1000
+
+    Updated for new Ajax
+
+commit 7de27b7f820e72a68a6b27a0a7fa9aa37095400c
+Author: mbl111 <matt@mbl111.com>
+Date:   Mon Jun 17 23:41:01 2013 +1000
+
+    Buttons on userpage now activate student
+
+commit 86f629dfa213e94afb30c101b96dc22f43dbe288
+Author: mbl111 <matt@mbl111.com>
+Date:   Mon Jun 17 23:40:33 2013 +1000
+
+    Teachers now have full control over adding and removing students from groups
+
+commit ef5e3d7a6bd6ffee93c040b47898130743f69129
+Author: mbl111 <matt@mbl111.com>
+Date:   Mon Jun 17 18:36:38 2013 +1000
+
+    Settings and Student searching
+
+commit 934428548f69f214e7fca8c7709007e428a8872a
+Author: mbl111 <matt@mbl111.com>
+Date:   Mon Jun 17 18:36:06 2013 +1000
+
+    Updated for new Dir Structure
+
+commit 6c14e2045a72fc9ad912d31a2162e188d245bde2
+Author: mbl111 <matt@mbl111.com>
+Date:   Mon Jun 17 15:43:50 2013 +1000
+
+    Worked on making the settings use classes
+
+commit 32f34a6e59cfbad2b51d9d4c710a2b78862c4cd1
+Author: mbl111 <matt@mbl111.com>
+Date:   Sun Jun 16 20:29:07 2013 +1000
+
+    Worked on something
+
+commit c959c7867b30d0a3b84f47c802012c2e9fe8b40f
+Author: mbl111 <matt@mbl111.com>
+Date:   Mon Jun 10 16:08:14 2013 +1000
+
+    Class news and users selection
+
+commit fcc476f725b30d355523a598e49257f631460259
+Author: mbl111 <matt@mbl111.com>
+Date:   Mon Jun 10 14:38:17 2013 +1000
+
+    Class specific news
+
+commit c984dbcfda9c67e80c733d09d45fc9794aded242
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jun 5 19:32:59 2013 +1000
+
+    Styled the sorting boxes
+
+commit 876dc77c8f771490562c57ab78ccdcc787392691
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jun 5 19:19:05 2013 +1000
+
+    Timezone settings + Error fixes
+
+commit 33d314d36b1197a182ede60ce40c83ea12053f3b
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jun 5 18:32:03 2013 +1000
+
+    Password protected
+
+commit 839eb223fdacf948f707cc89bb71539dbff7c365
+Author: mbl111 <matt@mbl111.com>
+Date:   Tue Jun 4 23:33:51 2013 +1000
+
+    Settings completed
+
+commit 3ad8b48e1ca6b238127d58a971352f7ebfe1ab88
+Author: mbl111 <matt@mbl111.com>
+Date:   Tue Jun 4 22:59:50 2013 +1000
+
+    Conditional name changing
+
+commit efc73d2099b8429f286876b893b1a39b005dc67c
+Author: mbl111 <matt@mbl111.com>
+Date:   Tue Jun 4 21:43:47 2013 +1000
+
+    Data Caching and generation time
+
+commit 08587dfc6fad1889f381e1dce8050ae67e2d1794
+Author: mbl111 <matt@mbl111.com>
+Date:   Tue Jun 4 21:29:19 2013 +1000
+
+    Teacher controls to add students
+
+commit 03064e99b6c05e0484399db0b36164e1517934e0
+Author: mbl111 <matt@mbl111.com>
+Date:   Tue Jun 4 21:29:06 2013 +1000
+
+    Added functions for checking logins
+
+commit 8de0a5add1872bfff4267d78847b7b34148af7b4
+Author: mbl111 <matt@mbl111.com>
+Date:   Mon Jun 3 21:17:51 2013 +1000
+
+    begun class work
+
+commit 9d57a546a8e1ce3b35e73871d96af0c73a2e8b99
+Author: mbl111 <matt@mbl111.com>
+Date:   Mon Jun 3 18:22:45 2013 +1000
+
+    Bug Reports
+
+commit 1713366b84945740e7e7ede6283f82888b28f338
+Author: mbl111 <matt@mbl111.com>
+Date:   Mon Jun 3 15:46:47 2013 +1000
+
+    Useraccount management
+
+commit 45e5ad38b7c5570bc256ea79412621dac16f1880
+Author: mbl111 <matt@mbl111.com>
+Date:   Sun Jun 2 23:34:09 2013 +1000
+
+    User logins
+
+commit 7fdd95026629264dd9d345ccd864c5d5a8b2f83f
+Author: mbl111 <matt@mbl111.com>
+Date:   Thu May 30 01:01:11 2013 +1000
+
+    Finished up some quiz things. Made it work on the public server
+
+commit d0da94eee41a21523d4b611e7b9491e6bb6a1100
+Author: mbl111 <matt@mbl111.com>
+Date:   Sun May 26 23:58:19 2013 +1000
+
+    Content Page working. News Feed Working. CSS fixed
+
+commit b1543c93709526fe935d3151ea691662149246d5
+Author: mbl111 <matt@mbl111.com>
+Date:   Sun May 26 23:51:01 2013 +1000
+
+    News Feed
+
+commit d0b65ddfc50c394cefe4fd02075587e90860c7dd
+Author: mbl111 <matt@mbl111.com>
+Date:   Sun May 26 19:19:38 2013 +1000
+
+    News content done
+
+commit 57fd05e7fc0019be11b2e1c0530834069de8f9fa
+Author: mbl111 <matt@mbl111.com>
+Date:   Sun May 26 18:41:32 2013 +1000
+
+    News template
+
+commit 31883dd966d1edc75fe94697f47a66333c3bde2a
+Author: mbl111 <matt@mbl111.com>
+Date:   Sun May 26 18:41:23 2013 +1000
+
+    Started using Database and included template compat
+
+commit 8c1b6113951495174c93b4c7495b71c768c25f87
+Author: mbl111 <matt@mbl111.com>
+Date:   Sun May 26 18:40:59 2013 +1000
+
+    Created Database connection
+
+commit e26f9b583c80d4018538013e9ab9f1d1bdc485d5
+Author: mbl111 <matt@mbl111.com>
+Date:   Sun May 26 18:22:42 2013 +1000
+
+    Dont...
+
+commit c520ad77591bd2c5a90bae59a943c049e0a8b52e
+Author: mbl111 <matt@mbl111.com>
+Date:   Sun May 26 18:22:25 2013 +1000
+
+    Worked on modulation?
+
+commit 23ad8fc1dcb8db270959fd7f98598d21f2b0781f
+Author: mbl111 <matt@mbl111.com>
+Date:   Sun May 26 16:28:05 2013 +1000
+
+    Worked on modular content
+
+commit e70c4968f625d29f66ad93e3b0b69d14db3ae5c3
+Author: mbl111 <matt@mbl111.com>
+Date:   Sun May 26 14:25:33 2013 +1000
+
+    Finished rebase
+
+commit 9e3b369f89463fd401d24d7f5440973639f9aa36
+Author: mbl111 <matt@mbl111.com>
+Date:   Sun May 26 10:37:33 2013 +1000
+
+    Login page
+
+commit 94a65523f88c0a7bda6f74d5438ef0dbac8ada47
+Author:  <@localhost>
+Date:   Sun May 26 00:07:50 2013 +1000
+
+    Sitename Constant
+
+commit 9b6ebcdc304493f1ccd25d9cb9034d8e31f07e84
+Author:  <@localhost>
+Date:   Sun May 26 00:00:25 2013 +1000
+
+    androidgit
+
+commit 135b83ed559bbeb5c8832289320b865bfb0ea5e0
+Author: mbl111 <matt@mbl111.com>
+Date:   Fri May 24 21:04:47 2013 +1000
+
+    Made toolboxes modular, split the sight into its components
+
+commit a31b230a3c55f9b024a43b50ba8f4bbc422688ff
+Author: mbl111 <matt@mbl111.com>
+Date:   Fri May 24 17:27:45 2013 +1000
+
+    IE9 Compat
+
+commit 3472f7e20b6e77f1be52e3fa29f93e4b745b1165
+Author: mbl111 <matt@mbl111.com>
+Date:   Fri May 24 17:24:12 2013 +1000
+
+    Content boxes completed. Changed formatting on title bars
+
+commit 302980786c0026da11d9b1df6f665dd7a00a6605
+Author: mbl111 <matt@mbl111.com>
+Date:   Fri May 24 01:43:34 2013 +1000
+
+    Worked on the content boxes
+
+commit dfc404e5d764491686b9fb99cb441f7e94260b7d
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed May 22 19:38:51 2013 +1000
+
+    Gah! Who needs tables
+
+commit 1b07b250a29c707c229ad0dff7e62d793770d69f
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed May 22 19:16:04 2013 +1000
+
+    Fixed up styling so it works on IE
+
+commit c5a2017beda73c9052ae9b863edc3b563309e6ad
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed May 22 00:10:27 2013 +1000
+
+    Readme text
+
+commit 5dd5906dcfaa0ebbd72016274f9661e3e8999b2e
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed May 22 00:09:39 2013 +1000
+
+    Added build script... (Moves it to the web folder :p)
+
+commit e22d117d1cef5bf72a6cd49f347d5f4d06d03e41
+Author: mbl111 <matt@mbl111.com>
+Date:   Tue May 21 23:56:51 2013 +1000
+
+    Empty Readme
+
+commit 8a1ab7e91a1f526b6b7df96b36461781e063dc69
+Author: mbl111 <matt@mbl111.com>
+Date:   Tue May 21 23:54:53 2013 +1000
+
+    Tonights Work
+
+commit 0fe9170bdc899609ad23f4245b9c82418deb5060
+Author: mbl111 <matt@mbl111.com>
+Date:   Tue May 21 23:53:42 2013 +1000
+
+    GitBasics
