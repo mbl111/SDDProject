@@ -86,11 +86,12 @@
 		$("#holder" + id).html(
 		'<div id="contentbox" class="question' + id + '"><div class="contentboxheader">Question ' + id + '<a href="javascript:removeQuestion(' + id + ');" class="styledLink" style="float:right;">Remove Question</a></div>'+
 		'<div class="contentboxbody">'+
+		'<p style="font-style:italic;font-size:12px;margin-bottom:3px;">The Questions, Correct Answer and Answer 1 are required. Leave the other answers blank if you wish to not include them.</p>' +
 		'<div class="field"><label>Question:</label><textarea class="input" type="text" name="q' + id + '" id="question"></textarea></div>' +
 		'<div class="field"><label>Correct Answer:</label><input class="input" type="text" name="a' + id + '" id="question" /></div>' +
 		'<div class="field"><label>Other Answer 1:</label><input class="input" type="text" name="b' + id + '" id="question" /></div>' +
-		'<div class="field"><label>Other Answer 1:</label><input class="input" type="text" name="c' + id + '" id="question" /></div>' +
-		'<div class="field"><label>Other Answer 1:</label><input class="input" type="text" name="d' + id + '" id="question" /></div>' +
+		'<div class="field"><label>Other Answer 2: <span style="font-style:italic;font-size:12px;">(Optional)</span></label><input class="input" type="text" name="c' + id + '" id="question" /></div>' +
+		'<div class="field"><label>Other Answer 3: <span style="font-style:italic;font-size:12px;">(Optional)</span></label><input class="input" type="text" name="d' + id + '" id="question" /></div>' +
 		'</div></div><div id="holder' + (id + 1) +'"></div>');
 		$(".question" + id).hide(0);
 		$(".question" + id).show(1000);
@@ -104,6 +105,45 @@
 		
 		addQuestion(updateCount(1));
 		
+		
+		$('#quiz').submit(function() {
+			var questions = $("#questioncount").val();
+			var valid = true;
+			var invalid = 0;
+			
+			var title = $("#titlebox").val();
+			var desc = $("#description").val();
+			var date = $("#datepicker").val();
+			
+			if (title == ""){
+				valid = false;
+				$("#title.field").addClass('highlightYellow', 2000);
+			}			
+			if (desc == ""){
+				valid = false;
+				$("#desc.field").addClass('highlightYellow', 2000);
+			}
+			if (date == ""){
+				valid = false;
+				$("#date.field").addClass('highlightYellow', 2000);
+			}
+			
+			for (var i = 1; i <= questions; i++){
+				var questionHtml = $(".question" + i).html();
+				var q = $("#question[name=q" + i + "]").val();
+				var ca = $("#question[name=a" + i + "]").val();
+				var oa = $("#question[name=b" + i + "]").val();
+				if (questionHtml != "" && (q == "" || ca == "" || oa == "")){
+					valid = false;
+					$(".question" + i).addClass('highlightYellow', 2000);
+					invalid++;
+				}
+			}
+			if (!valid){
+				$("#error").html("You have some blank fields. They have been highlighted. Please fill them out, or remove the question if you are not using it");
+			}
+			return false;
+		});
 	});
 	
 	 $(function() {
@@ -111,21 +151,6 @@
 	});
 	
 	//TODO
-	$('#quiz').submit(function() {
-		var val = $("input[type=radio][name^=answer]:checked").length;
-		var questions = $("input[name='questioncount']").val();
-			if (val < questions){
-				alert('You have not answered ' + (questions - val) + ' question(s)!');
-				for (var i = 1; i <= questions; i++){
-					var answered = $("input[type=radio][name=answer" + i + "]:checked").length;
-					if (answered < 1){
-						$("#question" + i).addClass('highlightYellow', 2000);//.animate({backgroundColor:"#FFFF00",}, 1000 );
-						$(".question" + i).addClass('highlightYellow', 2000);//.animate({backgroundColor:"#FFFF00",}, 1000 );
-					}
-				}
-			return false;
-		}
-	});
 </script>
 
 <?
@@ -144,20 +169,21 @@
 		$secOptions .= "<option value='$ms'>$ms</option>";
 	}
 ?>
+	<script src='js/ui/jquery.ui.effect.js'></script>
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 	 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/quizform.css"/>
 	<form method="post" action="" id="quiz">
 			<div id="contentbox"><div class="contentboxbody">
-				<div class="field">
+				<div class="field" id='title'>
 					<label>Title:</label>
-					<input class="input" type="text" name="title" id="title" />
+					<input class="input" type="text" name="title" id="titlebox" />
 				</div>
-				<div class="field">
+				<div class="field" id='desc'>
 					<label>Quiz Description:</label>
 					<textarea class="input" type="text" name="description" id="description" rows="4"></textarea>
 				</div>
-				<div class="field">
+				<div class="field" id='date'>
 					<label>Due Date: <span style='font-size:12px;font-weight:normal;'>(MM/DD/YYYY)</span></label>
 					<input class="input" type="text" id="datepicker" name='date'/>
 				</div>
@@ -176,6 +202,7 @@
 			<div id='holder1'></div>
 			
 			<div id="contentbox"><div class="contentboxbody">
+				<span id='error' style='font-weight:bold;color:#FF5566'></div>
 				<div class="field">
 					<label style="visibility:hidden;">.</label>
 					<input class='input' type="button" value="Add Question" name='addQ' id="addQuestion"/>
@@ -185,7 +212,7 @@
 					<label style="visibility:hidden;">.</label>
 					<input class='input' type="submit" value="Submit" name='submitquiz' id="submitquiz"/>
 				</div>
-			</div></div>
+			</div>
 			
 			<input id="questioncount" type='hidden' name='questioncount' value='0' />
 			<input id="class" type='hidden' name='class' value='<? echo $class; ?>' />
