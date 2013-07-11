@@ -206,11 +206,33 @@ background-color: #FFBBBB;
 
 .usersonlinespan{
 	float:left;
-	font-size:12px;'
+	font-size:12px;
+	margin-bottom: 5px;
+	line-height: 16px;
 }
 
 .usersonlinetitlespan{
 	float: left;
 	font-size: 12px;'
 	font-weight: bold;
+}
+
+.contentdropdown li{
+	text-shadow: 0px 0px 0px;
+	list-style-type: none;
+    width:100px;
+    padding:5px;
+    border:1px solid #b9bdc1;
+    background-color: #EEEEEE;
+}
+
+.contentdropdown li:hover {background-color:#CCCCCC;}  /* mouse over link */
+
+.contentdropdown{
+    display:absolute;
+    z-index:9002;
+    padding:0px;
+    margin-top:-14px;
+    border-top:0;
+    cursor:pointer;
 }
