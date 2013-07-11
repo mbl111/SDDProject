@@ -90,6 +90,9 @@
 	$descTemplate->assign("CONTENT_TIME", date($dateFormat, $quizContent['timestamp']));
 	$descTemplate->assign("QUIZ_STATUS", $doneQuiz ? "Quiz Completed" : "Not Complete");
 	$descTemplate->assign("QUIZ_DONE", $doneQuiz ? "true" : "false");
+	
+	$descTemplate->assign("ADMIN", isAdmin() ? "true" : "false");
+	$descTemplate->assign("POSTER", (loggedIn() and $quizDesc['poster'] == $_SESSION['userid']) ? "true" : "false");
 	if ($doneQuiz){
 		$descTemplate->assign("QUIZ_MARKS", getUserMarksForQuiz($quizId, $_SESSION['userid']));
 	}
@@ -97,7 +100,7 @@
 	$descTemplate->assign("QUIZ_PAGE", "true");
 	$descTemplate->assign("GLOBAL_STORY", $quizContent['class'] == -1 ? 'true' : 'false');
 	$descTemplate->assign("CLASS_NAME", getClassName($quizContent['class']));
-	$descTemplate->assign("QUIZ_DUE", date($dateFormat, getTimeWithZone($quizDesc['due'], +10)));
+	$descTemplate->assign("QUIZ_DUE", date($dateFormat, getTimeWithZone($quizDesc['due'], $_SESSION['timezone'])));
 	$descTemplate->assign("QUIZ_OVERDUE", $quizOverdue ? 'true' : 'false');
 	$descTemplate->render('quiz');
 	
@@ -105,7 +108,7 @@
 	
 	if (mysql_num_rows($questionQuery) > 0){
 		if (!$doneQuiz){
-			if ($quizDesc['canDoAfterDue'] == 1){
+			if ($quizDesc['canDoAfterDue'] == 1 or !$quizOverdue){
 				echo '<link rel="stylesheet" type="text/css" href="css/form.css" />';
 				echo "<form method='post' id='quiz' action=''>";
 				echo "<input type='hidden' name='quizid' value='$quizId'>";
