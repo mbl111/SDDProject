@@ -36,7 +36,7 @@
 						
 						dbQuery("INSERT INTO content_quiz_questions (`quiz_id`, `q`, `1`, `2`, `3`, `4`) VALUES ($quizid, '$q', '$a' , '$b', '$c', '$d')");
 					}
-					header("Location:classpage.php?id=$id");
+					header("Location:classpage.php?id=$class");
 				}
 				}else{
 					header("Location:message.php?id=10");
