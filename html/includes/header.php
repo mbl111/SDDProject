@@ -12,6 +12,8 @@
 	include_once("include.php");
 	include_once("engine.php");
 	
+	$bugManager = preg_match("/bug/", $_SERVER['PHP_SELF']);
+	
 	if (loggedIn()){
 		$q = dbQuery("SELECT active FROM users WHERE `id`={$_SESSION['userid']}");
 		if ($q){
@@ -36,6 +38,7 @@
 		if ($_SESSION['usertype']==USER_TEACHER or isAdmin()){
 			$teacherLinks .= "<li><a href='submitnews.php' class='toolboxlink'>Post News</a></li>";
 		}
+		if (!$bugManager){
 		addToolBox(myFullName(), "
 		<ul class='toolboxlinklist'>
 			<li><a href='index.php' class='toolboxlink'>Home</a></li>
@@ -47,9 +50,20 @@
 			<li><a href='logout.php?page=index.php' class='toolboxlink'>Logout</a></li>
 		</ul>
 		");
+		}else{
+		addToolBox(myFullName(), "
+		<ul class='toolboxlinklist'>
+			<li><a href='../index.php' class='toolboxlink'>Main site</a></li>
+			<li><a href='index.php' class='toolboxlink'>Bug List</a></li>
+			<li><a href='../logout.php?page=but/index.php' class='toolboxlink'>Logout</a></li>
+		</ul>
+		");
+		}
 	}else{
-		addToolBox("Welcome!", "Have an account? Why not click 'Login' in the top right corner to get started.<br/><br/>Students - If you don't have an account talk to your teacher about this website.<br/><br/>Teachers - You can register an account which can be used to manage your students.");
-		if (basename($_SERVER['PHP_SELF']) != "index.php"){
+		if (!$bugManager){
+			addToolBox("Welcome!", "Have an account? Why not click 'Login' in the top right corner to get started.<br/><br/>Students - If you don't have an account talk to your teacher about this website.<br/><br/>Teachers - You can register an account which can be used to manage your students.");
+		}
+		if (basename($_SERVER['PHP_SELF']) != "index.php" and basename($_SERVER['PHP_SELF']) != "message.php"){
 			header("Location:index.php");
 		}
 	}

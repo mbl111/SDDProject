@@ -1,10 +1,11 @@
 <?
-	include("includes/header.php");
+	include("../includes/header.php");
+	include("includes/buginclude.php");
 	drawToolBoxes();
 	beginMainContent();
 ?>
 	
-<?
+<?	
 	$page_no = 1;
 	if (isset($_GET['page'])){
 		$page_no = $_GET['page'];
@@ -14,33 +15,32 @@
 	}
 	$limit = 8;
 	$offset = ($page_no - 1) * $limit;
-	if (loggedIn()){
-		$query = dbQuery("SELECT class FROM users WHERE `id`={$_SESSION['userid']} LIMIT 1");
-		$user = mysql_fetch_assoc($query);
-		$classes = trim(rtrim($user['class'], ","), ",");
-		if ($classes != ""){
-			$classes .= ",";
+	
+	$query = dbQuery("SELECT * FROM bugreports ORDER BY `time` DESC LIMIT $offset, $limit");
+	if ($query){
+		echo "<table><tr class='issues'><th style='width:120px;'>Status</th><th style='width:80px;'>Key</th><th style='width:400px;'>Name</th><th style='width:30px;'>Comments</th></tr>";
+		$second = false;
+		while (($row = mysql_fetch_assoc($query))){
+			$commentQ = dbQuery("SELECT `id` FROM bugcomments WHERE `bug_id`={$row['id']}");
+			$comments = mysql_num_rows($commentQ);
+			$status = getStatus($row['status']);
+			if ($row['status'] == 3){
+				$status .= " of <a class='styledLink' href='bug.php?id={$row['dupeof']}'>#B{$row['dupeof']}</a>";
+			}
+		
+			echo "<tr class='issues report".($second ? " second" : "")."'>";
+				echo "<td class='".strtolower(getStatus($row['status']))."'>".$status."</td>";
+				echo "<td><a class='styledLink' style='font-size:12px;' href='bug.php?id={$row['id']}'>#B{$row['id']}</a></td>";
+				echo "<td><a class='styledLink' style='font-size:12px;' href='bug.php?id={$row['id']}'>{$row['title']}</a></td>";
+				echo "<td>$comments</td>";
+			echo "</tr>";
+			$second = !$second;
 		}
-		$hidden = isAdmin() ? "" : "AND `class` IN ($classes-1) "; 
-		//$query = dbQuery("SELECT * FROM content WHERE `class` IN ($classes, -1)  ORDER BY `timestamp` DESC LIMIT $offset, $limit");
-		$items = dbQuery("SELECT COUNT(*) FROM content WHERE `visible`=1 ".$hidden."ORDER BY `timestamp` DESC");
-	}else{
-		//$query = dbQuery("SELECT * FROM content WHERE `type`='news' AND `class`=-1  ORDER BY `timestamp` DESC LIMIT $offset, $limit");
-		$items = dbQuery("SELECT COUNT(*) FROM content WHERE `type`='news' AND `class`=-1 AND `visible`=1 ORDER BY `timestamp` DESC");
+		echo "</table>";
 	}
-	
-	$existingItems = mysql_fetch_array($items);
-	$existingItems = $existingItems[0];
-	
-	
-	$overallPage = "";
-	$count = 1;
-	while(($contentDetails = mysql_fetch_assoc($items)) and ($count <= $limit + $offset)){
-		if ($count > $offset){
-				buildContent($contentDetails['nid']);
-		}
-		$count++;
-	}
+	$query = dbQuery("SELECT COUNT(*) FROM bugreports");
+	$items = mysql_fetch_array($query);
+	$existingItems = $items[0];
 	
 	$adjacents = 2;
 	$numPages = ceil($existingItems / $limit);

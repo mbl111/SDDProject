@@ -1,6 +1,6 @@
 <?
 
-	include("includes/header.php");
+	include("../includes/header.php");
 	drawToolBoxes();
 	beginMainContent();
 
@@ -11,9 +11,9 @@
 			if (isset($_POST['title']) and isset($_POST['desc']) and isset($_POST['reproduce'])){
 				if ($_POST['title'] != "" and $_POST['desc'] != "" and $_POST['reproduce'] != ""){
 					$time = time();
-					$title = strip_tags(mysql_real_escape_string($_POST['title']));
-					$desc = strip_tags(mysql_real_escape_string($_POST['desc']));
-					$rep = strip_tags(mysql_real_escape_string($_POST['reproduce']));
+					$title = makeSafe($_POST['title']);
+					$desc = makeSafe($_POST['desc']);
+					$rep = makeSafe($_POST['reproduce']);
 					dbQuery("INSERT INTO bugreports (`title`, `desc`, `steps`, `time`, `user`) VALUES ('$title', '$desc', '$rep', $time, {$_SESSION['userid']})");
 					echo "<b style='margin-bottom:5px;'>Your report was submitted!</b>";
 				}else{

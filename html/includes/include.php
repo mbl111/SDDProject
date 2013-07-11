@@ -197,8 +197,10 @@ global $dateFormat;
 $timezone = isset($_SESSION['timezone']) ? $_SESSION['timezone'] : 0;
 $time = round(microtime_float() - $starttime, 4);
 $svrtime = date($dateFormat, getTimeWithZone(time(), $timezone));
+$reportBugPath = str_replace(basename($_SERVER['PHP_SELF']), "", $_SERVER['PHP_SELF']);
+$reportBugPath = str_replace("bug/", "", $reportBugPath);
 echo '<div id="footer" style="height:50px; margin-top:10px;width:100%;">
-	<span style="font-size:12px;font-style:italic;">Copyright 2013 - Matt and Justin - <a href="reportbug.php" style="color:black; font-weight:bold;">Report a bug</a></span><br/>
+	<span style="font-size:12px;font-style:italic;">Copyright 2013 - Matt and Justin - <a href="'.$reportBugPath.'bug/reportbug.php" style="color:black; font-weight:bold;">Report a bug</a></span><br/>
 	<span style="font-size:12px;font-style:italic;color:#101010;">All times in '.getTimeZoneString(getTimezone()).'</span><br/>
 	<span style="color:#B0B0B0;font-size:12px;font-style:italic;">Generated in '.$time.' seconds | Time now is '.$svrtime.'</span>
 	</div>
