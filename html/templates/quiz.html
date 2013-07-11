@@ -1,5 +1,45 @@
-<div id="contentbox">
-	<div class="contentboxheader"><a href="viewcontent.php?id=[CONTENT_ID]" class="contentboxheadertext">[CONTENT_TITLE]</a></div>
+<!-- IF [POSTER] or [ADMIN] -->
+<script>
+var clicked[CONTENT_ID] = false
+function newsdrop[CONTENT_ID](){
+	clicked[CONTENT_ID] = !clicked[CONTENT_ID];
+	if (clicked[CONTENT_ID]){
+		var listItems = "";
+			listItems += "<li onclick='javascript:del[CONTENT_ID]();' id='delete[CONTENT_ID]'>Delete</li>";
+		$(".result[CONTENT_ID]").html(listItems);
+	}else{
+		$(".result[CONTENT_ID]").html("");
+	}
+}
+
+function del[CONTENT_ID](){
+		$(".result[CONTENT_ID]").html("<li>Deleting...</li>");
+		$.post("ajax/deletecontent.php", {id:[CONTENT_ID]}, function(data) {
+			if (data.split(" ")[0]=="true"){
+				$("#contentbox.content[CONTENT_ID]").hide(1500);
+			}else{
+				$("#feedback").html("User Not Found");
+			}
+		});
+		$(".result[CONTENT_ID]").html("");
+		var clicked[CONTENT_ID] = false
+}
+</script>
+<!-- ENDIF -->
+
+<div id="contentbox" class='content[CONTENT_ID]'>
+	<div class="contentboxheader">
+	
+	<a href="viewcontent.php?id=[CONTENT_ID]" class="contentboxheadertext">[CONTENT_TITLE]</a>
+	
+	<!-- IF [POSTER] or [ADMIN] -->
+		<a class='styledLink' style="float:right;font-size:16px;" href="javascript:newsdrop[CONTENT_ID]()">X</a>
+		<div class='contentdropdown' style='font-size:14px;font-family:Verdana;margin-left:615px;margin-top:5px;position:absolute;'>
+			<ul class='result[CONTENT_ID]'></ul>
+		</div>
+	<!-- ENDIF -->
+	
+	</div>
 	<div class="contentboxbody">
 		<p>- [QUIZ_STATUS] 
 			<!-- IF [QUIZ_DONE] -->
@@ -24,7 +64,7 @@
 			<!-- ENDIF -->
 		<!-- ENDIF -->
 	</div>
-	<div class="contentboxfooter">Quiz set [CONTENT_TIME] by [CONTENT_USER]
+	<div class="contentboxfooter" id="f[CONTENT_ID]">Quiz set [CONTENT_TIME] by [CONTENT_USER]
 	<!-- IF ![GLOBAL_STORY] -->
 		in [CLASS_NAME]
 	<!-- ENDIF -->
