@@ -10,7 +10,7 @@
 			}
 			$class = mysql_fetch_assoc($query);
 		}
-		if (($id == -1 and isAdmin()) or ($_SESSION['usertype'] == USER_TEACHER && $_SESSION['userid'] == $class['teacher'])){
+		if (isAdmin() or ($id == -1 and isAdmin()) or ($_SESSION['usertype'] == USER_TEACHER && $_SESSION['userid'] == $class['teacher'])){
 			$title = $_POST['title'];
 			$body = $_POST['body'];
 			$title = strip_tags(mysql_real_escape_string($title));
@@ -25,6 +25,9 @@
 			}else{
 				header("Location:message.php?id=6");
 			}
+			if ($id==-1){
+				header("Location:index.php");
+			}
 			header("Location:classpage.php?id=$id");
 		}
 	}
@@ -36,13 +39,13 @@
 <?
 	$template = new Template;
 	
-	$defaultSelectedClass = -1;.
+	$defaultSelectedClass = -1;
 	
 	if (isset($_GET['class'])){
 		$defaultSelectedClass = $_GET['class'];
 	}
-	
-	$query = dbQuery("SELECT `name`, `id` FROM classes WHERE `teacher`={$_SESSION['userid']}");
+	$condition = isAdmin() ? "" : "WHERE `teacher`={$_SESSION['userid']}";
+	$query = dbQuery("SELECT `name`, `id` FROM classes $condition");
 	$classesDropDown = "";
 	//<option value="-12.0" '; if ($selected == -12){echo "selected";} echo'>(GMT -12:00) Eniwetok, Kwajalein</option>
 	
