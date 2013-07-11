@@ -70,7 +70,7 @@ function render(){
 		}
 	}
 	
-	echo "<input class='input' id='{$this->name}b' style='width:{$this->buttonWidth}px;font-weight:bold;margin-left:110px;' type='button' name='submit' value='{$this->buttontext}'/>";
+	echo "<input class='input' id='{$this->name}b' style='width:{$this->buttonWidth}px;font-weight:bold;margin-left:160px;' type='button' name='submit' value='{$this->buttontext}'/>";
 	
 	echo '</div>';
 }
