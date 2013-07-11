@@ -9,9 +9,9 @@
 	
 	$userId = $_SESSION['userid'];
 	$pretendingToBeStudent = false;
-	if ($_SESSION['usertype']==USER_TEACHER){
+	if ($_SESSION['usertype']==USER_TEACHER  or isAdmin()){
 		if (isset($_GET['masquerade'])){
-			if (studentBelongsTo($_SESSION['userid'], $_GET['masquerade'])){
+			if (studentBelongsTo($_SESSION['userid'], $_GET['masquerade']) or isAdmin()){
 				$userId = $_GET['masquerade'];
 				$pretendingToBeStudent = true;
 			}
@@ -34,7 +34,7 @@
 	$bio = $detail['bio'];
 	
 	?>
-	<link rel="stylesheet" type="text/css" href="css/form.css" />
+	<link rel="stylesheet" type="text/css" href="css/settingsform.css" />
 	
 	<script>
 		$(document).ready(function() {
@@ -87,7 +87,51 @@
 			});
 			
 		});
+		
+		<? if (isAdmin()){ ?>
+				$(document).ready(function() {
+					$("#query.input").keyup(function() {
+						var search_term = $(this).val();
+						$.post("ajax/studentsearch.php", {search_term:search_term}, function(data) {
+							$(".result").html(data);
+						});
+					});
+					
+					$("#seluser").click(function() {
+						$("#feedback").html("Validating User");
+						$(this).attr("disabled", true);
+						$(this).css("background-color", "#A9A9A9");
+						var inp = $("#query.input").val();
+						$.post("ajax/validateuser.php", {name:inp}, function(data) {
+							if (data.split(" ")[0]=="true"){
+								document.location.href = document.location.href.split("?")[0] + "?masquerade=" + data.split(" ")[1];
+							}else{
+								$("#feedback").html("User Not Found");
+							}
+						});
+						
+						$(this).removeAttr("disabled");
+						$(this).css("background-color", "#F9F9F9");
+					});
+				});
+				
+				function autoFill(e){
+					$("#query.input").val(e.innerHTML);
+					$(".result").html("");
+				}
+		<?}?>
 	</script>
+	
+	<? if (isAdmin()){
+			echo '<link rel="stylesheet" type="text/css" href="css/form.css"/>';
+			echo "<div id='contentbox'>";
+			echo "<form style='padding:10px 0px;'><field><label>Select User to Edit</label>";
+			echo "<input type='text' class='input' id='query' name='query' maxlength='20' autocomplete='off' style='width:200px;'/>";
+			echo "</field><input type='button' id='seluser' class='input' style='width:200px; margin: 0px 10px;' value='Select'/><span id='feedback'></span></form>";
+			echo "<div class='dropdown' style='font-family:Verdana;margin-left:110px;margin-top:-10px;position:absolute;'>
+                    <ul class='result'></ul>
+                </div></div>";
+	}?>
 	
 		<form id="contentbox">
 			<p style='margin-bottom:10px;padding:10px;border-bottom: 1px #BDC2BD dashed;font-size:18px;'>You are editing the profile of <b><? echo $detail['firstname']." ".$detail['lastname'];?></b><br/>
@@ -95,7 +139,7 @@
 			<div class="contentboxbody">
 				
 				<?
-				$settingGroup = new SettingGroup("changename", $pretendingToBeStudent ? "Change name" : "Change My Name!");
+				$settingGroup = new SettingGroup("changename", "Save Name Changes");
 				
 			
 				$textSetting = new TextSetting("First Name", "firstname");
@@ -115,7 +159,7 @@
 				$settingGroup->addSetting($hiddenSetting1);
 				$settingGroup->render();
 				
-				$settingGroup = new SettingGroup("changebio", $pretendingToBeStudent ? "Change bio" : "Change My Bio!");
+				$settingGroup = new SettingGroup("changebio", "Save Bio Changes");
 			
 				$hiddenSetting2 = new HiddenField("id", "id", $userId);
 			
@@ -137,8 +181,13 @@
 						<input maxlength="20" class="input" type="password" name="pass" id="pass" value=""/>
 						<span class="hint">Type a secure password (20 characters max.)</span>
 					</div>
+					<div class="field">
+						<label>Confirm Password</label>
+						<input maxlength="20" class="input" type="password" name="pass" id="pass" value=""/>
+						<span class="hint">Type your password again (20 characters max.)</span>
+					</div>
 					<input class="input" name="id" type="hidden" value="<?echo $_SESSION['userid'];?>"/>
-					<input class="input" id='changepassb' style="width:180px;font-weight:bold;margin-left:110px;" type="button" name="submit" value="<?echo $pretendingToBeStudent ? "Change password" : "Change My Password!";?>"/>
+					<input class="input" id='changepassb' style="width:180px;font-weight:bold;margin-left:160px;" type="button" name="submit" value="Change Password"/>
 				</div>
 				
 				<div id="changetz" style="margin-bottom:10px;padding-bottom:10px;border-bottom: 1px #BDC2BD dashed;">
@@ -149,7 +198,7 @@
 						<span class="hint">Select a timezone near you</span>
 					</div>
 					<input class="input" name="id" type="hidden" value="<?echo $_SESSION['userid'];?>"/>
-					<input class="input" id='changetzb' style="width:180px;font-weight:bold;margin-left:110px;" type="button" name="submit" value="<? echo $pretendingToBeStudent ? "Change timezone" : "Change My timezone!"?>"/>
+					<input class="input" id='changetzb' style="width:180px;font-weight:bold;margin-left:160px;" type="button" name="submit" value="Save Timezone"/>
 				</div>
 				
 			</div>
