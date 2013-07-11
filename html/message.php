@@ -35,6 +35,12 @@
 		case 8:
 			echo "<p class='error'>You cant submit this quiz! You have already done it</p>";
 			break;
+		case 8:
+			echo "<p class='error'>No class was found.</p>";
+			break;
+		case 10:
+			echo "<p class='error'>Error making quiz. Please try again.</p>";
+			break;
 		default: 
 			echo "<p class='error'>No message found</p>";
 			break;
