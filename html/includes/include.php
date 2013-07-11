@@ -151,12 +151,14 @@ echo '</aside><div id="centerelement">';
 }
 
 function endMainContent(){
+echo "</div></div>";
 	if (loggedIn()){
 		global $timeConstant;
 		$timeCheck = time() - ($timeConstant['min'] * 5);
 		$query = dbQuery("SELECT `firstname`, `lastname`, `id` FROM users WHERE `lastactive` > $timeCheck AND `id`!={$_SESSION['userid']}");
 		if ($query){
-			echo "<div style='padding-top:4px;'><span class='usersonlinetitlespan' style='font-weight:bold;'>Users online (Based on activity from the past 5 minutes)</span><br/><span class='usersonlinespan'>";
+			echo "<div id='contentbox' style='display:table;width:970px;margin-left:10px;'><div style='padding-bottom:3px;' class='contentboxbody'>";
+			echo "<p class='usersonlinetitlespan' style='font-weight:bold;'>Users online (Based on activity from the past 5 minutes)</p><br/><div class='usersonlinespan'>";
 			$num = mysql_num_rows($query);
 			if ($num == 0){
 				echo "No one else is online :(";
@@ -184,17 +186,21 @@ function endMainContent(){
 				}
 			}
 		}
+		echo "</div></div>";
 	}
-echo "</span></div></div></div>";
+	echo "</div></div></div>";
 }
 
 function footer(){
 global $starttime;
+global $dateFormat;
+$timezone = isset($_SESSION['timezone']) ? $_SESSION['timezone'] : 0;
 $time = round(microtime_float() - $starttime, 4);
+$svrtime = date($dateFormat, getTimeWithZone(time(), $timezone));
 echo '<div id="footer" style="height:50px; margin-top:10px;width:100%;">
 	<span style="font-size:12px;font-style:italic;">Copyright 2013 - Matt and Justin - <a href="reportbug.php" style="color:black; font-weight:bold;">Report a bug</a></span><br/>
 	<span style="font-size:12px;font-style:italic;color:#101010;">All times in '.getTimeZoneString(getTimezone()).'</span><br/>
-	<span style="color:#B0B0B0;font-size:12px;font-style:italic;">Generated in '.$time.' seconds</span>
+	<span style="color:#B0B0B0;font-size:12px;font-style:italic;">Generated in '.$time.' seconds | Time now is '.$svrtime.'</span>
 	</div>
 	</div>
 	</body>
@@ -209,11 +215,18 @@ function buildContent($contentID){
 	
 	$template = new Template;
 		
+		$timezone = isset($_SESSION['timezone']) ? $_SESSION['timezone'] : 0;
+		
 		$template->assign("CONTENT_TITLE", $contentDetails['title']);
 		$template->assign("CONTENT_ID", $contentDetails['nid']);
-		$template->assign("CONTENT_TIME", date($dateFormat, getTimeWithZone($contentDetails['timestamp'], +10)));
+		$template->assign("CONTENT_TIME", date($dateFormat, getTimeWithZone($contentDetails['timestamp'], $timezone)));
 		$template->assign("CONTENT_USER", resolveFullnameFromID($content['poster']));
 		$template->assign("CONTENT_BODY", $content['body']);
+		$template->assign("CONTENT_HIDDEN", $contentDetails['visible'] ? "false" : "true");
+		
+		$template->assign("ADMIN", isAdmin() ? "true" : "false");
+		$template->assign("POSTER", (loggedIn() and $content['poster'] == $_SESSION['userid']) ? "true" : "false");
+		$template->assign("POSTER_ID", $content['poster']);
 		
 		$template->assign("GLOBAL_STORY", $contentDetails['class'] == -1 ? "true" : "false");
 		if ($contentDetails['class'] != -1){
@@ -224,12 +237,12 @@ function buildContent($contentID){
 		if ($contentDetails['type'] == 'news'){
 			$template->assign("CONTENT_EDITED", ($content['lasteditor'] > 0) ? "true" : "false");
 			$template->assign("CONTENT_EDITOR", resolveFullnameFromID($content['lasteditor']));
-			$template->assign("CONTENT_EDIT_TIME", date($dateFormat, getTimeWithZone($content['edittime'], +10)));
+			$template->assign("CONTENT_EDIT_TIME", date($dateFormat, getTimeWithZone($content['edittime'], $timezone)));
 		}elseif ($contentDetails['type'] == 'quiz'){
 			$doneQuiz = userHasDoneQuiz($contentDetails['nid'], $_SESSION['userid']);
 		
 			$template->assign("QUIZ_OVERDUE", $content['due'] < time() ? 'true' : 'false');
-			$template->assign("QUIZ_DUE", date($dateFormat, getTimeWithZone($content['due'], +10)));
+			$template->assign("QUIZ_DUE", date($dateFormat, getTimeWithZone($content['due'], $_SESSION['timezone'])));
 			$template->assign("QUIZ_STATUS", $doneQuiz ? "Quiz Completed" : "Not Complete");
 			$template->assign("QUIZ_PAGE", "false");
 			if ($doneQuiz){
@@ -244,7 +257,7 @@ function buildContent($contentID){
 function getNewsForClass($id){
 	
 	global $dateFormat;
-	$query = dbQuery("SELECT nid FROM content WHERE `class`=$id ORDER BY `timestamp` DESC LIMIT 10");
+	$query = dbQuery("SELECT nid FROM content WHERE `visible`=1 AND `class`=$id  ORDER BY `timestamp` DESC LIMIT 10");
 	while(($idSet = mysql_fetch_assoc($query))==true){
 		buildContent($idSet['nid']);
 	}
@@ -358,6 +371,59 @@ function studentBelongsTo($idToTest, $student){
 		}
 	}
 	return false;
+}
+
+function makeSafe($s){
+$s = strip_tags(mysql_real_escape_string($s));
+$s = str_replace("\\r\\n", "<br/>", $s);
+return $s;
+}
+
+function getTitle($page){
+	switch ($page){
+		case "addstudent.php" :
+			return "CONT | Add Student";
+			break;
+		case "classpage.php" :
+			return "CONT | Class";
+			break;
+		case "createquiz.php" :
+			return "CONT | New Quiz";
+			break;
+		case "index.php" :
+			return "CONT | Home";
+			break;
+		case "login.php" :
+			return "CONT | Login";
+			break;
+		case "logout.php" :
+			return "CONT | Logout";
+			break;
+		case "message.php" :
+			return "CONT | Alert!";
+			break;
+		case "reportbug.php" :
+			return "CONT Bug Center";
+			break;
+		case "settings.php" :
+			return "CONT | Settings";
+			break;
+		case "students.php" :
+			return "CONT | My Students";
+			break;
+		case "submitnews.php" :
+			return "CONT | New News";
+			break;
+		case "userpage.php" :
+			return "CONT | User";
+			break;
+		case "viewcontent.php" :
+			return "CONT | Content";
+			break;
+		case "viewquiz.php" :
+			return "CONT | Quiz";
+			break;
+	}
 }
 
 ?>
