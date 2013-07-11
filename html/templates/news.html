@@ -1,9 +1,69 @@
-<div id="contentbox">
-	<div class="contentboxheader"><a href="viewcontent.php?id=[CONTENT_ID]" class="contentboxheadertext">[CONTENT_TITLE]</a></div>
+<!-- IF [POSTER] or [ADMIN] -->
+<script>
+var clicked[CONTENT_ID] = false
+function newsdrop[CONTENT_ID](){
+	clicked[CONTENT_ID] = !clicked[CONTENT_ID];
+	if (clicked[CONTENT_ID]){
+		var listItems = "";
+		<!-- IF [ADMIN] and ![GLOBAL_STORY] -->
+		if ($("#classname[CONTENT_ID]").html() != ""){
+			listItems = listItems + "<li onclick='javascript:makeGlobal[CONTENT_ID]();' id='makeGlobal[CONTENT_ID]'>Make Global</li>";
+		}
+		<!-- ENDIF -->
+			listItems = listItems + "<li onclick='javascript:del[CONTENT_ID]();' id='delete[CONTENT_ID]'>Delete</li>";
+		$(".result[CONTENT_ID]").html(listItems);
+	}else{
+		$(".result[CONTENT_ID]").html("");
+	}
+}
+
+<!-- IF [ADMIN] -->
+function makeGlobal[CONTENT_ID](){
+	$(".result[CONTENT_ID]").html("<li>Please wait</li>");
+		$.post("ajax/globalisecontent.php", {id:[CONTENT_ID]}, function(data) {
+			if (data.split(" ")[0]=="true"){
+				$("#classname[CONTENT_ID]").html("");
+			}else{
+				$("#feedback").html("User Not Found");
+			}
+		});
+		$(".result[CONTENT_ID]").html("");
+		clicked[CONTENT_ID] = false
+}
+<!-- ENDIF -->
+function del[CONTENT_ID](){
+		$(".result[CONTENT_ID]").html("<li>Deleting...</li>");
+		$.post("ajax/deletecontent.php", {id:[CONTENT_ID]}, function(data) {
+			if (data.split(" ")[0]=="true"){
+				$("#contentbox.content[CONTENT_ID]").hide(1500);
+			}else{
+				$("#feedback").html("User Not Found");
+			}
+		});
+		$(".result[CONTENT_ID]").html("");
+}
+</script>
+<!-- ENDIF -->
+
+<div id="contentbox" class='content[CONTENT_ID]'>
+	<div class="contentboxheader">
+	<!-- IF [CONTENT_HIDDEN] -->
+		HIDDEN:
+	<!-- ENDIF -->
+	<a href="viewcontent.php?id=[CONTENT_ID]" class="contentboxheadertext">[CONTENT_TITLE]</a>
+	
+	<!-- IF [POSTER] or [ADMIN] -->
+	<a class='styledLink' style="float:right;font-size:16px;" href="javascript:newsdrop[CONTENT_ID]()">X</a>
+	<div class='contentdropdown' style='font-size:14px;font-family:Verdana;margin-left:615px;margin-top:5px;position:absolute;'>
+		<ul class='result[CONTENT_ID]'></ul>
+	</div>
+	<!-- ENDIF -->
+	
+	</div>
 	<div class="contentboxbody">[CONTENT_BODY]</div>
 	<div class="contentboxfooter">Posted [CONTENT_TIME] by [CONTENT_USER] 
 		<!-- IF ![GLOBAL_STORY] -->
-			in [CLASS_NAME]
+			<span id='classname[CONTENT_ID]'>in [CLASS_NAME]</span>
 		<!-- ENDIF -->
 		<!-- IF [CONTENT_EDITED] -->
 			- Edited [CONTENT_EDIT_TIME] by [CONTENT_EDITOR] 
