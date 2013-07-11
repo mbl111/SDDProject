@@ -48,6 +48,9 @@
 		");
 	}else{
 		addToolBox("Welcome!", "Have an account? Why not click 'Login' in the top right corner to get started.<br/><br/>Students - If you don't have an account talk to your teacher about this website.<br/><br/>Teachers - You can register an account which can be used to manage your students.");
+		if (basename($_SERVER['PHP_SELF']) != "index.php"){
+			header("Location:index.php");
+		}
 	}
 	
 	$headerTemplate = new Template;
