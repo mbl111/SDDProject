@@ -1,5 +1,6 @@
 <?php
-
+//REGEX for checking first.last name format
+//"/^([a-zA-Z0-9]+)([a-zA-Z0-9-])(\.){1}([a-zA-Z0-9]+)([a-zA-Z0-9-])/"
 include("includes/header.php");
 $error = array();
 $page = "index.php";
@@ -12,7 +13,7 @@ if (isset($_GET['page'])){
 if (loggedIn() == false){
 	if (empty($_POST['username'])){
 		$error[] = "Please enter a username.";
-	}else if(preg_match("/^([a-zA-Z0-9]+)([a-zA-Z0-9-])(\.){1}([a-zA-Z0-9]+)([a-zA-Z0-9-])/",$_POST['username'])){
+	}else if(preg_match("/^([a-zA-Z0-9\.-]){1,}/",$_POST['username'])){
 		$username = $_POST['username'];
 	}else{
 		$error[] = "Username was incorrect.";
