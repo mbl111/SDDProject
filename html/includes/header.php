@@ -31,8 +31,10 @@
 		$_SESSION['admin'] = $profile['admin'];
 		$teacherLinks = "";
 		if ($_SESSION['usertype']==USER_TEACHER){
-			$teacherLinks = "<li><a href='students.php' class='toolboxlink'>Students</a></li>
-							<li><a href='submitnews.php' class='toolboxlink'>Post News</a></li>";
+			$teacherLinks = "<li><a href='students.php' class='toolboxlink'>Students</a></li>";
+		}
+		if ($_SESSION['usertype']==USER_TEACHER or isAdmin()){
+			$teacherLinks .= "<li><a href='submitnews.php' class='toolboxlink'>Post News</a></li>";
 		}
 		addToolBox(myFullName(), "
 		<ul class='toolboxlinklist'>
@@ -44,9 +46,12 @@
 			<li><a href='logout.php?page=index.php' class='toolboxlink'>Logout</a></li>
 		</ul>
 		");
+	}else{
+		addToolBox("Welcome!", "Have an account? Why not click 'Login' in the top right corner to get started.<br/><br/>Students - If you don't have an account talk to your teacher about this website.<br/><br/>Teachers - You can register an account which can be used to manage your students.");
 	}
 	
 	$headerTemplate = new Template;
 	$headerTemplate->assign("LOGGED_IN", loggedIn() ? "true" : "false");
+	$headerTemplate->assign("PAGE_TITLE", getTitle(basename($_SERVER['PHP_SELF'])));
 	$headerTemplate->render('header');
 ?>
