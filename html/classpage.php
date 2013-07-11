@@ -39,6 +39,7 @@
 					$q = dbQuery("SELECT `nid` FROM content WHERE `timestamp`=$timestamp");
 					$data = mysql_fetch_assoc($q);
 					dbQuery("INSERT INTO content_news (`id`, `body`, `poster`) VALUES ({$data['nid']}, '$body', {$_SESSION['userid']})");
+					header("Location:classpage.php?id=$id");
 				}else{
 					header("Location:message.php?id=6");
 				}
