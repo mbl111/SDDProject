@@ -10,7 +10,7 @@
 			}
 			$class = mysql_fetch_assoc($query);
 		}
-		if (isAdmin() or ($id == -1 and isAdmin()) or ($_SESSION['usertype'] == USER_TEACHER && $_SESSION['userid'] == $class['teacher'])){
+		if (isAdmin() or ($_SESSION['usertype'] == USER_TEACHER && $_SESSION['userid'] == $class['teacher'])){
 			$title = $_POST['title'];
 			$body = $_POST['body'];
 			$title = strip_tags(mysql_real_escape_string($title));
@@ -25,10 +25,11 @@
 			}else{
 				header("Location:message.php?id=6");
 			}
-			if ($id==-1){
+			if ($id == -1){
 				header("Location:index.php");
+			}else{
+				header("Location:classpage.php?id=$id");
 			}
-			header("Location:classpage.php?id=$id");
 		}
 	}
 	

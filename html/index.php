@@ -22,10 +22,10 @@
 			$classes .= ",";
 		}
 		$hidden = isAdmin() ? "" : "AND `class` IN ($classes-1) "; 
-		//$query = dbQuery("SELECT * FROM content WHERE `class` IN ($classes, -1)  ORDER BY `timestamp` DESC LIMIT $offset, $limit");
+		$query = dbQuery("SELECT * FROM content WHERE `visible`=1 ".$hidden."ORDER BY `timestamp` DESC LIMIT $offset, $limit");
 		$items = dbQuery("SELECT COUNT(*) FROM content WHERE `visible`=1 ".$hidden."ORDER BY `timestamp` DESC");
 	}else{
-		//$query = dbQuery("SELECT * FROM content WHERE `type`='news' AND `class`=-1  ORDER BY `timestamp` DESC LIMIT $offset, $limit");
+		$query = dbQuery("SELECT * FROM content WHERE `type`='news' AND `class`=-1 AND `visible`=1 ORDER BY `timestamp` DESC LIMIT $offset, $limit");
 		$items = dbQuery("SELECT COUNT(*) FROM content WHERE `type`='news' AND `class`=-1 AND `visible`=1 ORDER BY `timestamp` DESC");
 	}
 	
@@ -33,12 +33,10 @@
 	$existingItems = $existingItems[0];
 	
 	
-	$overallPage = "";
 	$count = 1;
-	while(($contentDetails = mysql_fetch_assoc($items)) and ($count <= $limit + $offset)){
-		if ($count > $offset){
-				buildContent($contentDetails['nid']);
-		}
+	while(($contentDetails = mysql_fetch_assoc($query)) and ($count <= $limit + $offset)){
+		
+		buildContent($contentDetails['nid']);
 		$count++;
 	}
 	
