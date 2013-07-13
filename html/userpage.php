@@ -75,6 +75,11 @@
 			}else{
 				$typestring = "Student";
 			}
+			
+			if (isAdmin()){
+				$typestring .= ", Admin";
+			}
+			
 			$classes = array();
 			if (isset($user['class']) and $user['class']!=""){
 				$classes = trim(rtrim($user['class'], ","), ",");
