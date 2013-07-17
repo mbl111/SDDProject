@@ -13,6 +13,7 @@
 	include_once("engine.php");
 	
 	$bugManager = preg_match("/bug/", $_SERVER['PHP_SELF']);
+	$help = preg_match("/help/", $_SERVER['PHP_SELF']);
 	
 	if (loggedIn()){
 		$q = dbQuery("SELECT active FROM users WHERE `id`={$_SESSION['userid']}");
@@ -61,7 +62,9 @@
 		}
 	}else{
 		if (!$bugManager){
-			addToolBox("Welcome!", "Have an account? Why not click 'Login' in the top right corner to get started.<br/><br/>Students - If you don't have an account talk to your teacher about this website.<br/><br/>Teachers - You can register an account which can be used to manage your students.");
+			if (!$help){
+				addToolBox("Welcome!", "Have an account? Why not click 'Login' in the top right corner to get started.<br/><br/>Students - If you don't have an account talk to your teacher about this website.<br/><br/>Teachers - You can register an account which can be used to manage your students.");
+			}
 		}else{
 			addToolBox("Bug Manager", "
 			<ul class='toolboxlinklist'>

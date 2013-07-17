@@ -1,0 +1,339 @@
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, p, blockquote, th, td
+{
+    margin: 0px 0px 0px 0px;
+    padding: 0px;
+}
+
+a.styledLink:hover{
+	color: #FF5566;
+	font-size:12px;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+a.styledLink,a.styledLink:visited{
+	color: #DD3344;
+	font-size:12px;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.quiz_answers
+{
+	list-style-type: none;
+	list-style-position:inside;
+	margin-left: 10px;
+	line-height: 18px;
+}
+
+.highlightYellow{
+background-color: #FFFFBB;
+}
+
+.highlightGreen{
+background-color: #BBFFBB;
+}
+
+.highlightRed{
+background-color: #FFBBBB;
+}
+
+#contentarea {
+	margin: 40px auto 0px auto;
+	width: 1000px;
+	background-color: #FFFFFF;
+	height: 100%;
+	display: table;
+}
+
+#sideelement {
+	width: 210px;
+	float: left;
+	background-color: #FFFFFF;
+	padding: 10px;
+	padding-top: 20px;
+	display:table-cell;
+}
+
+#centerelement{
+	background-color: #FFFFFF;
+	width: 745px;
+	float: left;
+	padding: 10px;
+	padding-top: 20px;
+	display:table-cell;
+}
+
+#toolbox{
+	width: 200px;
+	border: 2px #ADB2AD solid;
+	margin-bottom: 10px;
+}
+
+#contentbox{
+	border: 3px solid #CDD2CD;
+	margin-bottom: 10px;
+	width: 735px;
+	text-align: left;
+}
+
+.contentboxheader{
+	border-bottom:  1px #BDC2BD dashed;
+	padding: 3px 10px;
+	overflow: hidden;
+	font-weight: bold;
+    font-size: 18px;
+    text-shadow: 0px 0px 10px #AAFF55;
+	text-align: left;
+	color: #000000;
+}
+
+.contentboxheadertext{
+	font-weight: bold;
+    font-size: 18px;
+    text-shadow: 0px 0px 10px #AAFF55;
+	text-align: left;
+	color: #000000;
+	text-decoration: none;
+}
+
+.contentboxheadertext:hover{
+	font-weight: bold;
+    font-size: 18px;
+    text-shadow: 0px 0px 12px #AAFF55;
+	text-align: left;
+	color: #444444;
+	text-decoration: none;
+}
+
+.contentboxbody{
+	padding: 0px 10px;
+	margin: 10px 0px;
+	text-shadow: 0px 0px 10px white;
+	color: #222222;
+	text-decoration: none;
+	font-size: 14px;
+}
+
+.contentboxfooter{
+	border-top:  1px #BDC2BD dashed;
+	font-style: italic;
+	font-size: 10px;
+	color: #ADB2AD;
+	padding: 3px 10px;
+}
+
+.toolboxheader{
+	overflow: hidden;
+	padding: 3px 10px;
+	border-bottom: 1px #BDC2BD dashed;
+	/*background-color: #D9e0D9;*/
+	font-weight: bold;
+    font-size: 16px;
+    text-shadow: 0px 0px 10px #A1A1A1;
+	text-align: left;
+	color: #000000;
+	background: #c1c1c1; /* Old browsers */
+	background: -moz-linear-gradient(top,  #c1c1c1 0%, #969696 75%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#c1c1c1), color-stop(75%,#969696)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #c1c1c1 0%,#969696 75%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #c1c1c1 0%,#969696 75%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #c1c1c1 0%,#969696 75%); /* IE10+ */
+	background: linear-gradient(to bottom,  #c1c1c1 0%,#969696 75%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c1c1c1', endColorstr='#969696',GradientType=0 ); /* IE6-9 */
+}
+
+.toolboxcontent{
+	background-color: #F5F5F5;
+	padding: 4px;
+	min-height: 10px;
+	font-size: 12px;
+	color: #222222;
+	font-weight: bold;
+	text-align:left;
+	line-height: 14px;
+}
+
+.toolboxlink{
+	text-shadow: 0px 0px 10px white;
+	color: #222222;
+	text-decoration: none;
+}
+
+.toolboxlink:hover{
+	text-shadow: 0px 0px 10px #222222;
+	color: #F0F0F0;
+}
+
+.toolboxlinklist{
+	list-style-type: circle;
+	list-style-position:inside;
+	margin-left: 10px;
+	line-height: 18px;
+}
+
+.error{
+	border: 3px solid #AA0000;
+	margin-bottom: 10px;
+	text-align: left;
+	background-color: #FFAAAA;
+	padding: 3px 10px;
+}
+
+.paginationLink{
+	text-shadow: 0px 0px 10px white;
+	color: #222222;
+	padding: 0px 3px;
+}
+
+.paginationLink:hover{
+	text-shadow: 0px 0px 10px #222222;
+	color: #A0A0A0;
+}
+
+.paginationSelected{
+	color: #888888;
+}
+
+.pagination{
+	font-size: 12px;
+	color: #222222;
+	font-weight: bold;
+	text-shadow: 0px 0px 10px white;
+	text-decoration: none;
+	float: right;
+}
+
+.usersonlinespan{
+	float:left;
+	font-size:12px;
+	margin-bottom: 5px;
+	line-height: 16px;
+}
+
+.usersonlinetitlespan{
+	float: left;
+	font-size: 12px;'
+	font-weight: bold;
+}
+
+.contentdropdown li{
+	text-shadow: 0px 0px 0px;
+	list-style-type: none;
+    width:100px;
+    padding:5px;
+    border:1px solid #b9bdc1;
+    background-color: #EEEEEE;
+}
+
+.contentdropdown li:hover {background-color:#CCCCCC;}  /* mouse over link */
+
+.contentdropdown{
+    display:absolute;
+    z-index:9002;
+    padding:0px;
+    margin-top:-14px;
+    border-top:0;
+    cursor:pointer;
+}
+
+td{
+	vertical-align:top;
+}
+
+table{
+	border-collapse:collapse;
+}
+
+
+tr.comments, tr.issues{
+	border-bottom: 1px #BDC2BD solid;
+}
+
+tr.top{
+	background-color: #BDC2BD;
+}
+
+tr.report{
+	transition: background-color 1s, color 1s;
+    -moz-transition: background-color 1s, color 1s;
+    -webkit-transition: background-color 1s, color 1s;
+    -o-transition: background-color 1s, color 1s;
+	font-size: 12px;
+}
+
+tr.second{
+	background-color: #E0E0FF;
+}
+
+tr.report:hover{
+	background-color: #BDC2BD;
+}
+
+th, td{
+	padding: 6px;
+	text-align:left;
+}
+
+/*0=new, 1=accepted, 2=denied, 3=duplicate, 4=resolved*/
+.new{
+	background-color: #CCCCFF;
+}
+
+.accepted{
+	background-color: #FFFFCC;
+}
+
+.denied{
+	background-color: #FFCCCC;
+}
+
+.duplicate{
+	background-color: #CCCCCC;
+}
+
+.resolved{
+	background-color: #CCFFCC;
+}
+
+td.bug{
+	padding: 6px;
+}
+
+td.bug.label{
+	border-left: 1px #BDC2BD solid;
+	border-top: 1px #BDC2BD solid;
+	border-bottom: 1px #BDC2BD solid;
+	background-color: #BDC2BD;
+	font-weight: bold;
+	width: 120px;
+}
+
+td.bug.value{
+	border-right: 1px #BDC2BD solid;
+	border-top: 1px #BDC2BD solid;
+	border-bottom: 1px #BDC2BD solid;
+	width: 230px;
+}
+
+td.bug.extvalue{
+	border-right: 1px #BDC2BD solid;
+	border-top: 1px #BDC2BD solid;
+	border-bottom: 1px #BDC2BD solid;
+	width: 615px;
+	font-size: 14px;
+}
+
+li.dupe{
+	list-style-type: none;
+	font-size: 14px;
+}
+
+#error{
+	color: #EE0000;
+	font-weight: bold;
+}
+
+.mycomment{
+	background-color: #FFFFE0;
+}

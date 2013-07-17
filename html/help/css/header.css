@@ -1,0 +1,88 @@
+body {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    cursor: default;
+    margin: auto;
+    height: 100%;
+    color: #141414;
+    font: 16px "arial", "helvetica", "clean", sans-serif;
+    background-color: #F0F0F0;
+    overflow-y: scroll;
+}
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, p, blockquote, th, td
+    {
+    margin: 0px 0px 0px;
+    padding: 0px;
+}
+
+#floatbar {
+    width: 100%;
+    height: 40px;
+	z-index: 10000;
+    width: 100%;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    text-align: left;
+    clear: both;
+    vertical-align: middle;
+    line-height: 40px;
+    height: 40px;
+    border-bottom: 1px solid #D6D6D6;
+    margin: 0px;
+    margin-bottom: 10px;
+    /*background: #FA1622;*/
+    font-size: 14px;
+    overflow: hidden;
+    transition: box-shadow 0.5s;
+    -webkit-transition: box-shadow 0.5s; /* Safari */
+    box-shadow: 0px 0px 0px black;
+	/*FA1622 -> F5313B ->F72832*/
+	background: #FA1622; /* Old browsers */
+	background: -moz-linear-gradient(top,  #F72832 0%, #F5313B 45%, #FA1622 99%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#F72832), color-stop(45%,#F5313B), color-stop(99%,#FA1622)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #F72832 0%,#F5313B 45%,#FA1622 99%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #F72832 0%,#F5313B 45%,#FA1622 99%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #F72832 0%,#F5313B 45%,#FA1622 99%); /* IE10+ */
+	background: linear-gradient(to bottom,  #F72832 0%,#F5313B 45%,#FA1622 99%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#F72832', endColorstr='#FA1622',GradientType=0 ); /* IE6-9 */
+
+}
+
+#innerfloatbar{
+	padding: 0px 10px 0px 10px;
+}
+
+.usergreetinglink:hover{
+    text-shadow: 0px 0px 10px white;
+	color: #F0F0F0;
+}
+
+.usergreetinglink{
+    text-shadow: 0px 0px 10px white;
+	color: #222222;
+}
+
+.usergreeting {
+    float: right;
+    font-weight: bold;
+    font-size: 90%;
+    color: black;
+    margin-right: 10px;
+    text-shadow: 0px 0px 10px white;
+}
+
+.pagetitle{
+	font-size:22px;
+	font-weight:bold;
+	color:black;
+	text-decoration:none;
+}
+
+.pagetitle:clicked{
+	font-size:22px;
+	font-weight:bold;
+	color:black;
+	text-decoration:none;
+}
