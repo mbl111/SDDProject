@@ -113,9 +113,13 @@
 		
 			$query = dbQuery("SELECT * FROM users WHERE `class` LIKE '%$id%' AND `usertype`=1".$bonusString);
 			$amt = mysql_num_rows($query);
-			echo "<a href='classpage.php?id=$id&cpt=3' class='toolboxlink' style='font-weight:bold;font-size:16px;'>Add students to your class</a>";
+			if ($_SESSION['usertype'] == USER_TEACHER){
+				echo "<a href='classpage.php?id=$id&cpt=3' class='toolboxlink' style='font-weight:bold;font-size:16px;'>Add students to your class</a>";
+			}
 			echo "<form method='GET'>
 				Sort By
+				<input type='hidden' name='id' value='$id'/>
+				<input type='hidden' name='cpt' value='1'/>
 				<select name='srt' id='' class='input' style='width:115px;'>
 					<option value='fn' "; if ($sort[0] == 'fn'){echo "selected ";} echo ">First Name</option>
 					<option value='ln' "; if ($sort[0] == 'ln'){echo "selected ";} echo ">Last Name</option>
@@ -197,7 +201,7 @@
 						$(this).css("background-color", "#A9A9A9");
 						var inp = $("#query.input").val();
 						$.post("ajax/validateuser.php", {name:inp}, function(data) {
-							if (data=="true"){
+							if (data.split(" ")[0]=="true"){
 								$.post("ajax/class/putinclass.php", {name:inp,id:'.$id.'}, function(data) {
 									if (data.split(" ")[0]=="true"){
 										$("#feedback").html(inp + " added to class");
@@ -208,7 +212,7 @@
 									}
 								});
 							}else{
-								$("#feedback").html("User Not Found");
+								$("#feedback").html(data);
 							}
 						});
 						
