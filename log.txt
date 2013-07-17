@@ -1,3 +1,135 @@
+commit 1341d9a84f1a2ebb5bf3c56adee386319b022e9c
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jul 17 23:37:09 2013 +1000
+
+    Removed PHP mailer API
+
+commit 4dd2ddd50817f6e3eb2adf335cee42d159f4d7f9
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jul 17 23:36:40 2013 +1000
+
+    View quiz results
+
+commit 9fe410a5978145d970a770c2e1fdefe3233f37c5
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jul 17 23:36:31 2013 +1000
+
+    Teachers can register
+
+commit 9805114d635960096c11ef745d0cdfa1a45e8e49
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jul 17 23:36:22 2013 +1000
+
+    New Favicon
+
+commit 34cecc70a50de4b787d4494088b918be217957d9
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jul 17 23:36:15 2013 +1000
+
+    Not even working
+
+commit b94d770a6c4ded1fa71d5de7e8b1cddde2959244
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jul 17 23:36:08 2013 +1000
+
+    Teachers can create a class
+
+commit 751c40e629494fb3b2461aa8d1637382c236c556
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jul 17 23:35:44 2013 +1000
+
+    Posters see all answers
+
+commit cbfc6bb3ef5c485aa6059ab02387c3d4e120ba09
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jul 17 23:35:26 2013 +1000
+
+    Changed favicon, login specific
+
+commit f21acd5016458eec3815264d31424db12c1c5fcf
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jul 17 23:35:09 2013 +1000
+
+    Password setting now works
+
+commit c82a2a74b260b21442c67366cf2153571ccffb03
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jul 17 23:34:56 2013 +1000
+
+    New messages
+
+commit a3bf1ab6d2f350519631d425b0921fef965b75e7
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jul 17 23:34:47 2013 +1000
+
+    Changed site name, Quiz Submit time
+
+commit b9b74dd0f49270431eb150d9475de3b333266ed7
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jul 17 23:34:34 2013 +1000
+
+    Changed content boxes
+
+commit dd537030ea2408ba10a88548e8d74f3180e45360
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jul 17 23:34:22 2013 +1000
+
+    Login Specific
+
+commit 3025596108297d301c8dd6fe0bcf86822dfc28a9
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jul 17 23:34:14 2013 +1000
+
+    Quizes now create
+
+commit 0eab57db8ea8e69c5538128ab9cd370889db2f4c
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jul 17 23:34:05 2013 +1000
+
+    fixed bug
+
+commit f16e7976e810f2bfc06f114c642582ded4b9603b
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jul 17 23:33:55 2013 +1000
+
+    Fixed bug
+
+commit 8557adaa6b980c66d23776b7be90424f7f923ef5
+Author: mbl111 <matt@mbl111.com>
+Date:   Wed Jul 17 23:33:41 2013 +1000
+
+    Checked that the passes match
+
+commit 333286f34e2df2580ac951c86cf524afbda0e684
+Author: mbl111 <matt@mbl111.com>
+Date:   Sat Jul 13 20:56:35 2013 +1000
+
+    Fixed bugs
+
+commit 811379adad70a08a4f5d1dfd93b5d0748a2f56e6
+Author: mbl111 <matt@mbl111.com>
+Date:   Sat Jul 13 20:56:25 2013 +1000
+
+    Removed unused css
+
+commit dbd4ff4ee6d66ecf2479c66985d8b359bcb782b5
+Author: mbl111 <matt@mbl111.com>
+Date:   Sat Jul 13 19:38:17 2013 +1000
+
+    Admin display
+
+commit 86d62d44a4ea9b95ebac9931ff0e71428769f446
+Author: mbl111 <matt@mbl111.com>
+Date:   Fri Jul 12 03:24:07 2013 +1000
+
+    Bug Manager compat
+
+commit 19e58a900fc6f4c276b5e427f74e55f50f1dbf4d
+Author: mbl111 <matt@mbl111.com>
+Date:   Thu Jul 11 18:41:55 2013 +1000
+
+    Git Commit Log
+
 commit 5c111061f1978a6fdb41cd4033765df48564950c
 Author: mbl111 <matt@mbl111.com>
 Date:   Thu Jul 11 18:29:19 2013 +1000
