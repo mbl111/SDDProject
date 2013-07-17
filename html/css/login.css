@@ -1,4 +1,4 @@
-label{
+label.login{
 	display:block;
 	float:left;
 	font-weight:bold;
@@ -11,7 +11,7 @@ label{
 	text-shadow:1px 1px 3px white;
 }
 
-.remember{
+.login_remember{
 	font-weight:bold;
 	margin-right:1px;
 	text-align:right;
@@ -22,7 +22,7 @@ label{
 	text-shadow:1px 1px 3px white;
 }
 
-.remembercheck{
+.login_remembercheck{
 	margin-right:10px;
 	padding:5px;
 	border:1px solid #b9bdc1;
@@ -30,11 +30,11 @@ label{
 	background-color:#F9F9F9;
 }
 
-.field{
+.login_field{
 	margin-bottom:10px;
 }
 
-.input{
+.login_input{
 	font-size:15px;
 	padding:5px;
 	border:1px solid #b9bdc1;
@@ -42,10 +42,10 @@ label{
 	color:#505050;
 	background-color:#F9F9F9;
 }
-.input:focus{
+.login_input:focus{
 	background-color:white;
 }
-.textarea{
+.login_textarea{
 	font-family:Arial;
 	height:150px;
 	width:500px;
