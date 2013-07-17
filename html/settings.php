@@ -45,8 +45,9 @@
 			
 			$("#changepassb").click(function(e){
 				var b = $("#pass.input").val();
+				var b2 = $("#pass2.input").val();
 				$("#changepass").html("<span style='color:#990000'>Changing password... Please wait</span>");
-				$.post('ajax/setting/changepass.php', {pass:b, id:<?echo $userId;?>}, function(data) {
+				$.post('ajax/setting/changepass.php', {pass2:b2, pass:b, id:<?echo $userId;?>}, function(data) {
 					if (data=="true"){
 						$("#changepass").html("Your password has been changed.");
 					}else{
@@ -60,7 +61,22 @@
 			
 			$("#pass.input").keyup(function(e){
 				var pass = $("#pass.input").val();
-				if (pass.length < 5){
+				var pass2 = $("#pass2.input").val();
+				if (pass.length < 5 || pass != pass2){
+					$("#pass.input").css("border-color", "#FF0000");
+					$("#changepassb").attr("disabled", true);
+					$("#changepassb").css("background-color", "#A9A9A9");
+				}else{
+					$("#pass.input").css("border-color", "#00FF00");
+					$("#changepassb").removeAttr("disabled");
+					$("#changepassb").css("background-color", "#F9F9F9");
+				}
+			});
+			
+			$("#pass2.input").keyup(function(e){
+				var pass = $("#pass.input").val();
+				var pass2 = $("#pass2.input").val();
+				if (pass.length < 5 || pass != pass2){
 					$("#pass.input").css("border-color", "#FF0000");
 					$("#changepassb").attr("disabled", true);
 					$("#changepassb").css("background-color", "#A9A9A9");
@@ -183,7 +199,7 @@
 					</div>
 					<div class="field">
 						<label>Confirm Password</label>
-						<input maxlength="20" class="input" type="password" name="pass" id="pass" value=""/>
+						<input maxlength="20" class="input" type="password" name="pass2" id="pass2" value=""/>
 						<span class="hint">Type your password again (20 characters max.)</span>
 					</div>
 					<input class="input" name="id" type="hidden" value="<?echo $_SESSION['userid'];?>"/>
