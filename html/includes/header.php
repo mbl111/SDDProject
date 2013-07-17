@@ -33,37 +33,42 @@
 		$_SESSION['admin'] = $profile['admin'];
 		$teacherLinks = "";
 		if ($_SESSION['usertype']==USER_TEACHER){
-			$teacherLinks = "<li><a href='students.php' class='toolboxlink'>Students</a></li>";
+			$teacherLinks .= "<li><a href='students.php' class='toolboxlink'>Students</a></li>";
+			$teacherLinks .= "<li><a href='createclass.php' class='toolboxlink'>Create Class</a></li>";
 		}
 		if ($_SESSION['usertype']==USER_TEACHER or isAdmin()){
 			$teacherLinks .= "<li><a href='submitnews.php' class='toolboxlink'>Post News</a></li>";
 		}
 		if (!$bugManager){
-		addToolBox(myFullName(), "
-		<ul class='toolboxlinklist'>
-			<li><a href='index.php' class='toolboxlink'>Home</a></li>
-			<li><a href='userpage.php?id={$_SESSION['userid']}' class='toolboxlink'>My Account</a></li>
-			$teacherLinks
-			<li><a href='' class='toolboxlink'>Notifications (6)</a></li>
-			<li><a href='' class='toolboxlink'>Messages (1)</a></li>
-			<li><a href='settings.php' class='toolboxlink'>Settings</a></li>
-			<li><a href='logout.php?page=index.php' class='toolboxlink'>Logout</a></li>
-		</ul>
-		");
+			addToolBox(myFullName(), "
+			<ul class='toolboxlinklist'>
+				<li><a href='index.php' class='toolboxlink'>Home</a></li>
+				<li><a href='userpage.php?id={$_SESSION['userid']}' class='toolboxlink'>My Account</a></li>
+				$teacherLinks
+				<li><a href='settings.php' class='toolboxlink'>Settings</a></li>
+				<li><a href='logout.php?page=index.php' class='toolboxlink'>Logout</a></li>
+			</ul>
+			");
 		}else{
-		addToolBox(myFullName(), "
-		<ul class='toolboxlinklist'>
-			<li><a href='../index.php' class='toolboxlink'>Main site</a></li>
-			<li><a href='index.php' class='toolboxlink'>Bug List</a></li>
-			<li><a href='../logout.php?page=but/index.php' class='toolboxlink'>Logout</a></li>
-		</ul>
-		");
+			addToolBox(myFullName(), "
+			<ul class='toolboxlinklist'>
+				<li><a href='../index.php' class='toolboxlink'>Quiz JaM Home</a></li>
+				<li><a href='index.php' class='toolboxlink'>Bug List</a></li>
+				<li><a href='reportbug.php' class='toolboxlink'>Report a bug</a></li>
+				<li><a href='../logout.php?page=but/index.php' class='toolboxlink'>Logout</a></li>
+			</ul>
+			");
 		}
 	}else{
 		if (!$bugManager){
 			addToolBox("Welcome!", "Have an account? Why not click 'Login' in the top right corner to get started.<br/><br/>Students - If you don't have an account talk to your teacher about this website.<br/><br/>Teachers - You can register an account which can be used to manage your students.");
+		}else{
+			addToolBox("Bug Manager", "
+			<ul class='toolboxlinklist'>
+				<li><a href='../index.php' class='toolboxlink'>Quiz JaM Home</a></li>
+			</ul>");
 		}
-		if (basename($_SERVER['PHP_SELF']) != "index.php" and basename($_SERVER['PHP_SELF']) != "message.php"){
+		if (basename($_SERVER['PHP_SELF']) != "index.php" and basename($_SERVER['PHP_SELF']) != "message.php"  and basename($_SERVER['PHP_SELF']) != "register.php"){
 			header("Location:index.php");
 		}
 	}
