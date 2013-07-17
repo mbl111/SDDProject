@@ -56,10 +56,14 @@ function del[CONTENT_ID](){
 		</p>
 		<br/>
 		[CONTENT_BODY]
+		<!-- IF [POSTER] -->
+			<br/><a class='styledLink' style='font-size:14px;padding-top:3px;' href='viewresults.php?id=[CONTENT_ID]'>View Class Results</a>
+		<!-- ENDIF -->
+		
 		<!-- IF ![QUIZ_PAGE] -->
-			<br/><a class='styledLink' style='font-size:14px;padding-top:3px;' href='viewQuiz.php?id=[CONTENT_ID]'>View Quiz</a>
+			<br/><a class='styledLink' style='font-size:14px;padding-top:3px;' href='viewquiz.php?id=[CONTENT_ID]'>View Quiz</a>
 		<!-- ELSE -->
-			<!-- IF [QUIZ_DONE] -->
+			<!-- IF [QUIZ_DONE] or [POSTER] -->
 				<br/>Key: <span class='highlightGreen'>Correct Answer</span> | <span class='highlightRed'>Your answer (wrong)</span>
 			<!-- ENDIF -->
 		<!-- ENDIF -->

@@ -107,7 +107,7 @@
 	$questionQuery = dbQuery("SELECT * FROM content_quiz_questions WHERE quiz_id=$quizId");
 	
 	if (mysql_num_rows($questionQuery) > 0){
-		if (!$doneQuiz){
+		if (!$doneQuiz and $quizDesc['poster'] != $_SESSION['userid']){
 			if ($quizDesc['canDoAfterDue'] == 1 or !$quizOverdue){
 				echo '<link rel="stylesheet" type="text/css" href="css/form.css" />';
 				echo "<form method='post' id='quiz' action=''>";
@@ -156,7 +156,7 @@
 			while (($row = mysql_fetch_assoc($resultQuery))){
 				$resultById[$row['question_id']] = $row['answer'];
 			}
-			
+			$poster = $quizDesc['poster'] == $_SESSION['userid'];
 			$incid = 1;
 				while (($row = mysql_fetch_assoc($questionQuery))){
 					$answers = array();
@@ -171,21 +171,21 @@
 					$highlight[1] = "";
 					$highlight[2] = "";
 					$highlight[3] = "";
-					
-					if (1 != $resultById[$row['id']]){
-						if (2 == $resultById[$row['id']]){
-							$highlight[1] = "highlightRed";
-						}
-						
-						if (3 == $resultById[$row['id']]){
-							$highlight[2] = "highlightRed";
-						}
-						
-						if (4 == $resultById[$row['id']]){
-							$highlight[3] = "highlightRed";
+					if (!$poster){
+						if (1 != $resultById[$row['id']]){
+							if (2 == $resultById[$row['id']]){
+								$highlight[1] = "highlightRed";
+							}
+							
+							if (3 == $resultById[$row['id']]){
+								$highlight[2] = "highlightRed";
+							}
+							
+							if (4 == $resultById[$row['id']]){
+								$highlight[3] = "highlightRed";
+							}
 						}
 					}
-					
 				
 					$question = new Template;
 					$question->assign('QUESTION_TEXT', $row['q']);
