@@ -1,6 +1,6 @@
 <?php
 
-define("SITENAME","Online Creative Neuro-Learning Tools");
+define("SITENAME","Quiz JaM");
 	define("USER_STUDENT", 1);
 	define("USER_TEACHER", 0);
 
@@ -200,8 +200,9 @@ $svrtime = date($dateFormat, getTimeWithZone(time(), $timezone));
 $reportBugPath = str_replace(basename($_SERVER['PHP_SELF']), "", $_SERVER['PHP_SELF']);
 $reportBugPath = str_replace("bug/", "", $reportBugPath);
 echo '<div id="footer" style="height:50px; margin-top:10px;width:100%;">
-	<span style="font-size:12px;font-style:italic;">Copyright 2013 - Matt and Justin - <a href="'.$reportBugPath.'bug/reportbug.php" style="color:black; font-weight:bold;">Report a bug</a></span><br/>
-	<span style="font-size:12px;font-style:italic;color:#101010;">All times in '.getTimeZoneString(getTimezone()).'</span><br/>
+	<span style="font-size:12px;font-style:italic;"><a href="'.$reportBugPath.'bug/index.php" style="color:black; font-weight:bold;">Bug Tracker</a> - 
+	<a href="'.$reportBugPath.'bug/reportbug.php" style="color:black; font-weight:bold;">Report a bug</a><br/>All times in '.getTimeZoneString(getTimezone()).'<br/>
+	Copyright 2013 - Matt and Justin<br/></span>
 	<span style="color:#B0B0B0;font-size:12px;font-style:italic;">Generated in '.$time.' seconds | Time now is '.$svrtime.'</span>
 	</div>
 	</div>
@@ -365,6 +366,18 @@ function getNumberOfQuestionsForQuiz($qid){
 	return -1;
 }
 
+function getTimeUserSubmittedQuiz($quiz, $user){
+	$q = dbQuery("SELECT `timestamp` FROM user_quiz_answers WHERE `quiz_id`=$quiz AND `user_id`=$user LIMIT 1");
+	if ($q){
+		if (mysql_num_rows($q) == 0){
+			return -1;
+		}
+		$ts = mysql_fetch_assoc($q);
+		return $ts['timestamp'];
+	}
+	return -1;
+}
+
 function studentBelongsTo($idToTest, $student){
 	$query = dbQuery("SELECT id FROM users WHERE `id`=$student AND `teacher`=$idToTest LIMIT 1");
 	if ($query){
@@ -382,48 +395,49 @@ return $s;
 }
 
 function getTitle($page){
+	$sub = "Quiz JaM";
 	switch ($page){
 		case "addstudent.php" :
-			return "CONT | Add Student";
+			return "$sub | Add Student";
 			break;
 		case "classpage.php" :
-			return "CONT | Class";
+			return "$sub | Class";
 			break;
 		case "createquiz.php" :
-			return "CONT | New Quiz";
+			return "$sub | New Quiz";
 			break;
 		case "index.php" :
-			return "CONT | Home";
+			return "$sub | Home";
 			break;
 		case "login.php" :
-			return "CONT | Login";
+			return "$sub | Login";
 			break;
 		case "logout.php" :
-			return "CONT | Logout";
+			return "$sub | Logout";
 			break;
 		case "message.php" :
-			return "CONT | Alert!";
+			return "$sub | Alert!";
 			break;
 		case "reportbug.php" :
-			return "CONT Bug Center";
+			return "$sub Bug Center";
 			break;
 		case "settings.php" :
-			return "CONT | Settings";
+			return "$sub | Settings";
 			break;
 		case "students.php" :
-			return "CONT | My Students";
+			return "$sub | My Students";
 			break;
 		case "submitnews.php" :
-			return "CONT | New News";
+			return "$sub | New News";
 			break;
 		case "userpage.php" :
-			return "CONT | User";
+			return "$sub | User";
 			break;
 		case "viewcontent.php" :
-			return "CONT | Content";
+			return "$sub | Content";
 			break;
 		case "viewquiz.php" :
-			return "CONT | Quiz";
+			return "$sub | Quiz";
 			break;
 	}
 }
