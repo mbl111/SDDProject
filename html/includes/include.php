@@ -200,6 +200,7 @@ $svrtime = date($dateFormat, getTimeWithZone(time(), $timezone));
 $reportBugPath = str_replace(basename($_SERVER['PHP_SELF']), "", $_SERVER['PHP_SELF']);
 $reportBugPath = str_replace("bug/", "", $reportBugPath);
 echo '<div id="footer" style="height:50px; margin-top:10px;width:100%;">
+	<a href="'.$reportBugPath.'help/index.php" style="color:black; font-weight:bold;font-size:12px;line-height:20px;">View Online Help</a><br/>
 	<span style="font-size:12px;font-style:italic;"><a href="'.$reportBugPath.'bug/index.php" style="color:black; font-weight:bold;">Bug Tracker</a> - 
 	<a href="'.$reportBugPath.'bug/reportbug.php" style="color:black; font-weight:bold;">Report a bug</a><br/>All times in '.getTimeZoneString(getTimezone()).'<br/>
 	Copyright 2013 - Matt and Justin<br/></span>

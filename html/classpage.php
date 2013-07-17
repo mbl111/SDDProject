@@ -177,9 +177,10 @@
 				$groupdesc->setType(1);
 				$groupdesc->setLength(800);
 				$groupdesc->setDefault($class['description']);
-				
+				$hiddenSetting1 = new HiddenField("id", "id", $id);
 				$descSettingGroup = new SettingGroup('changegroupdesc', 'Change Description');
 				$descSettingGroup->addSetting($groupdesc);
+				$descSettingGroup->addSetting($hiddenSetting1);
 				$descSettingGroup->setButtonWidth(200);
 				$descSettingGroup->render();
 			echo '</div></form>';
