@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<title>[PAGE_TITLE]</title>
-	<link href="favicon.ico" rel="icon" type="image/x-icon" />
+	<link href="jam.png" rel="icon" type="image/x-icon" />
 </head>
 <body>
 <link rel="stylesheet" type="text/css" href="css/header.css" />
@@ -34,7 +34,7 @@ function logincancel() {
 			<? if (loggedIn()){
 			echo '<span class="usergreeting">Welcome <a href="userpage.php?id='.$_SESSION['userid'].'" class="usergreetinglink">'.myFullName().'</a>! - <a href="logout.php?page=index.php" class="usergreetinglink">Logout</a></span>';
 			}else{
-			echo '<span class="usergreeting">Welcome guest! Please <a href="javascript:login();" class="usergreetinglink">login</a> or <a href="regiser.php" class="usergreetinglink">register</a></span>';
+			echo '<span class="usergreeting">Welcome guest! Please <a href="javascript:login();" class="usergreetinglink">login</a> or <a href="register.php" class="usergreetinglink">register</a></span>';
 			}?>
 		</aside>
 		</div>
@@ -51,16 +51,14 @@ function logincancel() {
 			<span class="usergreeting"><a href="javascript:logincancel();" class="usergreetinglink">Close</a></span>
 		</aside>
 		</div>
-		<div class="field">
-			<label>Username:</label>
-			<input class="input" type="text" name="username" id="username" />
+		<div class="login_field">
+			<label class='login'>Username:</label>
+			<input class="login_input" type="text" name="username" id="username" />
 		</div>
-		<div class="field">
-			<label>Password:</label>
-			<input class="input" type="password" name="password" />
+		<div class="login_field">
+			<label class='login'>Password:</label>
+			<input class="login_input" type="password" name="password" />
 		</div>
-		<span class="remember">Remember Me?</span>
-		<input class="remembercheck" type="checkbox" name="remember" />
 		<br/>
 		<input type="submit" value="Login" id="loginButton"/>
 	</form>
