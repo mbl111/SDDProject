@@ -10,7 +10,7 @@
 			$dueHour = $_POST['hour'];
 			$dueMin = $_POST['min'];
 			$dueSecond = $_POST['sec'];
-			$unixdate = strtotime($dueDate) + ($timeConstant['hour'] * $dueHour) + ($timeConstant['min'] * $dueMin) + ($timeConstant['sec'] * $dueSecond) + (($timeConstant['hour'] * 2) + ($timeConstant['hour'] * $_SESSION['timezone']));
+			$unixdate = strtotime($dueDate) + ($timeConstant['hour'] * $dueHour) + ($timeConstant['min'] * $dueMin) + ($timeConstant['sec'] * $dueSecond) + (($timeConstant['hour'] * 2) - ($timeConstant['hour'] * $_SESSION['timezone']));
 			$afterdue = 0;
 			if (isset($_POST['afterdue'])){
 				$afterdue = 1;
@@ -142,8 +142,9 @@
 			}
 			if (!valid){
 				$("#error").html("You have some blank fields. They have been highlighted. Please fill them out, or remove the question if you are not using it");
+				return false;
 			}
-			return false;
+			return true;
 		});
 	});
 	
